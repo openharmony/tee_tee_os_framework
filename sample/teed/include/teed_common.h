@@ -16,15 +16,9 @@
 #include <teed_private.h>
 
 void teed_init_tee_ep_state(struct entry_point_info *tee_entry_point,
-<<<<<<< HEAD
-				      uint32_t rw,
-				      uintptr_t pc,
-				      tee_context_t *tee_ctx);
-=======
 							uint32_t rw,
 							uintptr_t pc,
 							tee_context_t *tee_ctx);
->>>>>>> 9bafdc531cdcd40b97af6453c73e28a1b27424a7
 
 uint64_t teed_synchronous_sp_entry(tee_context_t *tee_ctx);
 

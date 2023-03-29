@@ -10,15 +10,6 @@
 
 import("//build/lite/config/component/lite_component.gni")
 
-<<<<<<< HEAD
-copy("tee_copy") {
-    sources = [ "//device/hisilicon/hispark_taurus/tee/teehm.img" ]
-    outputs = [ "$root_out_dir/{{source_file_part}}" ]
-}
-
-group("tee_os_framework") {
-}
-=======
 build_ext_component("tee_build") {
     exec_path = rebase_path("../tee_os_kernel/build", root_build_dir)
     command  = "sh build.sh"
@@ -31,4 +22,3 @@ group("tee_os_framework") {
     ]
 }
 
->>>>>>> 9bafdc531cdcd40b97af6453c73e28a1b27424a7
