@@ -173,11 +173,7 @@ int32_t set_chip_type_info(char *chip_type, uint32_t size)
     char chip_type_tmp[CHIP_TYPE_LEN_MAX] = {0};
 
     if (memcpy_s(chip_type_tmp, CHIP_TYPE_LEN_MAX,
-<<<<<<< HEAD
-                 chip_type, (size > CHIP_TYPE_LEN_MAX) ? CHIP_TYPE_LEN_MAX : size) != EOK ) {
-=======
                  chip_type, (size > CHIP_TYPE_LEN_MAX) ? CHIP_TYPE_LEN_MAX : size) != EOK) {
->>>>>>> 9bafdc531cdcd40b97af6453c73e28a1b27424a7
         teelog("copy to chip_type_tmp failed\n");
         return -1;
     }
