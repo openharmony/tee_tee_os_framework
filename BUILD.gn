@@ -21,4 +21,3 @@ group("tee_os_framework") {
         ":tee_build",
     ]
 }
-
