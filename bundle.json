@@ -8,16 +8,23 @@
       "subsystem": "tee",
       "syscap": [],
       "features": [],
-      "adapted_system_type": [ "small" ],
+      "adapted_system_type": [ "small", "standard" ],
       "rom":"1635KB",
       "ram":"16M", 
       "deps": {
         "components": [],
-        "third_party": []
+        "third_party": [
+          "musl",
+          "bounds_checking_function"
+        ]
       },
       "build": {
         "sub_component": [
-          "//base/tee/tee_os_framework/:tee_os_framework"
+          "//base/tee/tee_os_framework/:services",
+          "//base/tee/tee_os_framework/:libs",
+          "//base/tee/tee_os_framework/:drivers",
+          "//base/tee/tee_os_framework/:service",
+          "//base/tee/tee_os_framework/:build"
         ],
         "inner_kits": [],
         "test": []

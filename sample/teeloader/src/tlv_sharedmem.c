@@ -22,7 +22,7 @@
 static struct tlv_tag *g_tlv_start = NULL;
 static uint64_t g_teeos_share_mem = 0;
 
-static int32_t tlv_start_init()
+static int32_t tlv_start_init(void)
 {
     if (g_tlv_start != NULL) {
         teelog("tlv already started\n");

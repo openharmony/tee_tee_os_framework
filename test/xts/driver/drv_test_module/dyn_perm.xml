@@ -1,0 +1,3 @@
+<drv_perm>
+    <drv_basic_info thread_limit="8" upgrade="true" virt2phys="true" />
+</drv_perm>

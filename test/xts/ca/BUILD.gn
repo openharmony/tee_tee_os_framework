@@ -1,0 +1,325 @@
+/*
+ * Copyright (C) 2023 Huawei Technologies Co., Ltd.
+ * Licensed under the Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ * http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT FOR A PARTICULAR
+ * PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
+
+import("//test/xts/tools/lite/build/suite_lite.gni")
+
+hcpptest_suite("tee_test_client_api") {
+  suite_name = "acts"
+
+  tee_dev_kit_dir   = "//base/tee/tee_dev_kit"
+  tee_test_root_dir = "//base/tee/tee_os_framework/test/xts"
+  sources = [
+    tee_test_root_dir + "/utils/public_test/public_test.cpp",
+    tee_test_root_dir + "/utils/session_mgr/client_session_mgr.cpp",
+
+    tee_test_root_dir + "/ca/client_api/src/initializecontext_test.cpp",
+    tee_test_root_dir + "/ca/client_api/src/opensession_test.cpp",
+    tee_test_root_dir + "/ca/client_api/src/invokecommand_test.cpp",
+    tee_test_root_dir + "/ca/client_api/src/closesession_test.cpp",
+    tee_test_root_dir + "/ca/client_api/src/finalizecontext_test.cpp",
+    tee_test_root_dir + "/ca/client_api/src/allocatesharedmemory_test.cpp",
+    tee_test_root_dir + "/ca/client_api/src/registersharedmemory_test.cpp",
+    tee_test_root_dir + "/ca/client_api/src/releasesharedmemory_test.cpp",
+  ]
+
+  include_dirs = [
+    tee_dev_kit_dir + "/sdk/include/TA",
+    tee_dev_kit_dir + "/sdk/thirdparty/open_source/libboundscheck/include/libhwsecurec",
+    tee_dev_kit_dir + "/sdk/include/CA",
+
+    tee_test_root_dir + "/utils",
+    tee_test_root_dir + "/utils/include",
+    tee_test_root_dir + "/utils/public_test",
+    tee_test_root_dir + "/utils/cmd_id",
+    tee_test_root_dir + "/ca/client_api/common",
+
+    "//test/xts/tools/lite/hctest/include",
+    "//third_party/googletest/googletest/include",
+    "//foundation/distributedschedule/samgr_lite/interfaces/kits/samgr",
+  ]
+
+  deps = [
+      "//base/tee/tee_client/frameworks/build/lite:libteec_vendor",
+      "//third_party/bounds_checking_function:libsec_static",
+  ]
+
+  cflags = [ "-Wno-error" ]
+  ldflags = [
+    "-lstdc++",
+    "-lm",
+    "-lpthread",
+  ]
+}
+
+hcpptest_suite("tee_test_tcf_api") {
+  suite_name = "acts"
+
+  tee_dev_kit_dir   = "//base/tee/tee_dev_kit"
+  tee_test_root_dir = "//base/tee/tee_os_framework/test/xts"
+  sources = [
+    tee_test_root_dir + "/utils/public_test/public_test.cpp",
+    tee_test_root_dir + "/utils/session_mgr/client_session_mgr.cpp",
+
+    tee_test_root_dir + "/ca/tcf_api/src/property/get_prop_as_identity_test.cpp",
+    tee_test_root_dir + "/ca/tcf_api/src/property/get_prop_as_string_test.cpp",
+    tee_test_root_dir + "/ca/tcf_api/src/property/get_prop_as_bool_test.cpp",
+    tee_test_root_dir + "/ca/tcf_api/src/property/get_prop_as_u32_test.cpp",
+    tee_test_root_dir + "/ca/tcf_api/src/property/get_prop_as_u64_test.cpp",
+    tee_test_root_dir + "/ca/tcf_api/src/property/get_prop_as_binaryblock_test.cpp",
+    tee_test_root_dir + "/ca/tcf_api/src/property/get_prop_as_uuid_test.cpp",
+    tee_test_root_dir + "/ca/tcf_api/src/property/get_prop_with_enumerator_test.cpp",
+    tee_test_root_dir + "/ca/tcf_api/src/mem/tee_malloc_test.cpp",
+    tee_test_root_dir + "/ca/tcf_api/src/mem/tee_realloc_test.cpp",
+    tee_test_root_dir + "/ca/tcf_api/src/mem/tee_memmove_test.cpp",
+    tee_test_root_dir + "/ca/tcf_api/src/mem/tee_memfill_test.cpp",
+    tee_test_root_dir + "/ca/tcf_api/src/mem/tee_free_test.cpp",
+    tee_test_root_dir + "/ca/tcf_api/src/mem/tee_memcompare_test.cpp",
+    tee_test_root_dir + "/ca/tcf_api/src/mem/tee_checkmemaccessrights_test.cpp",
+    tee_test_root_dir + "/ca/tcf_api/src/mem/tee_instance_test.cpp",
+    tee_test_root_dir + "/ca/tcf_api/src/other/internal_client_api_test.cpp",
+    tee_test_root_dir + "/ca/tcf_api/src/other/tee_panic_test.cpp",
+    tee_test_root_dir + "/ca/tcf_api/src/common_test.cpp",
+  ]
+
+  include_dirs = [
+    tee_dev_kit_dir + "/sdk/include/TA",
+    tee_dev_kit_dir + "/sdk/thirdparty/open_source/libboundscheck/include/libhwsecurec",
+    tee_dev_kit_dir + "/sdk/include/CA",
+
+    tee_test_root_dir + "/utils",
+    tee_test_root_dir + "/utils/include",
+    tee_test_root_dir + "/utils/public_test",
+    tee_test_root_dir + "/utils/cmd_id",
+    tee_test_root_dir + "/ca/tcf_api/common",
+
+    "//test/xts/tools/lite/hctest/include",
+    "//third_party/googletest/googletest/include",
+    "//foundation/distributedschedule/samgr_lite/interfaces/kits/samgr",
+  ]
+
+  deps = [
+      "//base/tee/tee_client/frameworks/build/lite:libteec_vendor",
+      "//third_party/bounds_checking_function:libsec_static",
+  ]
+
+  cflags = [ "-Wno-error" ]
+  ldflags = [
+    "-lstdc++",
+    "-lm",
+    "-lpthread",
+  ]
+}
+
+hcpptest_suite("tee_test_time_api") {
+  suite_name = "acts"
+
+  tee_dev_kit_dir   = "//base/tee/tee_dev_kit"
+  tee_test_root_dir = "//base/tee/tee_os_framework/test/xts"
+  sources = [
+    tee_test_root_dir + "/utils/public_test/public_test.cpp",
+    tee_test_root_dir + "/utils/session_mgr/client_session_mgr.cpp",
+
+    tee_test_root_dir + "/ca/time_api/src/tee_test_time_api.cpp",
+  ]
+
+  include_dirs = [
+    tee_dev_kit_dir + "/sdk/include/TA",
+    tee_dev_kit_dir + "/sdk/thirdparty/open_source/libboundscheck/include/libhwsecurec",
+    tee_dev_kit_dir + "/sdk/include/CA",
+
+    tee_test_root_dir + "/utils",
+    tee_test_root_dir + "/utils/include",
+    tee_test_root_dir + "/utils/public_test",
+    tee_test_root_dir + "/utils/cmd_id",
+    tee_test_root_dir + "/ca/time_api/common",
+
+    "//test/xts/tools/lite/hctest/include",
+    "//third_party/googletest/googletest/include",
+    "//foundation/distributedschedule/samgr_lite/interfaces/kits/samgr",
+  ]
+
+  deps = [
+      "//base/tee/tee_client/frameworks/build/lite:libteec_vendor",
+      "//third_party/bounds_checking_function:libsec_static",
+  ]
+
+  cflags = [ "-Wno-error" ]
+  ldflags = [
+    "-lstdc++",
+    "-lm",
+    "-lpthread",
+  ]
+}
+
+hcpptest_suite("tee_test_arithmetic_api") {
+  suite_name = "acts"
+
+  tee_dev_kit_dir   = "//base/tee/tee_dev_kit"
+  tee_test_root_dir = "//base/tee/tee_os_framework/test/xts"
+  sources = [
+    tee_test_root_dir + "/utils/public_test/public_test.cpp",
+    tee_test_root_dir + "/utils/session_mgr/client_session_mgr.cpp",
+
+    tee_test_root_dir + "/ca/arithmetic_api/src/tee_test_arithmetic_api.cpp",
+  ]
+
+  include_dirs = [
+    tee_dev_kit_dir + "/sdk/include/TA",
+    tee_dev_kit_dir + "/sdk/thirdparty/open_source/libboundscheck/include/libhwsecurec",
+    tee_dev_kit_dir + "/sdk/include/CA",
+
+    tee_test_root_dir + "/utils",
+    tee_test_root_dir + "/utils/include",
+    tee_test_root_dir + "/utils/public_test",
+    tee_test_root_dir + "/utils/cmd_id",
+    tee_test_root_dir + "/ca/arithmetic_api/common",
+
+    "//test/xts/tools/lite/hctest/include",
+    "//third_party/googletest/googletest/include",
+    "//foundation/distributedschedule/samgr_lite/interfaces/kits/samgr",
+  ]
+
+  deps = [
+      "//base/tee/tee_client/frameworks/build/lite:libteec_vendor",
+      "//third_party/bounds_checking_function:libsec_static",
+  ]
+
+  cflags = [ "-Wno-error" ]
+  ldflags = [
+    "-lstdc++",
+    "-lm",
+    "-lpthread",
+  ]
+}
+
+hcpptest_suite("tee_test_crypto_api") {
+  suite_name = "acts"
+
+  tee_dev_kit_dir   = "//base/tee/tee_dev_kit"
+  tee_test_root_dir = "//base/tee/tee_os_framework/test/xts"
+  sources = [
+    tee_test_root_dir + "/utils/public_test/public_test.cpp",
+    tee_test_root_dir + "/utils/session_mgr/client_session_mgr.cpp",
+
+    tee_test_root_dir + "/ca/crypto_api/src/tee_test_crypto_api.cpp",
+    tee_test_root_dir + "/ca/crypto_api/common/common_test.cpp",
+  ]
+
+  include_dirs = [
+    tee_dev_kit_dir + "/sdk/include/TA",
+    tee_dev_kit_dir + "/sdk/thirdparty/open_source/libboundscheck/include/libhwsecurec",
+    tee_dev_kit_dir + "/sdk/include/CA",
+
+    tee_test_root_dir + "/utils",
+    tee_test_root_dir + "/utils/include",
+    tee_test_root_dir + "/utils/public_test",
+    tee_test_root_dir + "/utils/cmd_id",
+    tee_test_root_dir + "/ca/crypto_api/common",
+
+    "//test/xts/tools/lite/hctest/include",
+    "//third_party/googletest/googletest/include",
+    "//foundation/distributedschedule/samgr_lite/interfaces/kits/samgr",
+  ]
+
+  deps = [
+      "//base/tee/tee_client/frameworks/build/lite:libteec_vendor",
+      "//third_party/bounds_checking_function:libsec_static",
+  ]
+
+  cflags = [ "-Wno-error" ]
+  ldflags = [
+    "-lstdc++",
+    "-lm",
+    "-lpthread",
+  ]
+}
+
+hcpptest_suite("tee_test_drv") {
+  suite_name = "acts"
+
+  tee_dev_kit_dir   = "//base/tee/tee_dev_kit"
+  tee_test_root_dir = "//base/tee/tee_os_framework/test/xts"
+  sources = [
+    tee_test_root_dir + "/utils/public_test/public_test.cpp",
+    tee_test_root_dir + "/utils/session_mgr/client_session_mgr.cpp",
+
+    tee_test_root_dir + "/ca/tee_test_drv/src/tee_test_drv.cpp",
+  ]
+
+  include_dirs = [
+    tee_dev_kit_dir + "/sdk/include/TA",
+    tee_dev_kit_dir + "/sdk/thirdparty/open_source/libboundscheck/include/libhwsecurec",
+    tee_dev_kit_dir + "/sdk/include/CA",
+
+    tee_test_root_dir + "/utils",
+    tee_test_root_dir + "/utils/include",
+    tee_test_root_dir + "/utils/public_test",
+    tee_test_root_dir + "/utils/cmd_id",
+    tee_test_root_dir + "/ca/tee_test_drv/include",
+
+    "//test/xts/tools/lite/hctest/include",
+    "//third_party/googletest/googletest/include",
+    "//foundation/distributedschedule/samgr_lite/interfaces/kits/samgr",
+  ]
+
+  deps = [
+      "//base/tee/tee_client/frameworks/build/lite:libteec_vendor",
+      "//third_party/bounds_checking_function:libsec_static",
+  ]
+
+  cflags = [ "-Wno-error" ]
+  ldflags = [
+    "-lstdc++",
+    "-lm",
+    "-lpthread",
+  ]
+}
+
+hcpptest_suite("tee_test_libc_api") {
+  suite_name = "acts"
+
+  tee_dev_kit_dir   = "//base/tee/tee_dev_kit"
+  tee_test_root_dir = "//base/tee/tee_os_framework/test/xts"
+  sources = [
+    tee_test_root_dir + "/utils/public_test/public_test.cpp",
+    tee_test_root_dir + "/utils/session_mgr/client_session_mgr.cpp",
+    tee_test_root_dir + "/ca/libc_api/src/tee_test_libc_api.cpp",
+  ]
+
+  include_dirs = [
+    tee_dev_kit_dir + "/sdk/include/TA",
+    tee_dev_kit_dir + "/sdk/thirdparty/open_source/libboundscheck/include/libhwsecurec",
+    tee_dev_kit_dir + "/sdk/include/CA",
+
+    tee_test_root_dir + "/utils",
+    tee_test_root_dir + "/utils/public_test",
+    tee_test_root_dir + "/utils/cmd_id",
+    tee_test_root_dir + "/utils/include",
+    tee_test_root_dir + "/ca/libc_api/common",
+
+    "//test/xts/tools/lite/hctest/include",
+    "//third_party/googletest/googletest/include",
+    "//foundation/distributedschedule/samgr_lite/interfaces/kits/samgr",
+  ]
+
+  deps = [
+      "//base/tee/tee_client/frameworks/build/lite:libteec_vendor",
+      "//third_party/bounds_checking_function:libsec_static",
+  ]
+
+  cflags = [ "-Wno-error" ]
+  ldflags = [
+    "-lstdc++",
+    "-lm",
+    "-lpthread",
+  ]
+}

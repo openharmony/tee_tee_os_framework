@@ -1,0 +1,5 @@
+CAUTION:
+
+libtee_shared/export.txt and libtee_shared_a32/export.txt are independent,
+when change one of them, should change another one.
+
