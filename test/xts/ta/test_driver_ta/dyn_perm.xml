@@ -1,0 +1,5 @@
+<drv_perm>
+    <drvcall_perm_apply>
+	    <item name="drv_test_module "/>
+    </drvcall_perm_apply>
+</drv_perm>

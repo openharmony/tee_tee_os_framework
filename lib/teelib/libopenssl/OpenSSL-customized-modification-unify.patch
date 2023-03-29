@@ -1,0 +1,627 @@
+Subject: [PATCH] OpenSSL customized modification unify Offering:Huawei
+
+---
+ crypto/evp/c_allc.c         |   1 +
+ crypto/evp/e_sm4.c          | 345 ++++++++++++++++++++++++++++++++++++
+ crypto/objects/obj_dat.h    |  15 +-
+ crypto/objects/obj_mac.num  |   1 +
+ crypto/objects/objects.txt  |   1 +
+ crypto/rand/rand_lib.c      |  20 +++
+ crypto/rand/rand_unix.c     |   6 +
+ fuzz/oids.txt               |   1 +
+ include/crypto/rand.h       |   1 +
+ include/internal/refcount.h |   2 +
+ include/openssl/evp.h       |   1 +
+ include/openssl/evperr.h    |   1 +
+ include/openssl/obj_mac.h   |   5 +
+ 13 files changed, 395 insertions(+), 5 deletions(-)
+
+diff --git a/crypto/evp/c_allc.c b/crypto/evp/c_allc.c
+index 22fdcc409c..1e1f8b82e6 100644
+--- a/crypto/evp/c_allc.c
++++ b/crypto/evp/c_allc.c
+@@ -85,6 +85,7 @@ void openssl_add_all_ciphers_int(void)
+     EVP_add_cipher(EVP_sm4_cfb());
+     EVP_add_cipher(EVP_sm4_ofb());
+     EVP_add_cipher(EVP_sm4_ctr());
++    EVP_add_cipher(EVP_sm4_gcm());
+     EVP_add_cipher_alias(SN_sm4_cbc, "SM4");
+     EVP_add_cipher_alias(SN_sm4_cbc, "sm4");
+ #endif
+diff --git a/crypto/evp/e_sm4.c b/crypto/evp/e_sm4.c
+index fce32794fc..378ddd0564 100644
+--- a/crypto/evp/e_sm4.c
++++ b/crypto/evp/e_sm4.c
+@@ -15,11 +15,29 @@
+ # include <openssl/modes.h>
+ # include "crypto/sm4.h"
+ # include "crypto/evp.h"
++# include "modes_local.h"
++# include "evp_local.h"
+ 
+ typedef struct {
+     SM4_KEY ks;
+ } EVP_SM4_KEY;
+ 
++/* SM4-GCM */
++typedef struct {
++    union {
++        double align;
++        SM4_KEY ks;
++    } ks;                       /* SM4 subkey to use */
++    int key_set;                /* Set if key initialised */
++    int iv_set;                 /* Set if an iv is set */
++    GCM128_CONTEXT gcm;
++    unsigned char *iv;          /* Temporary IV store */
++    int ivlen;                  /* IV length */
++    int taglen;
++    int iv_gen;                 /* It is OK to generate IVs */
++    int tls_aad_len;            /* TLS AAD length */
++} EVP_SM4_GCM_CTX;
++
+ static int sm4_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
+                         const unsigned char *iv, int enc)
+ {
+@@ -97,4 +115,331 @@ const EVP_CIPHER *EVP_sm4_ctr(void)
+     return &sm4_ctr_mode;
+ }
+ 
++/* increment counter (64-bit int) by 1 */
++static void ctr64_inc(unsigned char *counter)
++{
++    int n = 8;
++    unsigned char c;
++
++    do {
++        --n;
++        c = counter[n];
++        ++c;
++        counter[n] = c;
++        if (c)
++            return;
++    } while (n);
++}
++
++/* SM4-GCM */
++static int sm4_gcm_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
++                            const unsigned char *iv, int enc)
++{
++    int ret;
++    EVP_SM4_GCM_CTX *gctx = EVP_C_DATA(EVP_SM4_GCM_CTX,ctx);
++ 
++    if (!iv && !key)
++        return 1;
++    if (key) {
++        (void)SM4_set_key(key, &gctx->ks.ks);
++        CRYPTO_gcm128_init(&gctx->gcm, &gctx->ks, (block128_f) SM4_encrypt);
++
++        /*
++         * If we have an iv can set it directly, otherwise use saved IV.
++         */
++        if (iv == NULL && gctx->iv_set)
++            iv = gctx->iv;
++        if (iv) {
++            CRYPTO_gcm128_setiv(&gctx->gcm, iv, gctx->ivlen);
++            gctx->iv_set = 1;
++        }
++        gctx->key_set = 1;
++    } else {
++        /* If key set use IV, otherwise copy */
++        if (gctx->key_set)
++            CRYPTO_gcm128_setiv(&gctx->gcm, iv, gctx->ivlen);
++        else
++            memcpy(gctx->iv, iv, gctx->ivlen);
++        gctx->iv_set = 1;
++        gctx->iv_gen = 0;
++    }
++    return 1;
++}
++
++static int sm4_gcm_ctrl(EVP_CIPHER_CTX *c, int type, int arg, void *ptr)
++{
++    EVP_SM4_GCM_CTX *gctx = EVP_C_DATA(EVP_SM4_GCM_CTX,c);
++
++    switch (type) {
++    case EVP_CTRL_INIT:
++        gctx->key_set = 0;
++        gctx->iv_set = 0;
++        gctx->ivlen = EVP_CIPHER_iv_length(c->cipher);
++        gctx->iv = EVP_CIPHER_CTX_iv_noconst(c);
++        gctx->taglen = -1;
++        gctx->iv_gen = 0;
++        gctx->tls_aad_len = -1;
++        return 1;
++
++    case EVP_CTRL_AEAD_SET_IVLEN:
++        if (arg <= 0)
++            return 0;
++        /* Allocate memory for IV if needed */
++        if ((arg > EVP_MAX_IV_LENGTH) && (arg > gctx->ivlen)) {
++            if (gctx->iv != EVP_CIPHER_CTX_iv_noconst(c))
++                OPENSSL_free(gctx->iv);
++            if ((gctx->iv = OPENSSL_malloc(arg)) == NULL) {
++                EVPerr(EVP_F_SM4_GCM_CTRL, ERR_R_MALLOC_FAILURE);
++                return 0;
++            }
++        }
++        gctx->ivlen = arg;
++        return 1;
++
++    case EVP_CTRL_GET_IVLEN:
++        *(int *)ptr = gctx->ivlen;
++        return 1;
++
++    case EVP_CTRL_AEAD_SET_TAG:
++        if (arg <= 0 || arg > 16 || EVP_CIPHER_CTX_encrypting(c))
++            return 0;
++        memcpy(EVP_CIPHER_CTX_buf_noconst(c), ptr, arg);
++        gctx->taglen = arg;
++        return 1;
++
++    case EVP_CTRL_AEAD_GET_TAG:
++        if (arg <= 0 || arg > 16 || !EVP_CIPHER_CTX_encrypting(c)
++            || gctx->taglen < 0)
++            return 0;
++        memcpy(ptr, EVP_CIPHER_CTX_buf_noconst(c), arg);
++        return 1;
++ 
++    case EVP_CTRL_GCM_SET_IV_FIXED:
++        /* Special case: -1 length restores whole IV */
++        if (arg == -1) {
++            memcpy(gctx->iv, ptr, gctx->ivlen);
++            gctx->iv_gen = 1;
++            return 1;
++        }
++        /*
++         * Fixed field must be at least 4 bytes and invocation field at least
++         * 8.
++         */
++        if ((arg < 4) || (gctx->ivlen - arg) < 8)
++            return 0;
++        if (arg)
++            memcpy(gctx->iv, ptr, arg);
++        if (EVP_CIPHER_CTX_encrypting(c)
++            && RAND_bytes(gctx->iv + arg, gctx->ivlen - arg) <= 0)
++            return 0;
++        gctx->iv_gen = 1;
++        return 1;
++
++    case EVP_CTRL_GCM_IV_GEN:
++        if (gctx->iv_gen == 0 || gctx->key_set == 0)
++            return 0;
++        CRYPTO_gcm128_setiv(&gctx->gcm, gctx->iv, gctx->ivlen);
++        if (arg <= 0 || arg > gctx->ivlen)
++            arg = gctx->ivlen;
++        memcpy(ptr, gctx->iv + gctx->ivlen - arg, arg);
++        /*
++         * Invocation field will be at least 8 bytes in size and so no need
++         * to check wrap around or increment more than last 8 bytes.
++         */
++        ctr64_inc(gctx->iv + gctx->ivlen - 8);
++        gctx->iv_set = 1;
++        return 1;
++
++    case EVP_CTRL_GCM_SET_IV_INV:
++        if (gctx->iv_gen == 0 || gctx->key_set == 0
++            || EVP_CIPHER_CTX_encrypting(c))
++            return 0;
++        memcpy(gctx->iv + gctx->ivlen - arg, ptr, arg);
++        CRYPTO_gcm128_setiv(&gctx->gcm, gctx->iv, gctx->ivlen);
++        gctx->iv_set = 1;
++        return 1;
++
++    case EVP_CTRL_AEAD_TLS1_AAD:
++        /* Save the AAD for later use */
++        if (arg != EVP_AEAD_TLS1_AAD_LEN)
++            return 0;
++        memcpy(EVP_CIPHER_CTX_buf_noconst(c), ptr, arg);
++        gctx->tls_aad_len = arg;
++        {
++            unsigned int len =
++                EVP_CIPHER_CTX_buf_noconst(c)[arg - 2] << 8
++                | EVP_CIPHER_CTX_buf_noconst(c)[arg - 1];
++            /* Correct length for explicit IV */
++            if (len < EVP_GCM_TLS_EXPLICIT_IV_LEN)
++                return 0;
++            len -= EVP_GCM_TLS_EXPLICIT_IV_LEN;
++            /* If decrypting correct for tag too */
++            if (!EVP_CIPHER_CTX_encrypting(c)) {
++                if (len < EVP_GCM_TLS_TAG_LEN)
++                    return 0;
++                len -= EVP_GCM_TLS_TAG_LEN;
++            }
++            EVP_CIPHER_CTX_buf_noconst(c)[arg - 2] = len >> 8;
++            EVP_CIPHER_CTX_buf_noconst(c)[arg - 1] = len & 0xff;
++        }
++        /* Extra padding: tag appended to record */
++        return EVP_GCM_TLS_TAG_LEN;
++
++    case EVP_CTRL_COPY:
++        {
++            EVP_CIPHER_CTX *out = ptr;
++            EVP_SM4_GCM_CTX *gctx_out = EVP_C_DATA(EVP_SM4_GCM_CTX,out);
++            if (gctx->gcm.key) {
++                if (gctx->gcm.key != &gctx->ks)
++                    return 0;
++                gctx_out->gcm.key = &gctx_out->ks;
++            }
++            if (gctx->iv == EVP_CIPHER_CTX_iv_noconst(c))
++                gctx_out->iv = EVP_CIPHER_CTX_iv_noconst(out);
++            else {
++                if ((gctx_out->iv = OPENSSL_malloc(gctx->ivlen)) == NULL) {
++                    EVPerr(EVP_F_SM4_GCM_CTRL, ERR_R_MALLOC_FAILURE);
++                    return 0;
++                }
++                memcpy(gctx_out->iv, gctx->iv, gctx->ivlen);
++            }
++            return 1;
++        }
++
++    default:
++        return -1;
++    }
++}
++ 
++static int sm4_gcm_tls_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
++                              const unsigned char *in, size_t len)
++{
++    EVP_SM4_GCM_CTX *gctx = EVP_C_DATA(EVP_SM4_GCM_CTX,ctx);
++    int rv = -1;
++
++    /* Encrypt/decrypt must be performed in place */
++    if (out != in
++        || len < (EVP_GCM_TLS_EXPLICIT_IV_LEN + EVP_GCM_TLS_TAG_LEN))
++        return -1;
++    /*
++     * Set IV from start of buffer or generate IV and write to start of
++     * buffer.
++     */
++    if (EVP_CIPHER_CTX_ctrl(ctx, EVP_CIPHER_CTX_encrypting(ctx) ?
++                            EVP_CTRL_GCM_IV_GEN : EVP_CTRL_GCM_SET_IV_INV,
++                            EVP_GCM_TLS_EXPLICIT_IV_LEN, out) <= 0)
++        goto err;
++    /* Use saved AAD */
++    if (CRYPTO_gcm128_aad(&gctx->gcm, EVP_CIPHER_CTX_buf_noconst(ctx),
++                          gctx->tls_aad_len))
++        goto err;
++    /* Fix buffer and length to point to payload */
++    in += EVP_GCM_TLS_EXPLICIT_IV_LEN;
++    out += EVP_GCM_TLS_EXPLICIT_IV_LEN;
++    len -= EVP_GCM_TLS_EXPLICIT_IV_LEN + EVP_GCM_TLS_TAG_LEN;
++    if (EVP_CIPHER_CTX_encrypting(ctx)) {
++        /* Encrypt payload */
++        if (CRYPTO_gcm128_encrypt(&gctx->gcm, in, out, len))
++            goto err;
++        out += len;
++        /* Finally write tag */
++        CRYPTO_gcm128_tag(&gctx->gcm, out, EVP_GCM_TLS_TAG_LEN);
++        rv = len + EVP_GCM_TLS_EXPLICIT_IV_LEN + EVP_GCM_TLS_TAG_LEN;
++    } else {
++        /* Decrypt */
++        if (CRYPTO_gcm128_decrypt(&gctx->gcm, in, out, len))
++            goto err;
++        /* Retrieve tag */
++        CRYPTO_gcm128_tag(&gctx->gcm, EVP_CIPHER_CTX_buf_noconst(ctx),
++                          EVP_GCM_TLS_TAG_LEN);
++        /* If tag mismatch wipe buffer */
++        if (CRYPTO_memcmp(EVP_CIPHER_CTX_buf_noconst(ctx), in + len,
++                          EVP_GCM_TLS_TAG_LEN)) {
++            OPENSSL_cleanse(out, len);
++            goto err;
++        }
++        rv = len;
++    }
++
++ err:
++    gctx->iv_set = 0;
++    gctx->tls_aad_len = -1;
++    return rv;
++}
++
++static int sm4_gcm_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
++                          const unsigned char *in, size_t len)
++{
++    EVP_SM4_GCM_CTX *gctx = EVP_C_DATA(EVP_SM4_GCM_CTX,ctx);
++
++    /* If not set up, return error */
++    if (!gctx->key_set)
++        return -1;
++
++    if (gctx->tls_aad_len >= 0)
++        return sm4_gcm_tls_cipher(ctx, out, in, len);
++
++    if (!gctx->iv_set)
++        return -1;
++    if (in) {
++        if (out == NULL) {
++            if (CRYPTO_gcm128_aad(&gctx->gcm, in, len))
++                return -1;
++        } else if (EVP_CIPHER_CTX_encrypting(ctx)) {
++            if (CRYPTO_gcm128_encrypt(&gctx->gcm, in, out, len))
++                return -1;
++        } else {
++            if (CRYPTO_gcm128_decrypt(&gctx->gcm, in, out, len))
++                return -1;
++        }
++        return len;
++    }
++    if (!EVP_CIPHER_CTX_encrypting(ctx)) {
++        if (gctx->taglen < 0)
++            return -1;
++        if (CRYPTO_gcm128_finish(&gctx->gcm,
++                                 EVP_CIPHER_CTX_buf_noconst(ctx),
++                                 gctx->taglen) != 0)
++            return -1;
++        gctx->iv_set = 0;
++        return 0;
++    }
++    CRYPTO_gcm128_tag(&gctx->gcm, EVP_CIPHER_CTX_buf_noconst(ctx), 16);
++    gctx->taglen = 16;
++    /* Don't reuse the IV */
++    gctx->iv_set = 0;
++    return 0;
++}
++
++static int sm4_gcm_cleanup(EVP_CIPHER_CTX *ctx)
++{
++    EVP_SM4_GCM_CTX *gctx = EVP_C_DATA(EVP_SM4_GCM_CTX, ctx);
++
++    if (gctx->iv != EVP_CIPHER_CTX_iv_noconst(ctx))
++        OPENSSL_free(gctx->iv);
++
++    return 1;
++}
++ 
++#define SM4_AUTH_FLAGS  (EVP_CIPH_FLAG_DEFAULT_ASN1 \
++                          | EVP_CIPH_CUSTOM_IV | EVP_CIPH_FLAG_CUSTOM_CIPHER \
++                          | EVP_CIPH_ALWAYS_CALL_INIT | EVP_CIPH_CTRL_INIT \
++                          | EVP_CIPH_CUSTOM_COPY | EVP_CIPH_FLAG_AEAD_CIPHER \
++                          | EVP_CIPH_CUSTOM_IV_LENGTH)
++
++static const EVP_CIPHER sm4_gcm_mode = {
++    NID_sm4_gcm, 1, 16, 12,
++    SM4_AUTH_FLAGS|EVP_CIPH_GCM_MODE,
++    sm4_gcm_init_key,
++    sm4_gcm_cipher,
++    sm4_gcm_cleanup,
++    sizeof(EVP_SM4_GCM_CTX),
++    NULL, NULL, sm4_gcm_ctrl, NULL
++};
++ 
++const EVP_CIPHER *EVP_sm4_gcm(void)
++{
++    return &sm4_gcm_mode;
++}
++
+ #endif
+diff --git a/crypto/objects/obj_dat.h b/crypto/objects/obj_dat.h
+index 63bf69e443..7fa0373f3a 100644
+--- a/crypto/objects/obj_dat.h
++++ b/crypto/objects/obj_dat.h
+@@ -10,7 +10,7 @@
+  */
+ 
+ /* Serialized OID's */
+-static const unsigned char so[7762] = {
++static const unsigned char so[7770] = {
+     0x2A,0x86,0x48,0x86,0xF7,0x0D,                 /* [    0] OBJ_rsadsi */
+     0x2A,0x86,0x48,0x86,0xF7,0x0D,0x01,            /* [    6] OBJ_pkcs */
+     0x2A,0x86,0x48,0x86,0xF7,0x0D,0x02,0x02,       /* [   13] OBJ_md2 */
+@@ -1076,9 +1076,10 @@ static const unsigned char so[7762] = {
+     0x2A,0x85,0x03,0x07,0x01,0x02,0x01,0x01,0x04,  /* [ 7736] OBJ_id_tc26_gost_3410_2012_256_paramSetD */
+     0x2A,0x86,0x48,0x86,0xF7,0x0D,0x02,0x0C,       /* [ 7745] OBJ_hmacWithSHA512_224 */
+     0x2A,0x86,0x48,0x86,0xF7,0x0D,0x02,0x0D,       /* [ 7753] OBJ_hmacWithSHA512_256 */
++	0x2A,0x81,0x1C,0xCF,0x55,0x01,0x68,0x08,       /* [ 7761] OBJ_sm4_gcm */
+ };
+ 
+-#define NUM_NID 1195
++#define NUM_NID 1196
+ static const ASN1_OBJECT nid_objs[NUM_NID] = {
+     {"UNDEF", "undefined", NID_undef},
+     {"rsadsi", "RSA Data Security, Inc.", NID_rsadsi, 6, &so[0]},
+@@ -2275,9 +2276,10 @@ static const ASN1_OBJECT nid_objs[NUM_NID] = {
+     {"magma-mac", "magma-mac", NID_magma_mac},
+     {"hmacWithSHA512-224", "hmacWithSHA512-224", NID_hmacWithSHA512_224, 8, &so[7745]},
+     {"hmacWithSHA512-256", "hmacWithSHA512-256", NID_hmacWithSHA512_256, 8, &so[7753]},
++	{"SM4-GCM", "sm4-gcm", NID_sm4_gcm, 8, &so[7761]},
+ };
+ 
+-#define NUM_SN 1186
++#define NUM_SN 1187
+ static const unsigned int sn_objs[NUM_SN] = {
+      364,    /* "AD_DVCS" */
+      419,    /* "AES-128-CBC" */
+@@ -2550,6 +2552,7 @@ static const unsigned int sn_objs[NUM_SN] = {
+     1138,    /* "SM4-CFB8" */
+     1139,    /* "SM4-CTR" */
+     1133,    /* "SM4-ECB" */
++	1195,    /* "SM4-GCM" */
+     1135,    /* "SM4-OFB" */
+      188,    /* "SMIME" */
+      167,    /* "SMIME-CAPS" */
+@@ -3467,7 +3470,7 @@ static const unsigned int sn_objs[NUM_SN] = {
+     1093,    /* "x509ExtAdmission" */
+ };
+ 
+-#define NUM_LN 1186
++#define NUM_LN 1187
+ static const unsigned int ln_objs[NUM_LN] = {
+      363,    /* "AD Time Stamping" */
+      405,    /* "ANSI X9.62" */
+@@ -4608,6 +4611,7 @@ static const unsigned int ln_objs[NUM_LN] = {
+     1138,    /* "sm4-cfb8" */
+     1139,    /* "sm4-ctr" */
+     1133,    /* "sm4-ecb" */
++	1195,    /* "SM4-GCM" */
+     1135,    /* "sm4-ofb" */
+       16,    /* "stateOrProvinceName" */
+      660,    /* "streetAddress" */
+@@ -4657,7 +4661,7 @@ static const unsigned int ln_objs[NUM_LN] = {
+      125,    /* "zlib compression" */
+ };
+ 
+-#define NUM_OBJ 1071
++#define NUM_OBJ 1072
+ static const unsigned int obj_objs[NUM_OBJ] = {
+        0,    /* OBJ_undef                        0 */
+      181,    /* OBJ_iso                          1 */
+@@ -5124,6 +5128,7 @@ static const unsigned int obj_objs[NUM_OBJ] = {
+     1136,    /* OBJ_sm4_cfb1                     1 2 156 10197 1 104 5 */
+     1138,    /* OBJ_sm4_cfb8                     1 2 156 10197 1 104 6 */
+     1139,    /* OBJ_sm4_ctr                      1 2 156 10197 1 104 7 */
++	1195,    /* OBJ_sm4_gcm                      1 2 156 10197 1 104 8 */
+     1172,    /* OBJ_sm2                          1 2 156 10197 1 301 */
+     1143,    /* OBJ_sm3                          1 2 156 10197 1 401 */
+     1144,    /* OBJ_sm3WithRSAEncryption         1 2 156 10197 1 504 */
+diff --git a/crypto/objects/obj_mac.num b/crypto/objects/obj_mac.num
+index 1b6a9c61a1..7905885e03 100644
+--- a/crypto/objects/obj_mac.num
++++ b/crypto/objects/obj_mac.num
+@@ -1192,3 +1192,4 @@ magma_cfb		1191
+ magma_mac		1192
+ hmacWithSHA512_224		1193
+ hmacWithSHA512_256		1194
++sm4_gcm     1195
+diff --git a/crypto/objects/objects.txt b/crypto/objects/objects.txt
+index c49d4c568b..340d7a476b 100644
+--- a/crypto/objects/objects.txt
++++ b/crypto/objects/objects.txt
+@@ -1518,6 +1518,7 @@ sm-scheme 104 4         : SM4-CFB             : sm4-cfb
+ sm-scheme 104 5         : SM4-CFB1            : sm4-cfb1
+ sm-scheme 104 6         : SM4-CFB8            : sm4-cfb8
+ sm-scheme 104 7         : SM4-CTR             : sm4-ctr
++sm-scheme 104 8         : SM4-GCM             : sm4-gcm
+ 
+ # There is no OID that just denotes "HMAC" oddly enough...
+ 
+diff --git a/crypto/rand/rand_lib.c b/crypto/rand/rand_lib.c
+index 5c72fad8ca..bd0084149a 100644
+--- a/crypto/rand/rand_lib.c
++++ b/crypto/rand/rand_lib.c
+@@ -113,6 +113,26 @@ size_t rand_acquire_entropy_from_cpu(RAND_POOL *pool)
+ }
+ #endif
+ 
++#ifdef OPENSSL_RAND_SEED_ENTROPY_CUSTOMER
++size_t rand_acquire_entropy_from_customer(RAND_POOL *pool)
++{
++    size_t bytes_needed;
++    unsigned char *buffer;
++    int ret;
++
++    bytes_needed = rand_pool_bytes_needed(pool, 1 /*entropy_factor*/);
++    if (bytes_needed > 0) {
++        buffer = rand_pool_add_begin(pool, bytes_needed);
++        if (buffer != NULL) {
++            ret = OPENSSL_RAND_SEED_ENTROPY_CUSTOMER(buffer, bytes_needed);
++            if (ret == 0)
++                rand_pool_add_end(pool, bytes_needed, 8 * bytes_needed);
++        }
++    }
++
++    return rand_pool_entropy_available(pool);
++}
++#endif
+ 
+ /*
+  * Implements the get_entropy() callback (see RAND_DRBG_set_callbacks())
+diff --git a/crypto/rand/rand_unix.c b/crypto/rand/rand_unix.c
+index 0f4525106a..e6ef61c771 100644
+--- a/crypto/rand/rand_unix.c
++++ b/crypto/rand/rand_unix.c
+@@ -637,6 +637,12 @@ size_t rand_pool_acquire_entropy(RAND_POOL *pool)
+ #  else
+     size_t entropy_available;
+ 
++#   if defined(OPENSSL_RAND_SEED_ENTROPY_CUSTOMER)
++    entropy_available = rand_acquire_entropy_from_customer(pool);
++    if (entropy_available > 0)
++        return entropy_available;
++#   endif
++
+ #   if defined(OPENSSL_RAND_SEED_GETRANDOM)
+     {
+         size_t bytes_needed;
+diff --git a/fuzz/oids.txt b/fuzz/oids.txt
+index eda55e4e79..48ff299eeb 100644
+--- a/fuzz/oids.txt
++++ b/fuzz/oids.txt
+@@ -1063,3 +1063,4 @@ OBJ_id_tc26_gost_3410_2012_256_paramSetC="\x2A\x85\x03\x07\x01\x02\x01\x01\x03"
+ OBJ_id_tc26_gost_3410_2012_256_paramSetD="\x2A\x85\x03\x07\x01\x02\x01\x01\x04"
+ OBJ_hmacWithSHA512_224="\x2A\x86\x48\x86\xF7\x0D\x02\x0C"
+ OBJ_hmacWithSHA512_256="\x2A\x86\x48\x86\xF7\x0D\x02\x0D"
++OBJ_sm4_gcm="\x2A\x81\x1C\xCF\x55\x01\x68\x08"
+diff --git a/include/crypto/rand.h b/include/crypto/rand.h
+index 9e02bb0e50..b315e22133 100644
+--- a/include/crypto/rand.h
++++ b/include/crypto/rand.h
+@@ -40,6 +40,7 @@ void drbg_delete_thread_state(void);
+ /* Hardware-based seeding functions. */
+ size_t rand_acquire_entropy_from_tsc(RAND_POOL *pool);
+ size_t rand_acquire_entropy_from_cpu(RAND_POOL *pool);
++size_t rand_acquire_entropy_from_customer(RAND_POOL *pool);
+ 
+ /* DRBG entropy callbacks. */
+ size_t rand_drbg_get_entropy(RAND_DRBG *drbg,
+diff --git a/include/internal/refcount.h b/include/internal/refcount.h
+index 8fb536eadc..0d309c72e6 100644
+--- a/include/internal/refcount.h
++++ b/include/internal/refcount.h
+@@ -61,12 +61,14 @@ typedef int CRYPTO_REF_COUNT;
+ 
+ static __inline__ int CRYPTO_UP_REF(int *val, int *ret, void *lock)
+ {
++    (void)lock;
+     *ret = __atomic_fetch_add(val, 1, __ATOMIC_RELAXED) + 1;
+     return 1;
+ }
+ 
+ static __inline__ int CRYPTO_DOWN_REF(int *val, int *ret, void *lock)
+ {
++    (void)lock;
+     *ret = __atomic_fetch_sub(val, 1, __ATOMIC_RELAXED) - 1;
+     if (*ret == 0)
+         __atomic_thread_fence(__ATOMIC_ACQUIRE);
+diff --git a/include/openssl/evp.h b/include/openssl/evp.h
+index a411f3f2f9..2f0e6c693d 100644
+--- a/include/openssl/evp.h
++++ b/include/openssl/evp.h
+@@ -937,6 +937,7 @@ const EVP_CIPHER *EVP_sm4_cfb128(void);
+ #  define EVP_sm4_cfb EVP_sm4_cfb128
+ const EVP_CIPHER *EVP_sm4_ofb(void);
+ const EVP_CIPHER *EVP_sm4_ctr(void);
++const EVP_CIPHER *EVP_sm4_gcm(void);
+ # endif
+ 
+ # if OPENSSL_API_COMPAT < 0x10100000L
+diff --git a/include/openssl/evperr.h b/include/openssl/evperr.h
+index b4ea90ae9d..8d89ecb008 100644
+--- a/include/openssl/evperr.h
++++ b/include/openssl/evperr.h
+@@ -123,6 +123,7 @@ int ERR_load_EVP_strings(void);
+ # define EVP_F_R_32_12_16_INIT_KEY                        242
+ # define EVP_F_S390X_AES_GCM_CTRL                         201
+ # define EVP_F_UPDATE                                     173
++# define EVP_F_SM4_GCM_CTRL                               231
+ 
+ /*
+  * EVP reason codes.
+diff --git a/include/openssl/obj_mac.h b/include/openssl/obj_mac.h
+index 53516a06c6..e14c9c638f 100644
+--- a/include/openssl/obj_mac.h
++++ b/include/openssl/obj_mac.h
+@@ -4767,6 +4767,11 @@
+ #define NID_sm4_ctr             1139
+ #define OBJ_sm4_ctr             OBJ_sm_scheme,104L,7L
+ 
++#define SN_sm4_gcm              "SM4-GCM"
++#define LN_sm4_gcm              "sm4-gcm"
++#define NID_sm4_gcm             1195
++#define OBJ_sm4_gcm             OBJ_sm_scheme,104L,8L
++
+ #define SN_hmac         "HMAC"
+ #define LN_hmac         "hmac"
+ #define NID_hmac                855
+-- 
+2.17.1
+

@@ -1,0 +1,19 @@
+#
+# Copyright (C) 2022 Huawei Technologies Co., Ltd.
+# Licensed under the Mulan PSL v2.
+# You can use this software according to the terms and conditions of the Mulan PSL v2.
+# You may obtain a copy of Mulan PSL v2 at:
+#     http://license.coscl.org.cn/MulanPSL2
+# THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT FOR A PARTICULAR
+# PURPOSE.
+# See the Mulan PSL v2 for more details.
+#
+
+add_subdirectory(sample)
+add_subdirectory(client_api)
+add_subdirectory(tcf_api)
+add_subdirectory(tee_test_drv)
+add_subdirectory(arithmetic_api)
+add_subdirectory(time_api)
+add_subdirectory(crypto_api)

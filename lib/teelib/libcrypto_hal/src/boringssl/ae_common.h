@@ -1,0 +1,53 @@
+/*
+ * Copyright (C) 2022 Huawei Technologies Co., Ltd.
+ * Licensed under the Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *     http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT FOR A PARTICULAR
+ * PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
+#ifndef _AE_COMMON_H
+#define _AE_COMMON_H
+
+#include <openssl/evp.h>
+#include <crypto_driver_adaptor.h>
+
+typedef const EVP_CIPHER *(*evp_cipher_func)(void);
+struct aes_init_oper {
+    uint32_t algorithm;
+    uint32_t key_size;
+    evp_cipher_func aes_cipher;
+};
+
+static struct aes_init_oper g_aes_des_init_oeration[] = {
+    { CRYPTO_TYPE_AES_ECB_NOPAD, AES_TEN_ROUNDS_KEY_SIZE, EVP_aes_128_ecb },
+    { CRYPTO_TYPE_AES_ECB_NOPAD, AES_TWELVE_ROUNDS_KEY_SIZE, EVP_aes_192_ecb },
+    { CRYPTO_TYPE_AES_ECB_NOPAD, AES_FOURTEEN_ROUNDS_KEY_SIZE, EVP_aes_256_ecb },
+    { CRYPTO_TYPE_AES_CBC_NOPAD, AES_TEN_ROUNDS_KEY_SIZE, EVP_aes_128_cbc },
+    { CRYPTO_TYPE_AES_CBC_NOPAD, AES_TWELVE_ROUNDS_KEY_SIZE, EVP_aes_192_cbc },
+    { CRYPTO_TYPE_AES_CBC_NOPAD, AES_FOURTEEN_ROUNDS_KEY_SIZE, EVP_aes_256_cbc },
+    { CRYPTO_TYPE_AES_CTR, AES_TEN_ROUNDS_KEY_SIZE, EVP_aes_128_ctr },
+    { CRYPTO_TYPE_AES_CTR, AES_TWELVE_ROUNDS_KEY_SIZE, EVP_aes_192_ctr },
+    { CRYPTO_TYPE_AES_CTR, AES_FOURTEEN_ROUNDS_KEY_SIZE, EVP_aes_256_ctr },
+    { CRYPTO_TYPE_AES_CBC_MAC_NOPAD, AES_TEN_ROUNDS_KEY_SIZE, EVP_aes_128_cbc },
+    { CRYPTO_TYPE_AES_CBC_MAC_NOPAD, AES_TWELVE_ROUNDS_KEY_SIZE, EVP_aes_192_cbc },
+    { CRYPTO_TYPE_AES_CBC_MAC_NOPAD, AES_FOURTEEN_ROUNDS_KEY_SIZE, EVP_aes_256_cbc },
+    { CRYPTO_TYPE_AES_CCM, AES_TEN_ROUNDS_KEY_SIZE, EVP_aes_128_ccm },
+    { CRYPTO_TYPE_AES_CCM, AES_TWELVE_ROUNDS_KEY_SIZE, EVP_aes_192_ccm },
+    { CRYPTO_TYPE_AES_CCM, AES_FOURTEEN_ROUNDS_KEY_SIZE, EVP_aes_256_ccm },
+    { CRYPTO_TYPE_AES_GCM, AES_TEN_ROUNDS_KEY_SIZE, EVP_aes_128_gcm },
+    { CRYPTO_TYPE_AES_GCM, AES_TWELVE_ROUNDS_KEY_SIZE, EVP_aes_192_gcm },
+    { CRYPTO_TYPE_AES_GCM, AES_FOURTEEN_ROUNDS_KEY_SIZE, EVP_aes_256_gcm },
+    { CRYPTO_TYPE_SM4_GCM, SM4_GCM_KEY_SIZE, EVP_sm4_gcm },
+    { CRYPTO_TYPE_AES_XTS, AES_MAX_KEY_SIZE, EVP_aes_256_xts },
+    { CRYPTO_TYPE_AES_ECB_PKCS5, AES_TEN_ROUNDS_KEY_SIZE, EVP_aes_128_ecb },
+    { CRYPTO_TYPE_AES_ECB_PKCS5, AES_TWELVE_ROUNDS_KEY_SIZE, EVP_aes_192_ecb },
+    { CRYPTO_TYPE_AES_ECB_PKCS5, AES_FOURTEEN_ROUNDS_KEY_SIZE, EVP_aes_256_ecb },
+    { CRYPTO_TYPE_AES_CBC_PKCS5, AES_TEN_ROUNDS_KEY_SIZE, EVP_aes_128_cbc },
+    { CRYPTO_TYPE_AES_CBC_PKCS5, AES_TWELVE_ROUNDS_KEY_SIZE, EVP_aes_192_cbc },
+    { CRYPTO_TYPE_AES_CBC_PKCS5, AES_FOURTEEN_ROUNDS_KEY_SIZE, EVP_aes_256_cbc },
+};
+#endif
