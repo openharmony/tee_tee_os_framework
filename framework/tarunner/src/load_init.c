@@ -29,13 +29,13 @@ int32_t get_priority(void)
     if (prio_var != NULL) {
         errno = 0;
         priority = strtol(prio_var, NULL, 10); /* Convert priority to decimal */
-        if ((errno != 0) || (priority < HM_PRIO_TEE_MIN) || (priority > HM_PRIO_TEE_MAX)) {
-            tlogw("bad priority set, use default HM_PRIO_TEE_TA\n");
-            priority = HM_PRIO_TEE_TA;
+        if ((errno != 0) || (priority < PRIO_TEE_MIN) || (priority > PRIO_TEE_MAX)) {
+            tlogw("bad priority set, use default PRIO_TEE_TA\n");
+            priority = PRIO_TEE_TA;
         }
     } else {
-        tlogw("no priority set, use default HM_PRIO_TEE_TA\n");
-        priority = HM_PRIO_TEE_TA;
+        tlogw("no priority set, use default PRIO_TEE_TA\n");
+        priority = PRIO_TEE_TA;
     }
 
     return priority;

@@ -11,23 +11,23 @@
  */
 #include "gtask_config.h"
 #include "tee_config.h"
-#include <priorities.h> /* for HM_PRIO_TEE_* */
+#include <priorities.h>
 
 const struct task_info_st g_teeos_builtin_task_infos[] = {
 #ifdef TEE_SUPPORT_SSA_64BIT
-    { TEE_SERVICE_SSA, SSA_SERVICE_NAME, "/ssa.elf", HM_PRIO_TEE_AGENT, true },
+    { TEE_SERVICE_SSA, SSA_SERVICE_NAME, "/ssa.elf", PRIO_TEE_AGENT, true },
 #elif TEE_SUPPORT_SSA_32BIT
-    { TEE_SERVICE_SSA, SSA_SERVICE_NAME, "/ssa.elf", HM_PRIO_TEE_AGENT, false },
+    { TEE_SERVICE_SSA, SSA_SERVICE_NAME, "/ssa.elf", PRIO_TEE_AGENT, false },
 #endif
 #ifdef TEE_SUPPORT_HUK_SERVICE_64BIT
-    { TEE_SERVICE_HUK, HUK_TASK_NAME, "/huk_service.elf", HM_PRIO_TEE_AGENT, true },
+    { TEE_SERVICE_HUK, HUK_TASK_NAME, "/huk_service.elf", PRIO_TEE_AGENT, true },
 #elif TEE_SUPPORT_HUK_SERVICE_32BIT
-    { TEE_SERVICE_HUK, HUK_TASK_NAME, "/huk_service.elf", HM_PRIO_TEE_AGENT, false },
+    { TEE_SERVICE_HUK, HUK_TASK_NAME, "/huk_service.elf", PRIO_TEE_AGENT, false },
 #endif
 #ifdef TEE_SUPPORT_PERM_64BIT
-    {TEE_SERVICE_PERM, PERM_SERVICE_NAME, "/permission_service.elf", HM_PRIO_TEE_AGENT, true},
+    {TEE_SERVICE_PERM, PERM_SERVICE_NAME, "/permission_service.elf", PRIO_TEE_AGENT, true},
 #elif TEE_SUPPORT_PERM_32BIT
-    {TEE_SERVICE_PERM, PERM_SERVICE_NAME, "/permission_service.elf", HM_PRIO_TEE_AGENT, false},
+    {TEE_SERVICE_PERM, PERM_SERVICE_NAME, "/permission_service.elf", PRIO_TEE_AGENT, false},
 #endif
 };
 

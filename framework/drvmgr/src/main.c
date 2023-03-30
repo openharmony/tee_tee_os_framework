@@ -54,7 +54,7 @@ int32_t main(int32_t argc __attribute__((unused)), char *argv[] __attribute__((u
         exit(ret);
     }
 
-    ret = set_priority(HM_PRIO_TEE_DRV);
+    ret = set_priority(PRIO_TEE_DRV);
     if (ret < 0) {
         tloge("failed to set drv server priority\n");
         exit(ret);

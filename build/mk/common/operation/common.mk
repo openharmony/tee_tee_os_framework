@@ -48,7 +48,7 @@ flags += -fPIC -fstack-protector-strong
 flags += -fno-omit-frame-pointer -fno-short-enums
 flags += -include$(PREBUILD_DIR)/headers/platautoconf.h
 flags += -DARM_PAE=1
-flags += -DARCH_ARM -DAARCH64 -D__KERNEL_64__ -DARMV8_A -DARM_CORTEX_A53 -DDEBUG -DHM_DEBUG_KERNEL -DNDEBUG
+flags += -DARCH_ARM -DAARCH64 -D__KERNEL_64__ -DARMV8_A -DARM_CORTEX_A53 -DDEBUG -DNDEBUG
 flags += -DHAVE_AUTOCONF
 flags += -DVFMW_EXTRA_TYPE_DEFINE -DENV_SOS_KERNEL
 ifeq ($(CONFIG_UBSAN),y)

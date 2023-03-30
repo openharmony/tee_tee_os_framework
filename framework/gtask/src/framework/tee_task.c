@@ -18,8 +18,8 @@
 
 #include <stdio.h>
 #include <elf.h>
-#include <sys/fileio.h>
-#include <sys/priorities.h> // for `HM_PRIO_TEE_*`
+#include <fileio.h>
+#include <priorities.h>
 #include <drv.h>
 #include <spawn_init.h>
 #include <get_elf_info.h>
@@ -79,7 +79,7 @@ static TEE_Result ta_name_to_path(const struct service_struct *service,
     }
 
     /* set default priority for normal dynload task */
-    *p_priority = HM_PRIO_TEE_TA;
+    *p_priority = PRIO_TEE_TA;
 
     /* for dynload task, use uuid as path */
     if (uuid_to_fname(&service->property.uuid, path_name, (int)len) == 0)
