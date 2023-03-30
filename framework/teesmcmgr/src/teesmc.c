@@ -33,7 +33,7 @@ static void teeapi_configure(void)
 {
     int32_t err;
 
-    err = set_priority(HM_PRIO_TEE_SMCMGR);
+    err = set_priority(PRIO_TEE_SMCMGR);
     if (err < 0)
         panic("api set priority failed: %x\n", err);
 

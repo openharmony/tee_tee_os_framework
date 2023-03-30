@@ -10,7 +10,7 @@
  * See the Mulan PSL v2 for more details.
  */
 #include "tee_config.h"
-#include <sys/priorities.h> /* for HM_PRIO_TEE_* */
+#include <priorities.h>
 
 static struct drv_frame_info g_drv_frame_configs[] = {
 #if defined(TEE_SUPPORT_DRV_SERVER_64BIT) || defined(TEE_SUPPORT_DRV_SERVER_32BIT)

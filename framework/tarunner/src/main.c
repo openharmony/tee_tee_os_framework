@@ -15,8 +15,8 @@
 #include <fcntl.h>
 #include <dlfcn.h>
 #include <sys/mman.h>
-#include <sys/priorities.h> /* for `HM_PRIO_TEE_*` */
-#include <sys/fileio.h>
+#include <priorities.h>
+#include <fileio.h>
 #include <unistd.h>
 #include <ipclib.h>
 #include <securec.h>

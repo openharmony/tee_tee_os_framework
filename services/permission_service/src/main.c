@@ -13,7 +13,7 @@
 #include <sys/mman.h>
 #include <tee_log.h>
 #include <ipclib.h>             /* for channel */
-#include <sys/priorities.h>  /* for `HM_PRIO_TEE_*' */
+#include <sys/priorities.h>
 #include <pthread.h>            /* for thread */
 #include <stdlib.h>
 #include <tee_defines.h>
@@ -215,7 +215,7 @@ static void perm_thread_remove_channel(const char *name, cref_t channel)
     taskid_t pid;
 
     pid = get_self_taskid();
-    if (pid == SRE_PID_ERR) {
+    if (pid < 0) {
         tloge("get self pid error\n");
         return;
     }

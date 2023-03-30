@@ -181,7 +181,7 @@ static void init_spawn_buffer(struct spawn_drv_buffer *buffer)
 static int32_t init_spawn_env(const struct drv_spawn_param *drv_param, struct spawn_drv_buffer *buffer)
 {
     struct env_param eparam = { 0 };
-    eparam.priority = HM_PRIO_TEE_DRV;
+    eparam.priority = PRIO_TEE_DRV;
     eparam.target_type = DRV_TARGET_TYPE;
     eparam.drv_index = drv_param->drv_index;
     eparam.thread_limit = drv_param->thread_limit;
@@ -472,7 +472,7 @@ static int32_t send_cmd_perm_to_drv(const struct task_node *node)
 {
     int32_t ret = -1;
     uint32_t self_pid = get_self_taskid();
-    if (self_pid == SRE_PID_ERR) {
+    if (self_pid < 0) {
         tloge("get self pid fail\n");
         return ret;
     }

@@ -61,7 +61,7 @@ static void handle_cmd(const struct huk_srv_msg *msg, cref_t msghdl, uint32_t sn
     rsp.data.ret = TEE_ERROR_GENERIC;
     cmd_id = msg->header.send.msg_id;
     self_pid = get_self_taskid();
-    if (self_pid == SRE_PID_ERR) {
+    if (self_pid < 0) {
         tloge("huk service get self pid error\n");
         rsp.data.ret = TEE_ERROR_GENERIC;
         goto ret_flow;

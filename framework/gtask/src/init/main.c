@@ -78,9 +78,9 @@ static void gtask_init_timer_irqmgr(void)
 static void gtask_set_priority(void)
 {
     int32_t ret;
-    ret = set_priority(HM_PRIO_TEE_GT);
+    ret = set_priority(PRIO_TEE_GT);
     if (ret < 0) {
-        tee_abort("GTASK: failed to set priority to HM_PRIO_TEE_GT: %x\n", ret);
+        tee_abort("GTASK: failed to set priority to PRIO_TEE_GT: %x\n", ret);
         wait_for_kill();
     }
 }

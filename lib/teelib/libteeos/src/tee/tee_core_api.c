@@ -282,7 +282,7 @@ static TEE_Result new_ta2ta_session_handle(TEE_TASessionHandle *handle)
 
     session_handle->handle = (TEE_TASessionHandle)valid_handle;
     task_id = get_self_taskid();
-    if (task_id == SRE_PID_ERR) {
+    if (task_id < 0) {
         tloge("get taskid failed\n");
         TEE_Free(session_handle);
 

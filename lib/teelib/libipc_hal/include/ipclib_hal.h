@@ -18,6 +18,11 @@
 #define MSG_TYPE_NOTIF           1
 #define MSG_TYPE_CALL            2
 
+#define SRE_IPC_ERR            0xbeaf
+#define SRE_IPC_TIMEOUT_ERR    0xbeb0
+#define SRE_IPC_NO_CHANNEL_ERR 0xdeadbeaf
+#define SRE_PID_ERR            0xFFFFFFFFUL
+
 /* Create a IPC channel and register it to the mgr with path "$PID" */
 int32_t ipc_create_single_channel(const char *name, cref_t *pch, bool reg_pid, bool reg_name, bool reg_tamgr);
 

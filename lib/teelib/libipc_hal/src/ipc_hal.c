@@ -18,11 +18,6 @@
 #define GLOBAL_HANDLE     0 /* defined in tee_init.h */
 #define GLOBAL_SERVICE_NAME "TEEGlobalTask"
 
-#define SRE_IPC_ERR            0xbeaf
-#define SRE_IPC_TIMEOUT_ERR    0xbeb0
-#define SRE_IPC_NO_CHANNEL_ERR 0xdeadbeaf
-#define SRE_PID_ERR            0xFFFFFFFFUL
-
 struct msg_st {
     uint32_t msg_id;
     char payload[MSG_MAX_LEN];
@@ -225,9 +220,8 @@ static uint32_t ipc_msgrcv_core(struct msgrcv_st msgrcv)
     cref_t msg_hdl = ipc_get_my_msghdl();
 
     msg_ret = ipc_msg_receive(msgrcv.ch, &msg, sizeof(msg), msg_hdl, &info, msgrcv.timeout);
-    if (msg_ret < 0) {
-        if (msg_ret != E_EX_TIMER_TIMEOUT || msg_ret == E_EX_CNODE_INVOKE_NOCAP)
-            tloge("receive msg failed: %x\n", msg_ret);
+    if (msg_ret != 0) {
+        tloge("receive msg failed: %x\n", msg_ret);
         return msg_ret == E_EX_TIMER_TIMEOUT ? SRE_IPC_TIMEOUT_ERR : SRE_IPC_ERR;
     }
 
