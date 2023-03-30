@@ -513,8 +513,7 @@ static void  perm_thread_handle_main_msg(const perm_srv_req_msg_t *req_msg, uint
     }
 }
 
-#define HM_TASK_EXIT   (-1)
-#define HM_MSG_TIMEOUT (-1)
+#define TEE_TASK_EXIT   (-1)
 static void create_subthreads(void)
 {
     /*
@@ -523,7 +522,7 @@ static void create_subthreads(void)
      */
     if (perm_srv_create_rw_thread(perm_thread_init_file, NULL, NULL, 0) != TEE_SUCCESS) {
         tloge("file opt thread created fail\n");
-        exit(HM_TASK_EXIT);
+        exit(TEE_TASK_EXIT);
     }
 
     /*
@@ -532,7 +531,7 @@ static void create_subthreads(void)
      */
     if (perm_srv_create_rw_thread(perm_thread_init_async_file, NULL, NULL, 0) != TEE_SUCCESS) {
         tloge("async file opt thread created fail\n");
-        exit(HM_TASK_EXIT);
+        exit(TEE_TASK_EXIT);
     }
 }
 
@@ -559,7 +558,7 @@ __attribute__((visibility("default"))) void tee_task_entry(int32_t init_build)
 
     if (ipc_create_channel_native(CERT_PATH, &native_channel) != 0) {
         tloge("create main thread native channel failed\n");
-        exit(HM_TASK_EXIT);
+        exit(TEE_TASK_EXIT);
     }
 
     create_subthreads();
