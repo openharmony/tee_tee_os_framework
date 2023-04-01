@@ -106,8 +106,20 @@ package: check_sym
 	@mkdir $(FRAMEWORK_ELF_PATH)/apps
 	cp -a $(product_apps) $(FRAMEWORK_ELF_PATH)/apps
 
+ifeq ($(CONFIG_SUPPORT_64BIT),)
 PHONY += link_libs link_arm_libs link_aarch64_libs $(product_apps)
 link_libs: link_arm_libs link_aarch64_libs
+endif
+
+ifeq ($(CONFIG_SUPPORT_64BIT), false)
+PHONY += link_libs link_arm_libs $(product_apps)
+link_libs: link_arm_libs
+endif
+
+ifeq ($(CONFIG_SUPPORT_64BIT), true)
+PHONY += link_libs link_aarch64_libs $(product_apps)
+link_libs: link_aarch64_libs
+endif
 
 link_arm_libs: libs
 	@echo "[link] libs=$(libs)"
