@@ -11,8 +11,8 @@
 #Targets
 MODULE := libopenssl${TARG}.a
 
-CFLAGS += -w -Wno-unused-parameter
-A32_CFLAGS += -w -Wno-unused-parameter
+CFLAGS += -w -Wno-unused-parameter -Wno-int-conversion
+A32_CFLAGS += -w -Wno-unused-parameter -Wno-int-conversion
 
 CPPFLAGS += -I$(TEELIB)/libopenssl/include
 CPPFLAGS += -I$(TEELIB)/libopenssl/openssl

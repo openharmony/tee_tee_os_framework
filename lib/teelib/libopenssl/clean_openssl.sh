@@ -9,7 +9,7 @@
 # PURPOSE.
 # See the Mulan PSL v2 for more details.
 set -e
-cd "$1"/../../../third_party/openssl_1.1.1n
+cd "$1"/../../../third_party/openssl
 
 git checkout .
 git clean -df

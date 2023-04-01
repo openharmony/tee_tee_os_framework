@@ -37,7 +37,7 @@ export TARGET_ARCH_64 := aarch64-linux-gnu
 
 ifeq ($(ARCH), arm)
 	TARGET_ARCH := $(TARGET_ARCH_32)
-	LIBCOMPILER_RT_BUILTINS := $(TEE_COMPILER_DIR)/lib/arm-linux-ohosmusl/libclang_rt.builtins.a
+	LIBCOMPILER_RT_BUILTINS := $(TEE_COMPILER_DIR)/lib/arm-linux-ohos/libclang_rt.builtins.a
 ifeq (${CONFIG_THUMB_SUPPORT},y)
     flags += -mthumb
 endif
@@ -49,7 +49,7 @@ ifeq ($(CONFIG_ARM_CORTEX_A53),y)
 endif
 else
 	TARGET_ARCH := $(TARGET_ARCH_64)
-	LIBCOMPILER_RT_BUILTINS := $(TEE_COMPILER_DIR)/lib/aarch64-linux-ohosmusl/libclang_rt.builtins.a
+	LIBCOMPILER_RT_BUILTINS := $(TEE_COMPILER_DIR)/lib/aarch64-linux-ohos/libclang_rt.builtins.a
     flags += -march=armv8-a
 ifeq ($(CONFIG_ARM_CORTEX_A53),y)
     ASFLAGS += -march=armv8-a
