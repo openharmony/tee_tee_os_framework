@@ -8,11 +8,6 @@
 # PURPOSE.
 # See the Mulan PSL v2 for more details.
 
-ifeq ($(CONFIG_TA_64BIT), true)
-product_apps += $(OUTPUTDIR)/aarch64/drivers/tarunner.elf
-check-a64-syms-y += $(OUTPUTDIR)/aarch64/drivers/tarunner.elf
-endif
-
 ifeq ($(CONFIG_HUK_SERVICE_64BIT), true)
 product_apps += $(OUTPUTDIR)/aarch64/apps/huk_service.elf
 check-a64-syms-y += $(OUTPUTDIR)/aarch64/apps/huk_service.elf
@@ -54,6 +49,8 @@ endif
 ifeq ($(CONFIG_TA_64BIT), true)
 product_apps += $(OUTPUTDIR)/aarch64/obj/aarch64/libtee_shared/libtee_shared.so
 check-a64-syms-y += $(OUTPUTDIR)/aarch64/obj/aarch64/libtee_shared/libtee_shared.so
+product_apps += $(OUTPUTDIR)/aarch64/drivers/tarunner.elf
+check-a64-syms-y += $(OUTPUTDIR)/aarch64/drivers/tarunner.elf
 endif
 
 ifeq ($(CONFIG_TA_32BIT), true)
