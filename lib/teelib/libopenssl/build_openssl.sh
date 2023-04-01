@@ -10,7 +10,7 @@
 # See the Mulan PSL v2 for more details.
 set -e
 
-opensslpath="$1/../../../third_party/openssl_1.1.1n"
+opensslpath="$1/../../../third_party/openssl"
 
 cd $opensslpath
 

@@ -19,7 +19,7 @@ else
 export TOPDIR := $(CURDIR)/../
 endif
 
-export OPENSSL_DIR := $(TOPDIR)/../../../third_party/openssl_1.1.1n
+export OPENSSL_DIR := $(TOPDIR)/../../../third_party/openssl
 export OLD_TOPDIR := $(TOPDIR)/config
 export TOOLS      := $(TOPDIR)/build/tools
 export VER
@@ -42,8 +42,6 @@ export BUILD_FRAMEWORK := $(TOPDIR)/build/mk/framework_common
 export BUILD_CFI := $(TOPDIR)/build/mk/common/cfi
 export BUILD_CONFIG := $(TOPDIR)/build/mk/common/config
 export BUILD_OPERATION := $(TOPDIR)/build/mk/common/operation
-export TEE_COMPILER_DIR := $(TOPDIR)/../../../prebuilts/clang/ohos/linux-x86_64/llvm/lib/clang/10.0.1
-export TEE_CLANG_DIR := $(TOPDIR)/../../../prebuilts/clang/ohos/linux-x86_64/llvm/bin
 
 ## if O=xxx, using outsize output directory.
 ifneq ($(O),)
