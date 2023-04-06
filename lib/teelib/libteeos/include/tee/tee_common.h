@@ -48,7 +48,6 @@ enum global_service_cmd_id {
     GLOBAL_CMD_ID_LATE_INIT                 = 0x20, /* Global Task for late init for permission service */
     GLOBAL_CMD_ID_GET_TEE_VERSION           = 0x22, /* Global Task get tee version */
     GLOBAL_CMD_ID_UPDATE_TA_CRL             = 0x23, /* Global Task update ta crl */
-    GLOBAL_CMD_ID_REGISTER_RESMEM           = 0x24, /* Global Task register reserved memory */
 #ifdef CONFIG_ENABLE_DUMP_SRV_SESS
     GLOBAL_CMD_ID_DUMP_SRV_SESS             = 0x25, /* Global Task dump service/session info */
 #endif

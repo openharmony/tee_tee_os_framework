@@ -437,23 +437,10 @@ static TEE_Result open_session_handle(struct init_build_param *init_param,
     return ret;
 }
 
-static bool is_resmem_param_type(uint32_t type)
-{
-    bool flag = (type == TEE_PARAM_TYPE_RESMEM_INPUT || type == TEE_PARAM_TYPE_RESMEM_OUTPUT ||
-                 type == TEE_PARAM_TYPE_RESMEM_INOUT);
-    return flag;
-}
-
 static void recover_ta_params(uint32_t *param_type)
 {
     for (uint32_t i = 0; i < TEE_PARAMS_NUM; i++) {
         uint32_t type = TEE_PARAM_TYPE_GET(*param_type, i);
-        if (is_resmem_param_type(type)) {
-            uint32_t orig_type = type - (TEE_PARAM_TYPE_RESMEM_INPUT - TEE_PARAM_TYPE_MEMREF_INPUT);
-            uint32_t temp = (PARAM_TYPE_ALL >> ((PARAM_TYPE_SHIFT - i) * PARAM_TYPE_SHIFT)) & *param_type;
-            *param_type = ((*param_type >> (i * PARAM_TYPE_SHIFT)) & PARAM_TYPE_MASK) | orig_type;
-            *param_type = (*param_type << (i * PARAM_TYPE_SHIFT)) | temp;
-        }
     }
 }
 

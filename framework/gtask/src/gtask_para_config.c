@@ -21,8 +21,3 @@ uint32_t get_mailbox_size(void)
 {
     return MAILBOX_POOL_SIZE;
 }
-
-uint32_t get_res_mem_size(void)
-{
-    return RES_MEM_SIZE;
-}

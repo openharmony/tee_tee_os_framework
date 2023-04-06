@@ -16,11 +16,8 @@
 
 #define HASH_FILE_MAX_SIZE (16 * 1024)
 #define MAILBOX_POOL_SIZE  (4 * 1024 * 1024)
-#define RES_MEM_SIZE 0
 
 uint32_t get_hashfile_max_size(void);
 
 uint32_t get_mailbox_size(void);
-
-uint32_t get_res_mem_size(void);
 #endif

@@ -30,9 +30,6 @@ TEE_Result register_mailbox(const smc_cmd_t *cmd);
 bool in_mailbox_range(paddr_t addr, uint32_t size);
 TEE_Result check_cmd_in_mailbox_range(const smc_cmd_t *cmd);
 void *mailbox_phys_to_virt(paddr_t phys);
-TEE_Result register_res_mem(const smc_cmd_t *cmd);
-bool in_res_mem_range(paddr_t addr, uint64_t size);
-void *res_mem_phys_to_virt(paddr_t phys);
 TEE_Result dump_statmeminfo(const smc_cmd_t *cmd);
 void task_del_mem_region(struct dlist_node *mem_list, bool is_service_dead);
 
