@@ -87,7 +87,6 @@ static const struct ns_sync_cmd_t g_ns_sync_cmd_table[] = {
 #endif
     { GLOBAL_CMD_ID_LATE_INIT,                 agent_late_init },
     { GLOBAL_CMD_ID_GET_TEE_VERSION,           get_tee_version },
-    { GLOBAL_CMD_ID_REGISTER_RESMEM,           register_res_mem },
 };
 
 static const uint32_t g_ns_sync_cmd_num =

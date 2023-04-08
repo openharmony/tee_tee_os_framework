@@ -154,31 +154,11 @@ static void free_tee_mem(const void *addr, uint32_t size)
     free_sharemem((void *)addr, size);
 }
 
-static bool is_resmem_param_type(uint32_t type)
-{
-    bool flag = (type == TEE_PARAM_TYPE_RESMEM_INPUT || type == TEE_PARAM_TYPE_RESMEM_OUTPUT ||
-                 type == TEE_PARAM_TYPE_RESMEM_INOUT);
-    return flag;
-}
-
-static TEE_Result set_res_mem_prop(uint64_t mem_prop, const struct pam_node *node, uint32_t idx)
-{
-    (void)mem_prop;
-    (void)node;
-    (void)idx;
-    return TEE_ERROR_NOT_SUPPORTED;
-}
-
 static TEE_Result copy_from_src(uint32_t task_id, void **tee_addr, void *ree_addr, uint32_t size, uint32_t type)
 {
     if (tee_addr == NULL || ree_addr == NULL || size == 0) {
         tloge("copy_from_src invalid input\n");
         return TEE_ERROR_BAD_PARAMETERS;
-    }
-
-    if (is_resmem_param_type(type)) {
-        *tee_addr = ree_addr;
-        return TEE_SUCCESS;
     }
 
     TEE_UUID ta_uuid = {0};
@@ -261,11 +241,6 @@ void release_pam_node(struct pam_node *node)
             (void)memset_s(node->p_vaddr_gt_tee[i], node->op.p[i].memref.size + 1, 0, node->op.p[i].memref.size + 1);
             free_tee_mem(node->p_vaddr_gt_tee[i], node->op.p[i].memref.size + 1);
             break;
-        case TEE_PARAM_TYPE_RESMEM_INPUT:
-        case TEE_PARAM_TYPE_RESMEM_OUTPUT:
-        case TEE_PARAM_TYPE_RESMEM_INOUT:
-            (void)set_res_mem_prop(RESERVED_MEM_NONSECURE, node, i);
-            break;
         default:
             break;
         }
@@ -319,9 +294,6 @@ static TEE_Result copy_params_back_to_ree(const struct pam_node *n_tee, tee_oper
             break;
         case TEE_PARAM_TYPE_MEMREF_OUTPUT:
         case TEE_PARAM_TYPE_MEMREF_INOUT:
-        case TEE_PARAM_TYPE_RESMEM_INPUT:
-        case TEE_PARAM_TYPE_RESMEM_OUTPUT:
-        case TEE_PARAM_TYPE_RESMEM_INOUT:
             /* this condition should not happen */
             if (n_tee->op.p[i].memref.size != p_ree->p[i].memref.size) {
                 tloge("ERROR:memref size is wrong:%u %u %u\n", n_tee->op.p[i].memref.size, p_ree->p[i].memref.size,
@@ -338,12 +310,6 @@ static TEE_Result copy_params_back_to_ree(const struct pam_node *n_tee, tee_oper
                 tloge("ERROR:short memref size:%u/%u\n", n_tee->op.p[i].memref.size, get_index_memref_size(n_tee, i));
                 p_ree->p[i].memref.size = get_index_memref_size(n_tee, i);
                 ret                     = TEE_ERROR_SHORT_BUFFER;
-                break;
-            }
-
-            /* no copy */
-            if (is_resmem_param_type(type)) {
-                p_ree->p[i].memref.size = get_index_memref_size(n_tee, i);
                 break;
             }
 
@@ -494,40 +460,13 @@ static TEE_Result map_memref_for_gtask(bool ta2ta, const smc_cmd_t *cmd, tee_par
         }
     } else {
         paddr_t tmp_addr = (paddr_t)p.memref.buffer | (buffer_h_addr << SHIFT_OFFSET);
-        if (is_resmem_param_type(type))
-            *ree_addr = res_mem_phys_to_virt(tmp_addr);
-        else
-            *ree_addr = mailbox_phys_to_virt(tmp_addr);
+        *ree_addr = mailbox_phys_to_virt(tmp_addr);
         if (*ree_addr == NULL) {
             tloge("buffer addr value invalid\n");
             return TEE_ERROR_BAD_PARAMETERS;
         }
     }
 
-    return TEE_SUCCESS;
-}
-
-static TEE_Result params_map_for_ta_resmem(uint32_t i, uint32_t task_id, struct pam_node *node, const smc_cmd_t *cmd,
-                                           bool ta2ta)
-{
-    TEE_Result ret;
-    uint64_t resmem_vaddr;
-    uint32_t *buffer_h_addr = node->op.p_h_addr;
-    tee_param_32 *p         = node->op.p;
-
-    uint64_t tmp_addr = (uint64_t)p[i].memref.buffer | ((uint64_t)buffer_h_addr[i] << SHIFT_OFFSET);
-    if (task_map_ns_phy_mem(task_id, tmp_addr, p[i].memref.size, &resmem_vaddr)) {
-        tloge("map resmem to ta failed\n");
-        return TEE_ERROR_GENERIC;
-    }
-    ret = task_add_mem_region(cmd->event_nr, task_id, resmem_vaddr, p[i].memref.size, ta2ta);
-    if (ret != TEE_SUCCESS) {
-        tloge("params %u add mem region ref error:0x%x\n", i, ret);
-        if (task_unmap(task_id, resmem_vaddr, p[i].memref.size) != 0)
-            tloge("unmap resmem_vaddr failed\n");
-        return ret;
-    }
-    set_index_memref_buffer(node, i, resmem_vaddr);
     return TEE_SUCCESS;
 }
 
@@ -572,13 +511,10 @@ static TEE_Result params_map_for_ta_memref(uint32_t i, struct pam_node *node, ui
 
     /* 4.map tee mem addr for target ta */
     if (task_id == 0) {
-        /* 1)for global_task use tee_addr directly */
+        /* for global_task use tee_addr directly */
         set_index_memref_buffer(node, i, (uint64_t)(uintptr_t)tee_addr);
         return TEE_SUCCESS;
     }
-    /* 2)map tee mem for ta */
-    if (is_resmem_param_type(type))
-        return params_map_for_ta_resmem(i, task_id, node, cmd, ta2ta);
 
     set_index_memref_buffer(node, i, (uint64_t)(uintptr_t)tee_addr);
     return TEE_SUCCESS;
@@ -600,13 +536,6 @@ static TEE_Result set_params_for_ta(uint32_t task_id, const smc_cmd_t *cmd, stru
         set_index_value_a(node, index, p[index].value.a);
         set_index_value_b(node, index, p[index].value.b);
         break;
-    case TEE_PARAM_TYPE_RESMEM_INPUT:
-    case TEE_PARAM_TYPE_RESMEM_OUTPUT:
-    case TEE_PARAM_TYPE_RESMEM_INOUT:
-        ret = set_res_mem_prop(RESERVED_MEM_SECURE, node, index);
-        if (ret != TEE_SUCCESS)
-            return ret;
-        /* fall through */
     case TEE_PARAM_TYPE_MEMREF_INPUT:
     case TEE_PARAM_TYPE_MEMREF_OUTPUT:
     case TEE_PARAM_TYPE_MEMREF_INOUT:
@@ -997,28 +926,6 @@ TEE_Result register_mailbox(const smc_cmd_t *cmd)
     return register_mempool(cmd, &g_mb_state, pool_size);
 }
 
-TEE_Result register_res_mem(const smc_cmd_t *cmd)
-{
-    const uint32_t pool_size = get_res_mem_size();
-    tlogi("we have reserved memory pool, now register\n");
-    return register_mempool(cmd, &g_rm_state, pool_size);
-}
-
-bool in_res_mem_range(paddr_t addr, uint64_t size)
-{
-    bool flag = addr > ADDR_MAX - size || (addr < g_rm_state.start || addr >= (g_rm_state.start + g_rm_state.size)) ||
-                (addr + size) < g_rm_state.start || (addr + size) > (g_rm_state.start + g_rm_state.size);
-    if (g_rm_state.init == false) {
-        tlogd("reserved memory is not initialized\n");
-        return false;
-    }
-    if (flag) {
-        tloge("addr is not valid\n");
-        return false;
-    }
-    return true;
-}
-
 bool in_mailbox_range(paddr_t addr, uint32_t size)
 {
     if (g_mb_state.init == false) {
@@ -1033,13 +940,6 @@ bool in_mailbox_range(paddr_t addr, uint32_t size)
     }
 
     return true;
-}
-
-void *res_mem_phys_to_virt(paddr_t phys)
-{
-    if (phys == 0)
-        return NULL;
-    return (void *)(g_rm_state.va + (uintptr_t)(phys - g_rm_state.start));
 }
 
 void *mailbox_phys_to_virt(paddr_t phys)
@@ -1078,14 +978,6 @@ static TEE_Result check_operation_params_in_mailbox_range(const tee_operation_gt
                 tloge("buffer[%u] is not in mailbox\n", i);
                 ret = TEE_ERROR_BAD_PARAMETERS;
             }
-            break;
-        case TEE_PARAM_TYPE_RESMEM_INPUT:
-        case TEE_PARAM_TYPE_RESMEM_OUTPUT:
-        case TEE_PARAM_TYPE_RESMEM_INOUT:
-            buffer_addr = (paddr_t)((uint32_t)operation->p[i].memref.buffer |
-                                    ((paddr_t)operation->p_h_addr[i] << SHIFT_OFFSET));
-            if (buffer_addr != 0 && !in_res_mem_range(buffer_addr, operation->p[i].memref.size))
-                ret = TEE_ERROR_BAD_PARAMETERS;
             break;
         default:
             tloge("invalid param type %u operation->p_type : %x\n", type, operation->p_type);

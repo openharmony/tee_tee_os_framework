@@ -77,9 +77,6 @@ enum TEE_ParamType {
     TEE_PARAM_TYPE_MEMREF_OUTPUT    = 0x6,
     TEE_PARAM_TYPE_MEMREF_INOUT     = 0x7,
     TEE_PARAM_TYPE_MEMREF_SHARED_INOUT = 0xa,
-    TEE_PARAM_TYPE_RESMEM_INPUT        = 0xc,
-    TEE_PARAM_TYPE_RESMEM_OUTPUT       = 0xd,
-    TEE_PARAM_TYPE_RESMEM_INOUT        = 0xe,
 };
 
 #define S_VAR_NOT_USED(variable) \
