@@ -1,7 +1,0 @@
-gpd.ta.appID:           534d4152-542d-4353-4c54-d3016a171f0c
-gpd.ta.service_name:        LIBC_test
-gpd.ta.singleInstance:      true
-gpd.ta.multiSession:         false
-gpd.ta.instanceKeepAlive:    false
-gpd.ta.dataSize:        4096000
-gpd.ta.stackSize:        81920

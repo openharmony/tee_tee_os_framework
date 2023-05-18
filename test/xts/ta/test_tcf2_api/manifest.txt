@@ -1,8 +1,0 @@
-gpd.ta.appID:   		534d4152-542d-4353-4c54-d3016a171f02
-gpd.ta.service_name:		TCF2_test
-gpd.ta.singleInstance:               true
-gpd.ta.multiSession: 		false
-gpd.ta.instanceKeepAlive:	false
-gpd.ta.dataSize:		18176000
-gpd.ta.stackSize:		81920
-smc.ta.identity: 0xf0000000:01010101-2020-0303-4040-050505050505
