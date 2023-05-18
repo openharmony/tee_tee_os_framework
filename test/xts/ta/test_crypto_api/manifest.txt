@@ -1,7 +1,0 @@
-gpd.ta.appID:   		05050505-0303-0303-0303-030303030301
-gpd.ta.service_name:		test_crypto_api
-gpd.ta.singleInstance:		true
-gpd.ta.multiSession: 		true
-gpd.ta.instanceKeepAlive:	false
-gpd.ta.dataSize:		8192000
-gpd.ta.stackSize:		40960

@@ -1,7 +1,0 @@
-gpd.ta.appID:   		9ac09588-fed1-4b1e-bb36-d3e5a3f26c39
-gpd.ta.service_name:		test_arithmetic_api
-gpd.ta.singleInstance:          true
-gpd.ta.multiSession: 		true
-gpd.ta.instanceKeepAlive:	false
-gpd.ta.dataSize:		819200
-gpd.ta.stackSize:		81920

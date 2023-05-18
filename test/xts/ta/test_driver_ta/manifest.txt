@@ -1,5 +1,0 @@
-gpd.ta.appID:              534D4152-542D-4353-b919-d3016a171fc9
-gpd.ta.service_name:       drvcaller_test
-gpd.ta.instanceKeepAlive:  false
-gpd.ta.dataSize:           1048576
-gpd.ta.stackSize:          8192
