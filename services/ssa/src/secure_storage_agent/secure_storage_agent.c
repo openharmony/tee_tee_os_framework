@@ -197,7 +197,7 @@ void unregister_uuid(uint32_t sender, const char *name)
     client->dead = 1;
 
     (void)ipc_release_from_taskid(sender, 0);
-	(void)ipc_release_by_name(name);
+    (void)ipc_release_by_name(name);
 
     for (i = 0; i < MAX_CLIENT_OPEN_FILES; i++) {
         if ((client->file_instance[i].file_link) == NULL) {

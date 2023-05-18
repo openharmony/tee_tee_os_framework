@@ -243,7 +243,7 @@ void *perm_thread_init_file(void *data)
 
     while (true) {
         rc = ipc_msg_receive(native_channel, &req_msg, (unsigned long)sizeof(req_msg), msghdl, &info, -1);
-		if (rc < 0) {
+        if (rc < 0) {
             tloge("%s: message receive failed, %llx\n", LOG_TAG, rc);
             continue;
         }

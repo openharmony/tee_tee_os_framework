@@ -100,7 +100,7 @@ TEE_Result tee_obj_free(TEE_ObjectHandle *object)
 TEE_Result tee_obj_init(void)
 {
     (void)pthread_mutex_init(&g_object_mutex, NULL);
-	dlist_init(&g_object_head);
+    dlist_init(&g_object_head);
     dlist_init(&g_enum_obj_info_list);
     return TEE_SUCCESS;
 }

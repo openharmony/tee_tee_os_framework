@@ -24,47 +24,47 @@
  * initialize tee context and entry point info for the secure payload
  */
 void teed_init_tee_ep_state(struct entry_point_info *ep,
-				      uint32_t rw,
-				      uintptr_t pc,
-				      tee_context_t *tee_ctx)
+                      uint32_t rw,
+                      uintptr_t pc,
+                      tee_context_t *tee_ctx)
 {
-	uint32_t ep_attr;
-	uint32_t ee;
-	uint32_t daif;
-	/* Passing a NULL context is a critical programming error */
-	assert(tee_ctx != NULL);
-	assert(ep != NULL);
-	assert(pc != INVALID_PC_ADDR);
+    uint32_t ep_attr;
+    uint32_t ee;
+    uint32_t daif;
+    /* Passing a NULL context is a critical programming error */
+    assert(tee_ctx != NULL);
+    assert(ep != NULL);
+    assert(pc != INVALID_PC_ADDR);
 
-	/*
-	 * We support AArch64 TEE for now.
-	 * Associate this context with the cpu specified
-	 */
-	ee = (uint32_t)SPSR_E_LITTLE;
-	tee_ctx->mpidr = read_mpidr_el1();
-	tee_ctx->state = (uint32_t)TEE_PSTATE_OFF;
-	set_tee_pstate(tee_ctx->state, TEE_PSTATE_OFF);
-	clr_yield_smc_active_flag(tee_ctx->state);
+    /*
+     * We support AArch64 TEE for now.
+     * Associate this context with the cpu specified
+     */
+    ee = (uint32_t)SPSR_E_LITTLE;
+    tee_ctx->mpidr = read_mpidr_el1();
+    tee_ctx->state = (uint32_t)TEE_PSTATE_OFF;
+    set_tee_pstate(tee_ctx->state, TEE_PSTATE_OFF);
+    clr_yield_smc_active_flag(tee_ctx->state);
 
-	cm_set_context(&tee_ctx->cpu_context, SECURE);
+    cm_set_context(&tee_ctx->cpu_context, SECURE);
 
-	/* initialise an entrypoint to set up the CPU context */
-	ep_attr = SECURE | EP_ST_ENABLE;
-	bool ee_bit_flag = (read_sctlr_el3() & SCTLR_EE_BIT) == 0 ? false : true;
-	if (ee_bit_flag) {
-		ep_attr |= EP_EE_BIG;
-		ee = SPSR_E_BIG;
-	}
-	SET_PARAM_HEAD(ep, PARAM_EP, VERSION_1, ep_attr);
-	ep->pc = pc;
-	if (rw == TEE_AARCH64) {
-		ep->spsr = SPSR_64(MODE_EL1, MODE_SP_ELX, DISABLE_ALL_EXCEPTIONS);
-	} else {
-		daif = DAIF_ABT_BIT | DAIF_IRQ_BIT | DAIF_FIQ_BIT;
-		ep->spsr = SPSR_MODE32(MODE32_svc, pc & SPSR_T_MASK, ee, daif);
-	}
+    /* initialise an entrypoint to set up the CPU context */
+    ep_attr = SECURE | EP_ST_ENABLE;
+    bool ee_bit_flag = (read_sctlr_el3() & SCTLR_EE_BIT) == 0 ? false : true;
+    if (ee_bit_flag) {
+        ep_attr |= EP_EE_BIG;
+        ee = SPSR_E_BIG;
+    }
+    SET_PARAM_HEAD(ep, PARAM_EP, VERSION_1, ep_attr);
+    ep->pc = pc;
+    if (rw == TEE_AARCH64) {
+        ep->spsr = SPSR_64(MODE_EL1, MODE_SP_ELX, DISABLE_ALL_EXCEPTIONS);
+    } else {
+        daif = DAIF_ABT_BIT | DAIF_IRQ_BIT | DAIF_FIQ_BIT;
+        ep->spsr = SPSR_MODE32(MODE32_svc, pc & SPSR_T_MASK, ee, daif);
+    }
 
-	memset(&ep->args, 0, sizeof(ep->args));
+    memset(&ep->args, 0, sizeof(ep->args));
 }
 
 /*
@@ -77,21 +77,21 @@ void teed_init_tee_ep_state(struct entry_point_info *ep,
  */
 uint64_t teed_synchronous_sp_entry(tee_context_t *tee_ctx)
 {
-	uint64_t rc;
-	assert(tee_ctx != NULL);
-	assert(tee_ctx->rt_context == INVALID_C_RT_CTX);
+    uint64_t rc;
+    assert(tee_ctx != NULL);
+    assert(tee_ctx->rt_context == INVALID_C_RT_CTX);
 
-	/* Apply the Secure EL1 system register context and switch to it */
-	assert(cm_get_context(SECURE) == &tee_ctx->cpu_context);
+    /* Apply the Secure EL1 system register context and switch to it */
+    assert(cm_get_context(SECURE) == &tee_ctx->cpu_context);
 
-	cm_el1_sysregs_context_restore(SECURE);
-	cm_set_next_eret_context(SECURE);
-	rc = teed_enter_sp(&tee_ctx->rt_context);
+    cm_el1_sysregs_context_restore(SECURE);
+    cm_set_next_eret_context(SECURE);
+    rc = teed_enter_sp(&tee_ctx->rt_context);
 #if ENABLE_ASSERTIONS
-	tee_ctx->rt_context = INVALID_C_RT_CTX;
+    tee_ctx->rt_context = INVALID_C_RT_CTX;
 #endif
 
-	return rc;
+    return rc;
 }
 
 /*
@@ -104,20 +104,20 @@ uint64_t teed_synchronous_sp_entry(tee_context_t *tee_ctx)
  */
 void teed_synchronous_sp_exit(const tee_context_t *tee_ctx, uint64_t ret)
 {
-	assert(tee_ctx != NULL);
-	/* Save the Secure EL1 system register context */
-	assert(cm_get_context(SECURE) == &tee_ctx->cpu_context);
-	cm_el1_sysregs_context_save(SECURE);
-	int64_t init_context_saved = get_tee_init_context_saved();
+    assert(tee_ctx != NULL);
+    /* Save the Secure EL1 system register context */
+    assert(cm_get_context(SECURE) == &tee_ctx->cpu_context);
+    cm_el1_sysregs_context_save(SECURE);
+    int64_t init_context_saved = get_tee_init_context_saved();
 
-	tee_context_t *tee_context_tmp = get_teed_sp_init_context();
-	assert(tee_context_tmp != NULL);
-	if (init_context_saved == INIT_CONTEXT_NOT_SAVED) {
-		memcpy(tee_context_tmp, tee_ctx, sizeof(*tee_context_tmp));
-		set_tee_init_context_saved(INIT_CONTEXT_SAVED);
-	}
-	assert(tee_ctx->rt_context != INVALID_C_RT_CTX);
-	teed_exit_sp(tee_ctx->rt_context, ret);
-	printf("sp exit: Should never reach here\n");
-	assert(0);
+    tee_context_t *tee_context_tmp = get_teed_sp_init_context();
+    assert(tee_context_tmp != NULL);
+    if (init_context_saved == INIT_CONTEXT_NOT_SAVED) {
+        memcpy(tee_context_tmp, tee_ctx, sizeof(*tee_context_tmp));
+        set_tee_init_context_saved(INIT_CONTEXT_SAVED);
+    }
+    assert(tee_ctx->rt_context != INVALID_C_RT_CTX);
+    teed_exit_sp(tee_ctx->rt_context, ret);
+    printf("sp exit: Should never reach here\n");
+    assert(0);
 }

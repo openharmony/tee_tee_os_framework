@@ -205,7 +205,7 @@ static uint32_t get_gtask_and_ssa_handle(uint32_t *global_handle, uint32_t *ss_a
 {
     uint32_t global_taskid;
 
-	if (global_handle == NULL || ss_agent_handle == NULL)
+    if (global_handle == NULL || ss_agent_handle == NULL)
         return OS_ERROR;
 
     if (ipc_hunt_by_name(GLOBAL_SERVICE_NAME, &global_taskid) != 0) {
