@@ -213,7 +213,7 @@ static void *tee_task_entry_thread(void *data)
     pti->t_msghdl = msghdl;
 
     /* store msghdl in self tls */
-	if(ipc_save_my_msghdl(msghdl) != 0) {
+    if(ipc_save_my_msghdl(msghdl) != 0) {
         tloge("save hdl error");
         goto err_save_hdl;
     }

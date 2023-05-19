@@ -10,14 +10,14 @@
 
 TEED_DIR  := services/spd/teed
 
-SPD_INCLUDES        := -Iservices/spd/teed/include \
+SPD_INCLUDES        := -Iservices/spd/teed/include      \
                        -Iinclude/bl31                   \
                        -Iinclude/lib                    \
                        -Iinclude/lib/el3_runtime        \
-					   -Iinclude/lib/psci               \
-					   -Iinclude/common                 \
-					   -Iinclude/plat/common            \
-					   -Iinclude/lib/el3_runtime/aarch64
+                       -Iinclude/lib/psci               \
+                       -Iinclude/common                 \
+                       -Iinclude/plat/common            \
+                       -Iinclude/lib/el3_runtime/aarch64
 
 SPD_SOURCES := services/spd/teed/src/teed_common.c \
                services/spd/teed/src/teed_helpers.S \

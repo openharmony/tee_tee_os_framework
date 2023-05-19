@@ -41,7 +41,7 @@ int32_t drv_mutex_init(pthread_mutex_t *mtx)
         tloge("pthread mutex init failed with ret:%d\n", ret);
     }
 
-	return ret;
+    return ret;
 }
 
 struct fd_node *alloc_and_init_fd_node(void)

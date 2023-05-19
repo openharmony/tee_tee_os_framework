@@ -31,17 +31,17 @@
 #define get_tee_pstate(state) (((state) >> TEE_PSTATE_SHIFT) & TEE_PSTATE_MASK)
 
 #define clr_tee_pstate(state)                        \
-	do {                                              \
-		((state) &= ~(TEE_PSTATE_MASK <<     \
-		TEE_PSTATE_SHIFT));                  \
-	} while (0)
+    do {                                              \
+        ((state) &= ~(TEE_PSTATE_MASK <<     \
+        TEE_PSTATE_SHIFT));                  \
+    } while (0)
 
 #define set_tee_pstate(st, pst)                      \
-	do {                                              \
-		clr_tee_pstate(st);                  \
-		(st) |= ((pst) & TEE_PSTATE_MASK) << \
-		TEE_PSTATE_SHIFT;                    \
-	} while (0)
+    do {                                              \
+        clr_tee_pstate(st);                  \
+        (st) |= ((pst) & TEE_PSTATE_MASK) << \
+        TEE_PSTATE_SHIFT;                    \
+    } while (0)
 
 /* smc id added for TEE */
 #define TEE_STD_REE_SIQ                     0xb200000a
@@ -78,21 +78,21 @@
 #define SMC_INACTIVE                            0
 #define SMC_ACTIVE                              1
 #define get_yield_smc_active_flag(state)                                  \
-		(((state) >> YIELD_SMC_ACTIVE_FLAG_SHIFT)                 \
-		 & YIELD_SMC_ACTIVE_FLAG_MASK)
+        (((state) >> YIELD_SMC_ACTIVE_FLAG_SHIFT)                 \
+         & YIELD_SMC_ACTIVE_FLAG_MASK)
 
 #define set_yield_smc_active_flag(state)                                  \
-	do {                                                              \
-		((state) |=                                               \
-		1u << YIELD_SMC_ACTIVE_FLAG_SHIFT);                       \
-	} while (0)
+    do {                                                              \
+        ((state) |=                                               \
+        1u << YIELD_SMC_ACTIVE_FLAG_SHIFT);                       \
+    } while (0)
 
 #define clr_yield_smc_active_flag(state)                                  \
-	do {                                                              \
-		((state) &=                                               \
-		~(YIELD_SMC_ACTIVE_FLAG_MASK                              \
-		<< YIELD_SMC_ACTIVE_FLAG_SHIFT));                         \
-	} while (0)
+    do {                                                              \
+        ((state) &=                                               \
+        ~(YIELD_SMC_ACTIVE_FLAG_MASK                              \
+        << YIELD_SMC_ACTIVE_FLAG_SHIFT));                         \
+    } while (0)
 /*
  * This flag is used by the TEED to determine if the TEE has crashed in any way
  * and it is impossible to continue. The flag will disable forwarding any calls
@@ -108,36 +108,36 @@
 #define STD_SMC_CRASH_FLAG_SHIFT              0x3u
 #define STD_SMC_CRASH_FLAG_MASK               0x1u
 #define get_std_crash_flag(state)                                              \
-		(((state) >> STD_SMC_CRASH_FLAG_SHIFT) &                       \
-		STD_SMC_CRASH_FLAG_MASK)
+        (((state) >> STD_SMC_CRASH_FLAG_SHIFT) &                       \
+        STD_SMC_CRASH_FLAG_MASK)
 
 #define set_std_crash_flag(state)                                              \
-	do {                                                                   \
-		((state) |=                                                    \
-		1 << STD_SMC_CRASH_FLAG_SHIFT);                                \
-	} while (0)
+    do {                                                                   \
+        ((state) |=                                                    \
+        1 << STD_SMC_CRASH_FLAG_SHIFT);                                \
+    } while (0)
 
 /* Secure Payload execution state information i.e. aarch32 or aarch64 */
-#define TEE_AARCH32		MODE_RW_32
-#define TEE_AARCH64		MODE_RW_64
+#define TEE_AARCH32        MODE_RW_32
+#define TEE_AARCH64        MODE_RW_64
 
 /* The SPD should know the type of Secure Payload */
-#define TEE_TYPE_UP		PSCI_TOS_NOT_UP_MIG_CAP
+#define TEE_TYPE_UP        PSCI_TOS_NOT_UP_MIG_CAP
 #define TEE_TYPE_UPM    PSCI_TOS_UP_MIG_CAP
-#define TEE_TYPE_MP		PSCI_TOS_NOT_PRESENT_MP
+#define TEE_TYPE_MP        PSCI_TOS_NOT_PRESENT_MP
 
 /*
  * Secure Payload migrate type information as known to the SPD. We assume that
  * the SPD is dealing with an MP Secure Payload.
  */
-#define TEE_MIGRATE_INFO		TEE_TYPE_MP
+#define TEE_MIGRATE_INFO        TEE_TYPE_MP
 
 /*
  * Number of cpus that the present on this platform. Rely on a topology
  * tree to determine this in the future to avoid assumptions about mpidr
  * allocation
  */
-#define TEED_CORE_COUNT		PLATFORM_CORE_COUNT
+#define TEED_CORE_COUNT        PLATFORM_CORE_COUNT
 
 /*
  * Constants that allow assembler code to preserve callee-saved registers of the
@@ -205,7 +205,7 @@ DEFINE_REG_STRUCT(c_rt_regs, TEED_C_RT_CTX_ENTRIES);
  * register context.
  */
 CASSERT(TEED_C_RT_CTX_SIZE == sizeof(c_rt_regs_t), \
-	assert_spd_c_rt_regs_size_mismatch);
+    assert_spd_c_rt_regs_size_mismatch);
 
 /* SEL1 Secure payload (SP) caller saved register context structure. */
 DEFINE_REG_STRUCT(sp_ctx_regs, TEED_SP_CTX_ENTRIES);
@@ -216,7 +216,7 @@ DEFINE_REG_STRUCT(sp_ctx_regs, TEED_SP_CTX_ENTRIES);
  * register context.
  */
 CASSERT(TEED_SP_CTX_SIZE == sizeof(sp_ctx_regs_t), \
-	assert_spd_sp_regs_size_mismatch);
+    assert_spd_sp_regs_size_mismatch);
 
 /*
  * Structure which helps the SPD to maintain the per-cpu state of the SP.
@@ -237,50 +237,50 @@ CASSERT(TEED_SP_CTX_SIZE == sizeof(sp_ctx_regs_t), \
  *                    to SP.
  */
 typedef struct tee_context {
-	uint64_t elr_el3;
-	uint32_t spsr_el3;
-	uint32_t state;
-	uint64_t mpidr;
-	uint64_t rt_context;
-	cpu_context_t cpu_context;
-	uint64_t saved_tee_args[TEE_NUM_ARGS];
+    uint64_t elr_el3;
+    uint32_t spsr_el3;
+    uint32_t state;
+    uint64_t mpidr;
+    uint64_t rt_context;
+    cpu_context_t cpu_context;
+    uint64_t saved_tee_args[TEE_NUM_ARGS];
 } tee_context_t;
 
 typedef struct tee_vectors {
-	uint32_t yield_smc_entry;
-	uint32_t fast_smc_entry;
-	uint32_t cpu_on_entry;
-	uint32_t cpu_off_entry;
-	uint32_t cpu_resume_entry;
-	uint32_t cpu_suspend_entry;
-	uint32_t sel1_intr_entry;
-	uint32_t irq_return_entry;
-	uint32_t s4_resume_entry;
-	uint32_t s4_suspend_entry;
-	uint32_t system_off_entry;
-	uint32_t system_reset_entry;
-	uint32_t abort_yield_smc_entry;
+    uint32_t yield_smc_entry;
+    uint32_t fast_smc_entry;
+    uint32_t cpu_on_entry;
+    uint32_t cpu_off_entry;
+    uint32_t cpu_resume_entry;
+    uint32_t cpu_suspend_entry;
+    uint32_t sel1_intr_entry;
+    uint32_t irq_return_entry;
+    uint32_t s4_resume_entry;
+    uint32_t s4_suspend_entry;
+    uint32_t system_off_entry;
+    uint32_t system_reset_entry;
+    uint32_t abort_yield_smc_entry;
 } tee_vectors_t;
 
 typedef struct smc_registers {
-	u_register_t x1;
-	u_register_t x2;
-	u_register_t x3;
-	u_register_t x4;
+    u_register_t x1;
+    u_register_t x2;
+    u_register_t x3;
+    u_register_t x4;
 } smc_registers_t;
 
 /* Helper macros to store and retrieve tee args from tee_context */
 #define store_tee_args(_tee_ctx, _x1, _x2)                           \
-	do {                                                   \
-		(_tee_ctx)->saved_tee_args[0] = _x1; \
-		(_tee_ctx)->saved_tee_args[1] = _x2; \
-	} while (0)
+    do {                                                   \
+        (_tee_ctx)->saved_tee_args[0] = _x1; \
+        (_tee_ctx)->saved_tee_args[1] = _x2; \
+    } while (0)
 
 #define get_tee_args(_tee_ctx, _x1, _x2)                             \
-	do {                                                   \
-		_x1 = (_tee_ctx)->saved_tee_args[0]; \
-		_x2 = (_tee_ctx)->saved_tee_args[1]; \
-	} while (0)
+    do {                                                   \
+        _x1 = (_tee_ctx)->saved_tee_args[0]; \
+        _x2 = (_tee_ctx)->saved_tee_args[1]; \
+    } while (0)
 
 /* TEED power management handlers */
 const spd_pm_ops_t *get_teed_pm(void);
