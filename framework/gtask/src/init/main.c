@@ -104,6 +104,7 @@ int main(void)
      * gtask will init something :
      * hm_mmgr_client, cs_client, ipc_channels, main, ccmgr
      */
+    mem_ops_init();
     gtask_init();
 
     gtask_init_timer_irqmgr();

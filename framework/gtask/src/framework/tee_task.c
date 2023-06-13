@@ -475,6 +475,9 @@ static int set_argv_for_tsk(struct argv_base_buffer *argv, char *loader_path, ui
         if (get_elf_path(bin_type, loader_path, loader_path_size) != 0)
             return -EINVAL;
 
+        if (memcpy_s(argv->elf_path, sizeof(argv->elf_path), loader_path, loader_path_size) != EOK)
+            return -EINVAL;
+
         /* tasks load by  taloader and tarunner */
         if (strncpy_s(argv->task_name, sizeof(argv->task_name), get_cur_service()->name,
                       sizeof(get_cur_service()->name) - 1) != EOK)
@@ -515,6 +518,7 @@ static int32_t init_spawn_buffer(struct spawn_buffer *sbuf, char **argv, uint32_
     env[ENV_UID_INDEX] = sbuf->env.uid;
     env[ENV_TARGET_TYPE_INDEX] = sbuf->env.target_type;
 
+    argv[ARGV_ELF_PATH_INDEX] = sbuf->argv.elf_path;
     argv[ARGV_TASK_NAME_INDEX] = sbuf->argv.task_name;
     argv[ARGV_TASK_PATH_INDEX] = sbuf->argv.task_path;
     argv[ARGV_UNCOMMIT_INDEX] = sbuf->argv.uncommit;

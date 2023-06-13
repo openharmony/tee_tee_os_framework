@@ -472,4 +472,7 @@ ipc_msg_rcv
 ipc_msg_rcv_safe
 ipc_msg_rcv_a
 ipc_msg_q_recv
+
+delete_all_ta2ta_session
+clear_session_exception
 )
