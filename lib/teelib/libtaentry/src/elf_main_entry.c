@@ -486,15 +486,15 @@ static TEE_Result map_params(struct global_to_ta_msg *entry_msg, size_t *map_siz
 out:
     for (int i = 0; i < map_size_size; i++) {
         if (params_vaddrs[i] != 0) {
-            if (munmap((void *)(uintptr_t)params_vaddrs[i], map_size[i]) != 0)
-                tloge("munmap param's vaddr failed\n");
+            if (free_sharemem((void *)(uintptr_t)params_vaddrs[i], map_size[i]) != 0)
+                tloge("free sharemem param's vaddr failed\n");
             map_addrs[i] = 0;
         }
         map_size[i] = 0;
     }
 
-    if ((vaddr != 0) && (munmap((void *)(uintptr_t)vaddr, sizeof(TEE_Param) * map_addrs_size) != 0))
-        tloge("munmap vaddr failed\n");
+    if ((vaddr != 0) && (free_sharemem((void *)(uintptr_t)vaddr, sizeof(TEE_Param) * map_addrs_size) != 0))
+        tloge("free sharemem vaddr failed\n");
 
     return TEE_ERROR_GENERIC;
 }
@@ -518,15 +518,15 @@ static void unmap_params(struct global_to_ta_msg *entry_msg, size_t *map_size, i
              * cannot use memref.size because it may be changed by TA
              * must use map_size[i]
              */
-            if (munmap((void *)(uintptr_t)map_addrs[i], map_size[i]) != 0)
-                tloge("munmap buffer failed\n");
+            if (free_sharemem((void *)(uintptr_t)map_addrs[i], map_size[i]) != 0)
+                tloge("free sharemem buffer failed\n");
             map_addrs[i] = 0;
         }
         map_size[i] = 0;
     }
 
-    if (munmap(entry_msg->params, sizeof(TEE_Param) * map_addrs_size) != 0)
-        tloge("munmap params failed\n");
+    if (free_sharemem(entry_msg->params, sizeof(TEE_Param) * map_addrs_size) != 0)
+        tloge("free sharemem params failed\n");
     entry_msg->params = NULL;
 }
 

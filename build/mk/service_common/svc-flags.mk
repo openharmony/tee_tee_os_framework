@@ -9,7 +9,7 @@
 # See the Mulan PSL v2 for more details.
 
 # hm entrypoint
-ENTRY_POINT ?= _hm_start
+ENTRY_POINT ?= main
 
 TARGET_IS_SYS := y
 # setup toolchain

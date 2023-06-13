@@ -21,7 +21,7 @@ flags += -I$(PWD)/include
 flags += -I$(PREBUILD_HEADER)/sys
 flags += -I$(TEELIB)/libteeos/include/tee
 
-LDFLAGS += -u _hm_start -z noexecstack
+LDFLAGS += -z noexecstack -u main -e main
 
 # Source files required to build the target
 teesmcmgr_c_files :=  $(wildcard src/*.c)
@@ -32,7 +32,6 @@ $(BUILD_DIR)/$(TA_NAME): $(BUILD_DIR)/$(TARGETS)
 # Libraries
 LIBS := c_shared$(TARG)
 LDFLAGS += --dynamic-linker=libc_shared$(TARG).so
-ENTRY_POINT := _hm_start
 
 include $(BUILD_SERVICE)/svc-common.mk
 

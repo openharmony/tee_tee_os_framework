@@ -33,6 +33,7 @@ enum env_index {
 };
 
 enum argv_index {
+    ARGV_ELF_PATH_INDEX,
     ARGV_TASK_NAME_INDEX,
     ARGV_TASK_PATH_INDEX,
     ARGV_UNCOMMIT_INDEX,
@@ -63,6 +64,7 @@ struct env_drv_base_buffer {
 } __attribute__((packed));
 
 struct argv_base_buffer {
+    char elf_path[ARGV_SIZE];
     char task_name[ARGV0_SIZE];
     char task_path[ARGV_SIZE];
     char uncommit[ARGV2_SIZE];

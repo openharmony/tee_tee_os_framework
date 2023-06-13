@@ -445,6 +445,8 @@ __attribute__((visibility("default"))) int32_t main(int32_t argc, const char * c
     void *libtee = NULL;
     cref_t drv_channel = 0;
 
+    mem_ops_init();
+
     if (param_check(argc, argv) != 0) {
         tloge("param check failed\n");
         goto err_out;
