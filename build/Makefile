@@ -19,7 +19,49 @@ else
 export TOPDIR := $(CURDIR)/../
 endif
 
-export OPENSSL_DIR := $(TOPDIR)/../../../third_party/openssl
+ifneq (${TARGET_BOARD_PLATFORM},)
+export TARGET_BOARD_PLATFORM := ${TARGET_BOARD_PLATFORM}
+else
+export TARGET_BOARD_PLATFORM := oh_64
+endif
+
+ifneq (${FRAMEWORK_ELF_PATH},)
+export FRAMEWORK_ELF_PATH := ${FRAMEWORK_ELF_PATH}
+else
+export FRAMEWORK_ELF_PATH := $(TOPDIR)/elf_out
+endif
+
+ifneq (${TEE_COMPILER_DIR},)
+export TEE_COMPILER_DIR := ${TEE_COMPILER_DIR}
+else
+export TEE_COMPILER_DIR := $(TOPDIR)/../../../../tools/llvm
+endif
+
+ifneq (${LLVM_BASEVER},)
+export LLVM_BASEVER := ${LLVM_BASEVER}
+else
+export LLVM_BASEVER := 15.0.4
+endif
+
+ifneq ($(THIRDPARTY),)
+	export THIRDPARTY := $(THIRDPARTY)
+else
+	# Try to find third_party directory in default places
+	IS_THIRDPARTY_EMPTY := $(wildcard $(TOPDIR)/../third_party/*)
+	ifneq ($(IS_THIRDPARTY_EMPTY),)
+		export THIRDPARTY := $(TOPDIR)/../third_party/
+	endif
+
+	IS_THIRDPARTY_EMPTY := $(wildcard $(TOPDIR)/../../../third_party/*)
+	ifneq ($(IS_THIRDPARTY_EMPTY),)
+		export THIRDPARTY := $(TOPDIR)/../../../third_party/
+	endif
+endif
+
+export TEE_CLANG_DIR := ${TEE_COMPILER_DIR}/bin
+export TEE_SECUREC_DIR := $(THIRDPARTY)/bounds_checking_function
+export OPENSSL_DIR := $(THIRDPARTY)/openssl
+
 export OLD_TOPDIR := $(TOPDIR)/config
 export TOOLS      := $(TOPDIR)/build/tools
 export VER
@@ -43,12 +85,8 @@ export BUILD_CFI := $(TOPDIR)/build/mk/common/cfi
 export BUILD_CONFIG := $(TOPDIR)/build/mk/common/config
 export BUILD_OPERATION := $(TOPDIR)/build/mk/common/operation
 
-## if O=xxx, using outsize output directory.
-ifneq ($(O),)
-export OUTPUTDIR := $(O)
-else
+export PREBUILD_ROOT := $(TOPDIR)/prebuild
 export OUTPUTDIR := $(TOPDIR)/output
-endif
 
 export SDK_VER := tee-kernel-local-release
 
@@ -76,7 +114,7 @@ GEN_CONF_FILE:
 	rm -rf $(PREBUILD_DIR)/headers/.config
 	cat $(CONFIG_FILE) | tee $(PREBUILD_DIR)/headers/.config
 
-PATCH_OPENSSL:=$(shell $(TOPDIR)/lib/teelib/libopenssl/build_openssl.sh $(TOPDIR))
+PATCH_OPENSSL:=$(shell $(TOPDIR)/lib/teelib/libopenssl/build_openssl.sh $(THIRDPARTY) $(TOPDIR))
 
 export PLAT_CFG_DIR := $(PLATFORM_DIR)/$(PLATFORM_NAME)/$(PRODUCT_NAME)/$(CHIP_NAME)/plat_cfg
 export PLAT_COMMON_DIR := $(PLATFORM_DIR)/common
@@ -102,8 +140,8 @@ $(drivers): setup_links libs link_libs
 $(frameworks): setup_links libs link_libs
 $(service): setup_links libs link_libs
 package: check_sym
-	@mkdir $(FRAMEWORK_ELF_PATH)
-	@mkdir $(FRAMEWORK_ELF_PATH)/apps
+	@mkdir -p $(FRAMEWORK_ELF_PATH)
+	@mkdir -p $(FRAMEWORK_ELF_PATH)/apps
 	cp -a $(product_apps) $(FRAMEWORK_ELF_PATH)/apps
 
 ifeq ($(CONFIG_SUPPORT_64BIT),)
@@ -188,7 +226,7 @@ release:
 
 PHONY += clean
 clean: clean_links
-	sh $(TOPDIR)/lib/teelib/libopenssl/clean_openssl.sh  $(TOPDIR)
+	sh $(TOPDIR)/lib/teelib/libopenssl/clean_openssl.sh  $(THIRDPARTY) $(TOPDIR)
 	@rm -rf $(OUTPUTDIR)
 	@rm -rf sec_trustedcore.img
 	@rm -rf tools/linker.lds_pp

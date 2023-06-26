@@ -10,7 +10,8 @@
 # See the Mulan PSL v2 for more details.
 set -e
 
-opensslpath="$1/../../../third_party/openssl"
+opensslpath="$1/openssl"
+ln -s "${opensslpath}" ./
 
 cd $opensslpath
 
@@ -18,7 +19,7 @@ cd $opensslpath
 echo "before ./config "
 ./config
 make include/crypto/dso_conf.h
-cp "$1"/lib/teelib/libopenssl/include/opensslconf.h $opensslpath/include/openssl/
-cp "$1"/lib/teelib/libopenssl/include/bn_conf.h $opensslpath/include/crypto/
-patch -p1 < $1/lib/teelib/libopenssl/OpenSSL-customized-modification-unify.patch
+cp "$2"/lib/teelib/libopenssl/include/opensslconf.h $opensslpath/include/openssl/
+cp "$2"/lib/teelib/libopenssl/include/bn_conf.h $opensslpath/include/crypto/
+patch -p1 < $2/lib/teelib/libopenssl/OpenSSL-customized-modification-unify.patch
 

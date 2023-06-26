@@ -11,7 +11,6 @@
  */
 #include "get_spawn_env.h"
 #include <stdlib.h>
-#include <alltypes.h>
 #include <errno.h>
 #include <tee_log.h>
 #include <target_type.h>

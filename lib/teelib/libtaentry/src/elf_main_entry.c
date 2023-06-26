@@ -437,13 +437,6 @@ static TEE_Result open_session_handle(struct init_build_param *init_param,
     return ret;
 }
 
-static void recover_ta_params(uint32_t *param_type)
-{
-    for (uint32_t i = 0; i < TEE_PARAMS_NUM; i++) {
-        uint32_t type = TEE_PARAM_TYPE_GET(*param_type, i);
-    }
-}
-
 static TEE_Result map_params(struct global_to_ta_msg *entry_msg, size_t *map_size, int32_t map_size_size,
                              uint64_t *map_addrs, int32_t map_addrs_size)
 {
@@ -556,7 +549,6 @@ void tee_task_entry(uint32_t init_build, const struct ta_routine_info *append_ar
                 msg_send_elf(cmd, GLOBAL_HANDLE, &ret_msg, sizeof(ret_msg));
                 continue;
             }
-            recover_ta_params(&(entry_msg.param_type));
         }
 
         switch (cmd) {
