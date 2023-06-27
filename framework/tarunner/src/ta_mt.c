@@ -9,6 +9,9 @@
  * PURPOSE.
  * See the Mulan PSL v2 for more details.
  */
+
+#define _GNU_SOURCE
+
 #include "ta_mt.h"
 #include <stdlib.h>
 #include <string.h>

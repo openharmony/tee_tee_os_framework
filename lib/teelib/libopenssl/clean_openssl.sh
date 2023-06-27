@@ -9,8 +9,9 @@
 # PURPOSE.
 # See the Mulan PSL v2 for more details.
 set -e
-cd "$1"/../../../third_party/openssl
+cd "$1"/openssl
 
 git checkout .
 git clean -df
 
+rm -rf $2"/lib/teelib/libopenssl/openssl

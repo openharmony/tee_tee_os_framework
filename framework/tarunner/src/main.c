@@ -10,6 +10,8 @@
  * See the Mulan PSL v2 for more details.
  */
 
+#define _GNU_SOURCE
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
@@ -31,6 +33,8 @@
 #include "load_init.h"
 #include "ta_mt.h"
 #include <ipclib_hal.h>
+#include <mem_ops.h>
+#include <unistd.h>
 
 #define RTLD_TA 0x100000
 #define IPC_CHANNEL_NUM 2

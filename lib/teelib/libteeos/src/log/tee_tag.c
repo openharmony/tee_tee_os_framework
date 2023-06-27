@@ -9,6 +9,8 @@
  * PURPOSE.
  * See the Mulan PSL v2 for more details.
  */
+#define _GNU_SOURCE
+
 #include "tee_tag.h"
 
 #include <securec.h>
@@ -16,6 +18,7 @@
 #include "tee_mem_mgmt_api.h"
 #include "tee_init.h"
 #include <ipclib.h>
+#include <spawn_ext.h>
 #include <unistd.h>
 
 #define DRIVER_TAG_MAX_LEN      25

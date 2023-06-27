@@ -23,6 +23,7 @@
 #include "global_task.h"
 #include "init.h"
 #include <sched.h>
+#include <mem_ops.h>
 
 #define GT_CHANNEL_NUM 2
 

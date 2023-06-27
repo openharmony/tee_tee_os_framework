@@ -67,7 +67,6 @@ struct mempool_state {
 
 static struct dlist_node g_mem_ns;
 static struct mempool_state g_mb_state;
-static struct mempool_state g_rm_state;
 static struct pam_node *g_gt_pam_node = NULL;
 static tee_operation_gtask *g_gt_oper_addr = NULL;
 
@@ -156,6 +155,7 @@ static void free_tee_mem(const void *addr, uint32_t size)
 
 static TEE_Result copy_from_src(uint32_t task_id, void **tee_addr, void *ree_addr, uint32_t size, uint32_t type)
 {
+    (void)type;
     if (tee_addr == NULL || ree_addr == NULL || size == 0) {
         tloge("copy_from_src invalid input\n");
         return TEE_ERROR_BAD_PARAMETERS;
@@ -440,6 +440,7 @@ bool is_opensession_cmd(const smc_cmd_t *cmd)
 static TEE_Result map_memref_for_gtask(bool ta2ta, const smc_cmd_t *cmd, tee_param_32 p,
                                        paddr_t buffer_h_addr, uint32_t type, void **ree_addr)
 {
+    (void)type;
     if (ta2ta) {
         uint64_t tmp_addr;
         if (map_sharemem(cmd->uid, (uint32_t)p.memref.buffer | (buffer_h_addr << SHIFT_OFFSET),
