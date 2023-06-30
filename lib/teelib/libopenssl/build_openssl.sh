@@ -11,7 +11,7 @@
 set -e
 
 opensslpath="$1/openssl"
-ln -s "${opensslpath}" ./
+ln -sf "${opensslpath}" "$2"/lib/teelib/libopenssl/
 
 cd $opensslpath
 
