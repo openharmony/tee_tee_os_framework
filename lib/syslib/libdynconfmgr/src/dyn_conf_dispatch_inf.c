@@ -333,8 +333,11 @@ int32_t tlv_to_uuid(const char *uuid_buff, uint32_t size, struct tee_uuid *uuid)
     }
 
     uint32_t i;
-    uint64_t data[UUID_STRUCT_LEN] = { 0 };
-
+    //TODO
+    uint64_t data[UUID_STRUCT_LEN];
+    for (i = 0; i < UUID_STRUCT_LEN; i++) {
+        data[i] = 0;
+    }
     const char *ptr = uuid_buff;
     uint8_t flag = 0;
     flag |= (uint8_t)(trans_str_to_int(ptr, UUID_TIMELOW_LEN, BASE_OF_HEX, &data[DATA_TIMELOW_IDX]) != 0);

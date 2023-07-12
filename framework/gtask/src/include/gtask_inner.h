@@ -133,7 +133,7 @@ struct ta2ta_info_t {
 #define session_id_of_context(context)    (context & 0x0000ffff)
 
 #define GLOBAL_TSK_ID 0
-#define SMCMGR_PID    1
+#define SMCMGR_PID    6
 #define REET_TSK_ID   SMCMGR_PID
 #define TASK_ID_NULL    0xFFFFFFFF
 

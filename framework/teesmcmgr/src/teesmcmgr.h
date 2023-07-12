@@ -17,7 +17,7 @@
 #include <stdbool.h>
 #include <ipclib.h>
 #include <priorities.h>
-#define SMCMGR_STACK_SIZE  0x2000
+#define SMCMGR_STACK_SIZE  0x8000
 
 #define PAY_LOAD_SIZE 24
 #define MAGIC_MSG "IDLE_0xDEADBEEF"

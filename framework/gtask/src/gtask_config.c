@@ -52,8 +52,10 @@ const struct task_info_st *get_teeos_builtin_task_infos(void)
 #define RPMB_HUK_HEAP_DIV     2
 #define SSA_DEFAULT_HEAP_HEAPMGR_MUL  24
 #define HUK_DEFAULT_HEAP_HEAPMGR_MUL  24
-#define PERM_SRV_STACK_SIZE (DEFAULT_STACK_SIZE * 8)
-#define PERM_SRV_HEAP_SIZE  (DEFAULT_HEAP_SIZE * 3)
+#define HUk_SRV_STACK_SIZE (DEFAULT_STACK_SIZE * 2)
+#define HUK_SRV_HEAP_SIZE  (DEFAULT_HEAP_SIZE * 2)
+#define PERM_SRV_STACK_SIZE (DEFAULT_STACK_SIZE * 16)
+#define PERM_SRV_HEAP_SIZE  (DEFAULT_HEAP_SIZE * 8)
 #define PERM_SRV_DEFAULT_HEAP_HEAPMGR_MUL  (DEFAULT_HEAP_SIZE * 24)
 
 /* build in service propertys for teeos */
@@ -65,7 +67,7 @@ const struct ta_property g_teeos_service_property[] = {
       true, false, false, false, NULL, 0 },
 #endif
 #if (defined TEE_SUPPORT_HUK_SERVICE_32BIT || defined TEE_SUPPORT_HUK_SERVICE_64BIT)
-    { TEE_SERVICE_HUK, DEFAULT_STACK_SIZE / RPMB_HUK_STACK_DIV, DEFAULT_HEAP_SIZE / RPMB_HUK_HEAP_DIV,
+    { TEE_SERVICE_HUK, HUk_SRV_STACK_SIZE, HUK_SRV_HEAP_SIZE,
       true, false, false, false, NULL, 0 },
 #endif
 #if (defined TEE_SUPPORT_PERM_64BIT || defined TEE_SUPPORT_PERM_32BIT)

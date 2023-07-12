@@ -80,9 +80,7 @@ __attribute__((noreturn)) void *tee_idle_thread(void *arg)
     error("StartTZ done\n");
 
     while (1) {
-        debug("calling smc_switch_req\n");
         err = smc_switch_req(CAP_TEESMC_REQ_IDLE);
-        debug("smc_switch_req return err=%x\n", err);
         if (err != 0)
             panic("something wrong");
     }

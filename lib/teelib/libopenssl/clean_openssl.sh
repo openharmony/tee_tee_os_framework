@@ -14,4 +14,6 @@ cd "$1"/openssl
 git checkout .
 git clean -df
 
-rm -rf $2"/lib/teelib/libopenssl/openssl
+if [ -d "$2"/lib/teelib/libopenssl/openssl ]; then
+    rm -rf "$2"/lib/teelib/libopenssl/openssl
+fi

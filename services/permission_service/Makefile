@@ -97,7 +97,7 @@ CPPFLAGS += -DDYN_IMPORT_CERT=1
 CFILES := $(filter-out , $(CFILES))
 endif
 
-CFLAGS += -fvisibility=hidden
+CFLAGS += -fvisibility=hidden -Wno-pointer-to-int-cast
 ifeq ($(CONFIG_CRYPTO_SOFT_ENGINE),openssl)
 CFLAGS += -DOPENSSL_ENABLE
 endif

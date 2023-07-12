@@ -30,7 +30,7 @@ $(BUILD_DIR)/$(TA_NAME): $(BUILD_DIR)/$(TARGETS)
 	cp $< $@
 
 # Libraries
-LIBS := c_shared$(TARG)
+LIBS := c_shared$(TARG) tee_shared$(TARG)
 LDFLAGS += --dynamic-linker=libc_shared$(TARG).so
 
 include $(BUILD_SERVICE)/svc-common.mk

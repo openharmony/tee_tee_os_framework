@@ -48,7 +48,6 @@ static const char *g_tarunner_path = "/tarunner_a32.elf";
 static const char *g_drv_so_path = "libdrv_shared_a32.so";
 static const char *g_tee_share_so_path = "libtee_shared_a32.so";
 #endif
-const char *g_debug_prefix = "tarunner";
 
 static int32_t param_check(int32_t argc, const char * const * argv)
 {

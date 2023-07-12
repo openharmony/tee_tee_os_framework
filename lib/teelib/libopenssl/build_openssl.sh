@@ -17,6 +17,7 @@ cd $opensslpath
 
 # config and generate dso_conf.h
 echo "before ./config "
+chmod +x ./config
 ./config
 make include/crypto/dso_conf.h
 cp "$2"/lib/teelib/libopenssl/include/opensslconf.h $opensslpath/include/openssl/
