@@ -17,6 +17,7 @@
 #include "tee_init.h"
 #include "timer_export.h"
 #include "tee_tag.h"
+#include "teecall.h"
 
 enum log_source_type {
     COMMON_SOURCE = 0,

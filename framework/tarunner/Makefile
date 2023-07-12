@@ -17,7 +17,7 @@ include $(BUILD_CONFIG)/var.mk
 tarunner_c_files := $(wildcard src/*.c)
 
 # Libraries
-LIBS := c_shared${TARG}
+LIBS := c_shared$(TARG) tee_shared$(TARG)
 
 inc-flags += -I$(SYSLIB)/libspawn_common/include/
 inc-flags += -I$(DRVLIB)/libdrv_shared/src/

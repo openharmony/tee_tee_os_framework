@@ -622,6 +622,22 @@ index 53516a06c6..e14c9c638f 100644
  #define SN_hmac         "HMAC"
  #define LN_hmac         "hmac"
  #define NID_hmac                855
+diff --git a/crypto/threads_pthread.c b/crypto/threads_pthread.c
+index 1774a2b2a..870fd3892 100644
+--- a/crypto/threads_pthread.c
++++ b/crypto/threads_pthread.c
+@@ -131,6 +131,12 @@ int CRYPTO_THREAD_init_local(CRYPTO_THREAD_LOCAL *key, void (*cleanup)(void *))
+ 
+ void *CRYPTO_THREAD_get_local(CRYPTO_THREAD_LOCAL *key)
+ {
++    if (key == NULL)
++        return NULL;
++
++    if (*key == 0)
++        pthread_key_create(key, NULL);
++
+     return pthread_getspecific(*key);
+ }
+ 
 -- 
 2.17.1
-

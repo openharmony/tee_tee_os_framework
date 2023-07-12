@@ -53,7 +53,7 @@ struct service_struct *get_cur_service(void)
     return g_cur_service;
 }
 
-static TEE_Result call_ta_invoke_close_session(const smc_cmd_t *cmd, uint32_t cmd_type, uint32_t cmd_id,
+static TEE_Result __attribute__((noinline)) call_ta_invoke_close_session(const smc_cmd_t *cmd, uint32_t cmd_type, uint32_t cmd_id,
                                                global_to_ta_msg *entry_msg)
 {
     TEE_Result ret;

@@ -54,7 +54,7 @@ extern const char *g_debug_prefix;
 #ifdef TLOG_USE_TEE_PRINT
 #define tlogv(fmt, args...) tee_print(LOG_LEVEL_VERBO, "%s %d:" fmt "", TAG_VERB, __LINE__, ##args)
 #else
-#define tlogd(fmt, args...) printf("[%s] %s %d:" fmt " ", g_debug_prefix, TAG_VERB, __LINE__, ##args)
+#define tlogv(fmt, args...) printf("[%s] %s %d:" fmt " ", g_debug_prefix, TAG_VERB, __LINE__, ##args)
 #endif /* TLOG_USE_TEE_PRINT */
 #else
 #define tlogv(fmt, args...) \

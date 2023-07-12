@@ -14,12 +14,6 @@
 
 #include <stdint.h>
 #include <stddef.h>
-static inline int debug_rdr_logitem(char *str, size_t str_len)
-{
-    (void)str;
-    (void)str_len;
-    return 0;
-}
 
 uint8_t get_log_source(const char *driver_tag);
 char *get_log_tag(const char *driver_tag, const char *debug_prefix);
