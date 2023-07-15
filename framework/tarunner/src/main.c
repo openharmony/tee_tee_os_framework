@@ -42,12 +42,11 @@
 #ifdef __aarch64__
 static const char *g_tarunner_path = "/tarunner.elf";
 static const char *g_drv_so_path = "libdrv_shared.so";
-static const char *g_tee_share_so_path = "libtee_shared.so";
 #else
 static const char *g_tarunner_path = "/tarunner_a32.elf";
 static const char *g_drv_so_path = "libdrv_shared_a32.so";
-static const char *g_tee_share_so_path = "libtee_shared_a32.so";
 #endif
+const char *g_debug_prefix = "tarunner";
 
 static int32_t param_check(int32_t argc, const char * const * argv)
 {
@@ -151,11 +150,14 @@ static int32_t create_task_channel(const char *task_name, const struct env_param
     return 0;
 }
 
-static int32_t init1(const char *task_name, const struct env_param *param, cref_t *drv_channel)
+static int32_t init(const char *task_name, const struct env_param *param, cref_t *drv_channel)
 {
     int32_t ret;
 
     load_info_print(task_name, param);
+
+    /* modify g_debug_prefix */
+    g_debug_prefix = task_name;
 
     /* Extend utable for drv or agent, such as SSA */
     if ((param->target_type == DRV_TARGET_TYPE) || extend_one_more_utable(task_name)) {
@@ -175,35 +177,6 @@ static int32_t init1(const char *task_name, const struct env_param *param, cref_
         tloge("file io init failed: %d\n", ret);
         return -1;
     }
-
-    return 0;
-}
-
-static int32_t init2(void *libtee, const char *task_name, uint32_t target_type)
-{
-    const void **pp = NULL;
-    int32_t (*func)(void) = NULL;
-
-    /* Change debug prefix */
-    pp = dlsym(libtee, "g_debug_prefix");
-    if (pp != NULL)
-        *pp = task_name;
-
-    (void)target_type;
-    (void)func;
-    return 0;
-}
-
-static int32_t library_init(const char *task_name, const struct env_param *param, void **libtee)
-{
-    /* Load TEE library */
-    *libtee = ta_mt_dlopen(g_tee_share_so_path, RTLD_NOW | RTLD_GLOBAL | RTLD_TA);
-    if (*libtee == NULL)
-        return -1;
-
-    /* TEE library initialization */
-    if (init2(*libtee, task_name, param->target_type) != 0)
-        return -1;
 
     return 0;
 }
@@ -459,11 +432,7 @@ __attribute__((visibility("default"))) int32_t main(int32_t argc, const char * c
         goto err_out;
 
     /* task context initialization */
-    if (init1(argv[ARGV_TASK_NAME_INDEX], &param, &drv_channel) != 0)
-        goto err_out;
-
-    /* load tee library and init it */
-    if (library_init(argv[ARGV_TASK_NAME_INDEX], &param, &libtee) != 0)
+    if (init(argv[ARGV_TASK_NAME_INDEX], &param, &drv_channel) != 0)
         goto err_out;
 
     if (param.target_type == DRV_TARGET_TYPE) {
