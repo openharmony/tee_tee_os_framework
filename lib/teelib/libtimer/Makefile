@@ -25,6 +25,12 @@ else
 inc-flags += -I$(TEELIB)/libtimer/include/aarch64
 endif
 
+ifneq ($(findstring $(CONFIG_CRYPTO_SOFT_ENGINE), openssl openssl3),)
+inc-flags += -I$(TEELIB)/libopenssl/openssl/include
+inc-flags += -I$(TEELIB)/libopenssl/openssl/crypto
+endif
+
+
 # Source files required to build the target
 ifeq ($(CONFIG_OFF_DRV_TIMER), y)
 libtimer_c_files := $(wildcard src/*.c)

@@ -45,6 +45,12 @@ inc-flags += -I$(DRIVERS_PATH)/include
 inc-flags += -I$(DRIVERS_PATH)/tee_misc_driver/src
 inc-flags += -I$(TEELIB)/libteemem/include
 
+ifneq ($(findstring $(CONFIG_CRYPTO_SOFT_ENGINE), openssl openssl3),)
+inc-flags += -I$(TEELIB)/libopenssl/openssl/include
+inc-flags += -I$(TEELIB)/libopenssl/openssl/crypto
+endif
+
+
 # Source files required to build the target
 libteeconfig_c_files += $(wildcard src/drv_hal/*.c)
 libteeconfig_c_files += $(wildcard src/tee_config/*.c)

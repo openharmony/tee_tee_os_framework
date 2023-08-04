@@ -36,7 +36,7 @@ CPPFLAGS += -I$(TOPDIR)/libs/libcrypto_common
 CPPFLAGS += -I$(TEELIB)/libteeagentcommon_client/include
 CPPFLAGS += -I$(TEELIB)/libipc_hal/include
 
-ifeq ($(CONFIG_CRYPTO_SOFT_ENGINE), openssl)
+ifneq ($(findstring $(CONFIG_CRYPTO_SOFT_ENGINE), openssl openssl3),)
 CPPFLAGS += -I$(TEELIB)/libopenssl/openssl/include
 CPPFLAGS += -I$(TEELIB)/libopenssl/openssl/crypto
 endif

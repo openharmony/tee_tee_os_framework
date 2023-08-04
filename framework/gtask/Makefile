@@ -132,4 +132,6 @@ flags += -DTA_LOG_LEVEL=2
 
 ifeq ($(CONFIG_CRYPTO_SOFT_ENGINE),openssl)
 flags += -DOPENSSL_ENABLE
+else ifeq ($(CONFIG_CRYPTO_SOFT_ENGINE),openssl3)
+flags += -DOPENSSL3_ENABLE
 endif

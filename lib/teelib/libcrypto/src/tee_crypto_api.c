@@ -474,7 +474,7 @@ void TEE_FreeOperation(TEE_OperationHandle operation)
     delete_operation((const TEE_OperationHandle)operation);
     TEE_Free(operation);
 #ifdef OPENSSL_ENABLE
-    tee_crypto_free_opensssl_drbg();
+    tee_crypto_free_openssl_drbg();
 #endif
 }
 
@@ -564,7 +564,7 @@ void TEE_ResetOperation(TEE_OperationHandle operation)
         operation->handleState &= ~TEE_HANDLE_FLAG_INITIALIZED;
     crypto_unlock_operation(operation);
 #ifdef OPENSSL_ENABLE
-    tee_crypto_free_opensssl_drbg();
+    tee_crypto_free_openssl_drbg();
 #endif
 }
 
@@ -2218,7 +2218,7 @@ void TEE_GenerateRandom(void *randomBuffer, size_t randomBufferLen)
     }
     tee_crypto_generate_random(randomBuffer + left, randomBufferLen, false);
 #ifdef OPENSSL_ENABLE
-    tee_crypto_free_opensssl_drbg();
+    tee_crypto_free_openssl_drbg();
 #endif
     return;
 }

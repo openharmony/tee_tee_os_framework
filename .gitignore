@@ -1,0 +1,6 @@
+.cache/
+output/
+prebuild/
+compile_commands.json
+.vscode/
+lib/teelib/libopenssl/openssl/

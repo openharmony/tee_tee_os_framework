@@ -11,10 +11,9 @@
  */
 
 #include "tee_crypto_signature_verify.h"
-#ifdef OPENSSL_ENABLE
+#if defined(OPENSSL_ENABLE) || defined (OPENSSL3_ENABLE)
 #include <openssl/obj_mac.h>
 #include <openssl/evp.h>
-#include <evp/evp_local.h>
 #include <openssl/sha.h>
 #include <openssl/bn.h>
 #include <openssl/rsa.h>

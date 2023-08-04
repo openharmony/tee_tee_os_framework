@@ -60,7 +60,6 @@ endif
 
 export TEE_CLANG_DIR := ${TEE_COMPILER_DIR}/bin
 export TEE_SECUREC_DIR := $(THIRDPARTY)/bounds_checking_function
-export OPENSSL_DIR := $(THIRDPARTY)/openssl
 
 export OLD_TOPDIR := $(TOPDIR)/config
 export TOOLS      := $(TOPDIR)/build/tools
@@ -99,6 +98,7 @@ include $(BUILD_CONFIG)/var.mk
 include $(BUILD_CONFIG)/plat_config_file.mk
 
 PHONY += GEN_CONF_FILE PATCH_OPENSSL
+
 GEN_CONF_FILE:
 	echo "generated platautoconf.h "
 	rm -rf $(PLAT_AUTOCONF_FILE)
@@ -114,7 +114,10 @@ GEN_CONF_FILE:
 	rm -rf $(PREBUILD_DIR)/headers/.config
 	cat $(CONFIG_FILE) | tee $(PREBUILD_DIR)/headers/.config
 
-PATCH_OPENSSL:=$(shell $(TOPDIR)/lib/teelib/libopenssl/build_openssl.sh $(THIRDPARTY) $(TOPDIR))
+PATCH_OPENSSL:
+	@bash $(TOPDIR)/lib/teelib/libopenssl/build_openssl.sh $(THIRDPARTY) $(TOPDIR)
+
+export CONFIG_CRYPTO_SOFT_ENGINE := $(CONFIG_CRYPTO_SOFT_ENGINE)
 
 export PLAT_CFG_DIR := $(PLATFORM_DIR)/$(PLATFORM_NAME)/$(PRODUCT_NAME)/$(CHIP_NAME)/plat_cfg
 export PLAT_COMMON_DIR := $(PLATFORM_DIR)/common
@@ -226,7 +229,7 @@ release:
 
 PHONY += clean
 clean: clean_links
-	sh $(TOPDIR)/lib/teelib/libopenssl/clean_openssl.sh  $(THIRDPARTY) $(TOPDIR)
+	bash $(TOPDIR)/lib/teelib/libopenssl/clean_openssl.sh $(TOPDIR)
 	@rm -rf $(OUTPUTDIR)
 	@rm -rf sec_trustedcore.img
 	@rm -rf tools/linker.lds_pp

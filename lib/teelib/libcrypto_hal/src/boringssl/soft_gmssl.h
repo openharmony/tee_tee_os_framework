@@ -14,6 +14,7 @@
 
 #include <tee_defines.h>
 #include <crypto_driver_adaptor.h>
+#include <openssl/evp.h>
 
 int32_t sm3_digest_init(struct ctx_handle_t *ctx);
 
@@ -51,4 +52,5 @@ int32_t sm2_generate_keypair(uint32_t key_size, uint32_t curve,
 int32_t soft_copy_gmssl_info(struct ctx_handle_t *dest, const struct ctx_handle_t *src);
 
 void free_sm4_context(uint64_t *ctx);
+
 #endif

@@ -390,7 +390,7 @@ int32_t tee_crypto_generate_random(void *buffer, uint32_t size, bool is_hw_rand)
 }
 
 #ifdef OPENSSL_ENABLE
-void tee_crypto_free_opensssl_drbg(void)
+void tee_crypto_free_openssl_drbg(void)
 {
     free_openssl_drbg_mem();
 }

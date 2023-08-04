@@ -8,12 +8,6 @@
 # IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT FOR A PARTICULAR
 # PURPOSE.
 # See the Mulan PSL v2 for more details.
-set -e
-cd "$1"/openssl
 
-git checkout .
-git clean -df
+rm -rf "$1"/lib/teelib/libopenssl/openssl
 
-if [ -d "$2"/lib/teelib/libopenssl/openssl ]; then
-    rm -rf "$2"/lib/teelib/libopenssl/openssl
-fi

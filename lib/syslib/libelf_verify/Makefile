@@ -18,10 +18,16 @@ CFILES := $(patsubst $(SOURCE_DIR)/%,%,$(wildcard $(SOURCE_DIR)/src/tee_load_ext
 CFILES += $(patsubst $(SOURCE_DIR)/%,%,$(wildcard $(SOURCE_DIR)/src/tee_elf_verify.c))
 CFILES += $(patsubst $(SOURCE_DIR)/%,%,$(wildcard $(SOURCE_DIR)/src/tee_load_key_ops.c))
 
+ifeq ($(CONFIG_ELF_DECRYPT_ENABLE),y)
+CFLAGS += -DELF_DECRYPT_ENABLE
+CFILES += $(patsubst $(SOURCE_DIR)/%,%,$(wildcard $(SOURCE_DIR)/src/tee_load_dec_key_ops.c))
 ifeq ($(CONFIG_CRYPTO_SOFT_ENGINE), mbedtls)
 CFILES += $(patsubst $(SOURCE_DIR)/%,%,$(wildcard $(SOURCE_DIR)/src/tee_elf_verify_mbedtls.c))
 else
 CFILES += $(patsubst $(SOURCE_DIR)/%,%,$(wildcard $(SOURCE_DIR)/src/tee_elf_verify_openssl.c))
+endif
+else
+CFILES += $(patsubst $(SOURCE_DIR)/%,%,$(wildcard $(SOURCE_DIR)/src/tee_elf_verify_stub.c))
 endif
 
 ifneq ($(findstring y, $(CONFIG_APP_TEE_PERM) $(CONFIG_APP_TEE_PERM_A32)),)
@@ -62,7 +68,7 @@ CPPFLAGS += -I$(TEELIB)/libtimer/include/
 CPPFLAGS += -I$(SYSLIB)/libspawn_common/include/
 CPPFLAGS += -I$(TEELIB)/libdrv/include
 
-ifeq ($(CONFIG_CRYPTO_SOFT_ENGINE), openssl)
+ifneq ($(findstring $(CONFIG_CRYPTO_SOFT_ENGINE), openssl openssl3),)
 CPPFLAGS += -I$(TEELIB)/libopenssl/openssl/include
 CPPFLAGS += -I$(TEELIB)/libopenssl/openssl/crypto
 endif
@@ -71,7 +77,11 @@ endif
 CPPFLAGS += -I$(SOURCE_DIR)/include/
 CPPFLAGS += -I$(TEELIB)/libteeagentcommon_client/include
 
+ifeq ($(CONFIG_CRYPTO_SOFT_ENGINE), openssl3)
+CFLAGS += -DOPENSSL3_ENABLE
+else 
 CFLAGS += -DOPENSSL_ENABLE
+endif
 
 ifeq ($(CONFIG_DYN_TA_FORMAT),1)
 CFLAGS += -DDYN_TA_SUPPORT_V3
