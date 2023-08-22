@@ -20,13 +20,3 @@ TEE_Result get_config_cert_param(cert_param_t *cert_param, struct sign_config_t 
     (void)config;
     return TEE_SUCCESS;
 }
-
-TEE_Result oh_get_verify_key(void **key, const struct sign_config_t *config, cert_param_t *cert_param)
-{
-    (void)key;
-    (void)config;
-    (void)cert_param;
-    tloge("should support permission service\n");
-    return TEE_ERROR_GENERIC;
-}
-
