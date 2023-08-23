@@ -44,28 +44,3 @@ TEE_Result get_config_cert_param(cert_param_t *cert_param, struct sign_config_t 
     ta_payload->conf_registed = true;
     return TEE_SUCCESS;
 }
-
-TEE_Result oh_get_verify_key(void **key, const struct sign_config_t *config, cert_param_t *cert_param)
-{
-    TEE_Result ret;
-    if (config == NULL || cert_param == NULL || key == NULL)
-        return TEE_ERROR_BAD_PARAMETERS;
-
-    uint32_t alg = config->sign_ta_alg;
-    uint32_t ca_type = get_ca_type();
-    if (ca_type == CA_PUBLIC) {
-        *key = &(cert_param->public_key);
-        ret = TEE_SUCCESS;
-    } else if (ca_type == CA_PRIVATE) {
-        if (cert_param->cert_type == TA_DEBUG_CERT) {
-            *key = &(cert_param->public_key);
-            ret = TEE_SUCCESS;
-        } else {
-            ret = oh_get_ta_pub_key(key, alg);
-        }
-    } else {
-        tloge("the ca type is invalid\n");
-        ret = TEE_ERROR_GENERIC;
-    }
-    return ret;
-}

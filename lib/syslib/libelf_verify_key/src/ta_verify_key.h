@@ -32,5 +32,4 @@ struct ta_verify_key {
 };
 
 TEE_Result get_ta_verify_pubkey(struct ta_verify_key *key_info);
-TEE_Result oh_get_ta_pub_key(void **key, uint32_t alg);
 #endif

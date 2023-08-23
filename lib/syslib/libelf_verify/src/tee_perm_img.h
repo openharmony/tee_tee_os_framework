@@ -25,7 +25,6 @@ struct sign_config_t {
     bool is_oh;
 };
 
-TEE_Result oh_get_verify_key(void **key, const struct sign_config_t *config, cert_param_t *cert_param);
 TEE_Result get_config_cert_param(cert_param_t *cert_param, struct sign_config_t *config);
 
 #endif

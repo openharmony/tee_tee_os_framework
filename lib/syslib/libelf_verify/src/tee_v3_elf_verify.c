@@ -639,9 +639,6 @@ static TEE_Result get_signature_verify_key(void **key, const struct sign_config_
 
     struct ta_verify_key verify_key = { config->key_len, config->key_style, NULL };
 
-    if (config->is_oh)
-        return oh_get_verify_key(key, config, cert_param);
-
     if (ta_payload->payload_hdr.ta_conf_size != 0) {
         if (ta_local_sign_check()) {
             *key = &(cert_param->public_key);
