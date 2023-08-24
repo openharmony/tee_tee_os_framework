@@ -33,7 +33,7 @@
 #include "tee_elf_verify_openssl.h"
 #include "ipclib.h"
 #include <sys/mman.h>
-#ifdef OPENSSL_ENABLE
+#if defined(OPENSSL_ENABLE) || defined(OPENSSL3_ENABLE)
 #include <openssl/obj_mac.h>
 #endif
 
@@ -718,6 +718,19 @@ static TEE_Result do_ta_image_verify(uint8_t *signature, uint32_t signature_size
 
     tlogd("signature VerifyDigest success\n");
     return TEE_SUCCESS;
+}
+
+static void print_ta_sign_algorithm_info(const struct sign_config_t *config)
+{
+    if (config == NULL)
+        return;
+
+    ta_cipher_layer_t *ta_cipher_layer = get_ta_cipher_layer();
+
+    tloge("sec config info:sign_alg=0x%x, key_len=%u, hash_size=%zu, hash_padding=%s, key_style=%s\n",
+        ta_cipher_layer->cipher_hdr.signature_alg, config->key_len, config->hash_size,
+        config->padding == RSA_PKCS1_PSS_PADDING ? "PKCS1_PSS" : "PKCS1",
+        config->key_style == PUB_KEY_RELEASE ? "release" : "debug");
 }
 
 TEE_Result tee_secure_img_signature_verify(const uint8_t *plaintext_payload, uint32_t plaintext_size,

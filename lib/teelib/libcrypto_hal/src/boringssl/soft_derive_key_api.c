@@ -11,9 +11,11 @@
  */
 
 #include "soft_derive_key_api.h"
-#include <ec/ec_local.h>
 #include <crypto/evp.h>
+#ifdef CRYPTO_SUPPORT_SOFT_ECC
+#include <ec/ec_local.h>
 #include <openssl/ecdh.h>
+#endif
 #include <openssl/evp.h>
 #include <securec.h>
 #include <tee_log.h>
@@ -39,6 +41,7 @@ static EVP_MD *get_pbkdf_digest_type(uint32_t digest_type)
     }
 }
 
+#ifdef CRYPTO_SUPPORT_SOFT_ECC
 static int32_t x25519_derive_key(const struct ecc_pub_key_t *client_key, const struct ecc_priv_key_t *server_key,
     uint8_t *out_shared_key, uint32_t *out_share_key_len)
 {
@@ -159,6 +162,19 @@ int32_t soft_crypto_ecdh_derive_key(uint32_t alg_type, const struct ecc_pub_key_
     }
     return CRYPTO_SUCCESS;
 }
+#else
+int32_t soft_crypto_ecdh_derive_key(uint32_t alg_type, const struct ecc_pub_key_t *client_key,
+    const struct ecc_priv_key_t *server_key, const struct asymmetric_params_t *ec_params,
+    struct memref_t *secret)
+{
+    (void)alg_type;
+    (void)client_key;
+    (void)server_key;
+    (void)ec_params;
+    (void)secret;
+    return CRYPTO_NOT_SUPPORTED;
+}
+#endif
 
 int32_t soft_crypto_pbkdf2(const struct memref_t *password, const struct memref_t *salt,
     uint32_t iterations, uint32_t digest_type, struct memref_t *data_out)

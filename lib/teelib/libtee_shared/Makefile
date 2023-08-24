@@ -72,8 +72,12 @@ ld-flags := -lcrypto_hal$(TARG) -ltimer$(TARG) -lagent$(TARG) -lagent_base$(TARG
 
 ifeq ($(CONFIG_CRYPTO_SOFT_ENGINE),mbedtls)
 ld-flags += -lmbedtls${TARG}
+else ifeq ($(CONFIG_CRYPTO_SOFT_ENGINE),openssl3)
+ld-flags += -lopenssl${TARG}
+flag += -DOPENSSL3_ENABLE
 else
 ld-flags += -lopenssl${TARG}
+flag += -DOPENSSL_ENABLE
 endif
 
 ifeq ($(findstring true, $(CONFIG_SE_SERVICE_32BIT) $(CONFIG_SE_SERVICE_64BIT)), true)

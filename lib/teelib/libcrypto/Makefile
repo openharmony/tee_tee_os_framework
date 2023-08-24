@@ -37,11 +37,17 @@ endif
 CFLAGS += -DMAX_SRC_SIZE=512000
 A32_CFLAGS += -DMAX_SRC_SIZE=512000
 
+ifneq ($(findstring $(CONFIG_CRYPTO_SOFT_ENGINE), openssl openssl3),)
+CPPFLAGS += -I$(TEELIB)/libopenssl/openssl/include
+CPPFLAGS += -I$(TEELIB)/libopenssl/openssl/crypto
+endif
+
 ifeq ($(CONFIG_CRYPTO_SOFT_ENGINE), openssl)
 CFLAGS += -DOPENSSL_ENABLE
 A32_CFLAGS += -DOPENSSL_ENABLE
-CPPFLAGS += -I$(OPENSSL_DIR)/include
-CPPFLAGS += -I$(OPENSSL_DIR)/crypto
+else ifeq ($(CONFIG_CRYPTO_SOFT_ENGINE), openssl3)
+CFLAGS += -DOPENSSL3_ENABLE
+A32_CFLAGS += -DOPENSSL3_ENABLE
 endif
 
 ifeq (${TARG}, _a32)

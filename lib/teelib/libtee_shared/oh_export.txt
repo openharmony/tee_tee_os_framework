@@ -216,8 +216,14 @@ ECDSA_SIG_new;
 ECDSA_SIG_set0;
 ECDSA_do_verify;
 ED25519_public_from_private;
+#ifdef OPENSSL_ENABLE
 ED25519_sign;
 ED25519_verify;
+#endif
+#ifdef OPENSSL3_ENABLE
+ossl_ed25519_sign;
+ossl_ed25519_verify;
+#endif
 
 SHA256_Init;
 SHA256_Update;

@@ -41,6 +41,6 @@ struct ctx_handle_t *driver_alloc_ctx_handle(uint32_t alg_type, uint32_t engine,
 int64_t get_ctx_fd_handle(uint32_t alg_type, bool is_copy_ctx);
 int32_t driver_ctx_buffer_prepare(const struct ctx_handle_t *src_ctx, struct ctx_handle_t *dest_ctx);
 #ifdef OPENSSL_ENABLE
-void tee_crypto_free_opensssl_drbg(void);
+void tee_crypto_free_openssl_drbg(void);
 #endif
 #endif

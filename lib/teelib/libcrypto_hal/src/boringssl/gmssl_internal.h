@@ -14,11 +14,18 @@
 
 #include <crypto_driver_adaptor.h>
 #include <crypto/sm2.h>
+#ifdef OPENSSL3_ENABLE
+#include <internal/sm3.h>
+#else
 #include <crypto/sm3.h>
+#endif
 #include <crypto/sm4.h>
 #include <crypto/evp.h>
 #include <openssl/evp.h>
+#ifdef CRYPTO_SUPPORT_SOFT_ECC
 #include <openssl/ec.h>
+#include <ec/ec_local.h>
+#endif
 #include "crypto/ec.h"
 #include <openssl/ossl_typ.h>
 #include <openssl/crypto.h>
@@ -27,7 +34,6 @@
 #include <openssl/rand.h>
 #include <openssl/asn1.h>
 #include <openssl/asn1t.h>
-#include <ec/ec_local.h>
 #include <bn/bn_local.h>
 #include <tee_log.h>
 #include <tee_crypto_api.h>
@@ -66,6 +72,7 @@
 #define SM2_SIG_LEN              64
 #define SM2_MAX_PLAINTEXT_LENGTH 1024
 
+#ifdef CRYPTO_SUPPORT_SOFT_SM2
 struct sm2_public_key {
     uint8_t sm2_x[KEY_SIZE_2 + 1];
     uint8_t sm2_y[KEY_SIZE_2 + 1];
@@ -117,4 +124,5 @@ struct sm2_new_ec_group_t {
     const char *h_hex;
 };
 
+#endif
 #endif

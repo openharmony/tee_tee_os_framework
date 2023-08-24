@@ -84,7 +84,7 @@ inc-flags += -I$(SERVICES_PATH)/permission_service/src/anti_rollback
 inc-flags += -I$(SERVICES_PATH)/permission_service/src/auth/tee_auth_sign_rsa.h
 inc-flags += -I$(PREBUILD_HEADER)/sys
 
-ifeq ($(CONFIG_CRYPTO_SOFT_ENGINE), openssl)
+ifneq ($(findstring $(CONFIG_CRYPTO_SOFT_ENGINE), openssl openssl3),)
 inc-flags += -I$(TEELIB)/libopenssl/openssl/include
 inc-flags += -I$(TEELIB)/libopenssl/openssl/crypto
 inc-flags += -I$(TEELIB)/libopenssl/openssl/crypto/include
@@ -98,7 +98,9 @@ CFILES := $(filter-out , $(CFILES))
 endif
 
 CFLAGS += -fvisibility=hidden -Wno-pointer-to-int-cast
-ifeq ($(CONFIG_CRYPTO_SOFT_ENGINE),openssl)
+ifeq ($(CONFIG_CRYPTO_SOFT_ENGINE), openssl3)
+CFLAGS += -DOPENSSL3_ENABLE
+else
 CFLAGS += -DOPENSSL_ENABLE
 endif
 

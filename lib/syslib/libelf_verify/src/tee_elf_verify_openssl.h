@@ -53,7 +53,6 @@ struct ecc_derive_data_st {
 
 TEE_Result tee_secure_img_decrypt_cipher_layer(const uint8_t *cipher_layer, uint32_t cipher_size,
     uint8_t *plaintext_layer, uint32_t *plaintext_size);
-void print_ta_sign_algorithm_info(const struct sign_config_t *config);
 RSA *get_ta_verify_key(void);
 int32_t aes_cbc_256_decrypt(const uint8_t *key, const uint8_t *iv,
     const uint8_t *in, uint32_t in_len, uint8_t *out);

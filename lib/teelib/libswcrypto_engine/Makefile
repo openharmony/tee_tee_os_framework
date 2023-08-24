@@ -23,7 +23,7 @@ inc-flags += -I$(TEELIB)/libhuk/include
 inc-flags += -I$(TEELIB)/libtee_shared/include
 inc-flags += -I$(PREBUILD_HEADER)/sys
 
-ifeq ($(CONFIG_CRYPTO_SOFT_ENGINE), openssl)
+ifneq ($(findstring $(CONFIG_CRYPTO_SOFT_ENGINE), openssl openssl3),)
 inc-flags += -I$(TEELIB)/libopenssl/openssl/include
 inc-flags += -I$(TEELIB)/libopenssl/openssl/crypto
 endif
@@ -60,7 +60,11 @@ else
 libswcrypto_engine_c_files := $(filter-out src/aes_wrapper.c, $(libswcrypto_engine_c_files))
 endif
 
-c-flags += -DOPENSSL_ENABLE
+ifeq ($(CONFIG_CRYPTO_SOFT_ENGINE),openssl3)
+    c-flags += -DOPENSSL3_ENABLE
+else
+    c-flags += -DOPENSSL_ENABLE
+endif
 libswcrypto_engine_c_files := $(filter-out src/stub/rsa_wrapper_stub.c, $(libswcrypto_engine_c_files))
 
 include $(BUILD_LIB)/lib-common.mk

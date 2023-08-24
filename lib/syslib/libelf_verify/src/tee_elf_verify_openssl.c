@@ -64,19 +64,6 @@ TEE_Result tee_secure_img_decrypt_cipher_layer(const uint8_t *cipher_layer, uint
     return TEE_SUCCESS;
 }
 
-void print_ta_sign_algorithm_info(const struct sign_config_t *config)
-{
-    if (config == NULL)
-        return;
-
-    ta_cipher_layer_t *ta_cipher_layer = get_ta_cipher_layer();
-
-    tloge("sec config info:sign_alg=0x%x, key_len=%u, hash_size=%zu, hash_padding=%s, key_style=%s\n",
-        ta_cipher_layer->cipher_hdr.signature_alg, config->key_len, config->hash_size,
-        config->padding == RSA_PKCS1_PSS_PADDING ? "PKCS1_PSS" : "PKCS1",
-        config->key_style == PUB_KEY_RELEASE ? "release" : "debug");
-}
-
 static void free_rsa_bn_n(BIGNUM *bn_n, BIGNUM *bn_e, BIGNUM *bn_d, BIGNUM *bn_p)
 {
     BN_free(bn_n);
@@ -740,15 +727,4 @@ void free_private_key(RSA *priv_key)
 {
     if (priv_key != NULL)
         RSA_free(priv_key);
-}
-
-RSA *get_ta_verify_key(void)
-{
-    struct ta_verify_key verify_key = { PUB_KEY_2048_BITS, PUB_KEY_RELEASE, NULL};
-
-    TEE_Result ret = get_ta_verify_pubkey(&verify_key);
-    if (ret != TEE_SUCCESS || verify_key.key == NULL)
-        return NULL;
-
-    return rsa_build_public_key(verify_key.key);
 }

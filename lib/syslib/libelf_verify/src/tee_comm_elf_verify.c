@@ -23,6 +23,9 @@
 #include "tee_load_key_ops.h"
 #include "tee_crypto_hal.h"
 #include <sys/mman.h>
+#ifdef OPENSSL3_ENABLE
+#include <openssl/rsa.h>
+#endif
 
 TEE_Result tee_secure_img_header_check(uint32_t img_version)
 {

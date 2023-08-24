@@ -16,9 +16,11 @@
 #include <openssl/sha.h>
 #include <openssl/hmac.h>
 #include <openssl/cmac.h>
-#ifdef CONFIG_CRYPTO_SUPPORT_SIPHASH
+#ifdef OPENSSL_ENABLE
 #include <crypto/siphash.h>
 #include <siphash/siphash_local.h>
+#elif defined OPENSSL3_ENABLE
+#include <crypto/siphash.h>
 #endif
 #include <openssl/rand.h>
 #include <securec.h>
@@ -192,7 +194,7 @@ static int32_t soft_copy_hmac_info(struct ctx_handle_t *dest, const struct ctx_h
     return CRYPTO_SUCCESS;
 }
 
-#ifdef CONFIG_CRYPTO_SUPPORT_SIPHASH
+#if defined(OPENSSL_ENABLE) || defined (OPENSSL3_ENABLE)
 static int32_t soft_copy_siphash_info(struct ctx_handle_t *dest, const struct ctx_handle_t *src)
 {
     TEE_Free((void *)(uintptr_t)(dest->ctx_buffer));
@@ -239,7 +241,7 @@ static struct soft_ctx_copy g_soft_copy_ctx[] = {
     { CRYPTO_TYPE_HMAC_SHA256, soft_copy_hmac_info },
     { CRYPTO_TYPE_HMAC_SHA384, soft_copy_hmac_info },
     { CRYPTO_TYPE_HMAC_SHA512, soft_copy_hmac_info },
-#ifdef CONFIG_CRYPTO_SUPPORT_SIPHASH
+#if defined(OPENSSL_ENABLE) || defined (OPENSSL3_ENABLE)
     { CRYPTO_TYPE_SIP_HASH, soft_copy_siphash_info },
 #endif
     { CRYPTO_TYPE_SM4_ECB, soft_copy_gmssl_info },
@@ -306,6 +308,7 @@ int32_t get_boring_nid_by_tee_curve(uint32_t tee_domain, uint32_t *nid)
     return CRYPTO_BAD_PARAMETERS;
 }
 
+#ifdef OPENSSL_ENABLE
 int32_t get_openssl_rand(unsigned char *buf, int num)
 {
     if (num == 0 || num > INT32_MAX)
@@ -320,3 +323,4 @@ void free_openssl_drbg_mem(void)
     drbg_delete_thread_state();
     OPENSSL_thread_stop();
 }
+#endif

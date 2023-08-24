@@ -23,7 +23,12 @@ CPPFLAGS += -I$(TEELIB)/libteeagentcommon_client/include
 CPPFLAGS += -I$(TEELIB)/libhuk/include
 CPPFLAGS += -I$(TEELIB)/libipc_hal/include
 
+ifeq ($(CONFIG_CRYPTO_SOFT_ENGINE),openssl)
 CFLAGS += -DOPENSSL_ENABLE
 A32_CFLAGS += -DOPENSSL_ENABLE
+else ifeq ($(CONFIG_CRYPTO_SOFT_ENGINE),openssl3)
+CFLAGS += -DOPENSSL3_ENABLE
+A32_CFLAGS += -DOPENSSL3_ENABLE
+endif
 
 include $(BUILD_LIB)/lib-common.mk

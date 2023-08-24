@@ -533,8 +533,13 @@ static int32_t ed25519_sign_digest(struct memref_t *signature, const struct memr
     uint8_t *digest_buffer = (uint8_t *)(uintptr_t)(digest->buffer);
     uint8_t *signature_buffer = (uint8_t *)(uintptr_t)(signature->buffer);
 
+#ifdef OPENSSL3_ENABLE
+    sign_ret = ossl_ed25519_sign(signature_buffer, digest_buffer, digest->size,
+        private_key->r + X25519_SHARE_KEY_LEN, private_key->r, NULL, NULL);
+#else
     sign_ret = ED25519_sign(signature_buffer, digest_buffer, digest->size,
         private_key->r + X25519_SHARE_KEY_LEN, private_key->r);
+#endif
     if (sign_ret != BORINGSSL_OK) {
         tloge("ed25519 sign fail");
         return CRYPTO_BAD_PARAMETERS;
@@ -581,8 +586,13 @@ static int32_t ed25519_verify_digest(const struct memref_t *signature, const str
 
     uint8_t *signature_buffer = (uint8_t *)(uintptr_t)(signature->buffer);
 
+#ifdef OPENSSL3_ENABLE
+    int32_t verf_ret = ossl_ed25519_verify((const uint8_t *)(uintptr_t)digest->buffer,
+        digest->size, signature_buffer, public_key->x, NULL, NULL);
+#else
     int32_t verf_ret = ED25519_verify((const uint8_t *)(uintptr_t)digest->buffer,
         digest->size, signature_buffer, public_key->x);
+#endif
     if (verf_ret != BORINGSSL_OK) {
         tloge("soft verify fail");
         return CRYPTO_BAD_PARAMETERS;

@@ -1138,7 +1138,7 @@ int rsa_import_priv(rsa_priv_key_t *priv, const uint8_t *in, uint32_t in_len)
         return -1;
     }
 
-    RSA *rsa_priv = EVP_PKEY_get0_RSA(evp_key);
+    const RSA *rsa_priv = EVP_PKEY_get0_RSA(evp_key);
     if (rsa_priv == NULL) {
         tloge("get rsa key fail");
         return -1;

@@ -820,7 +820,7 @@ void TEE_FreeTransientObject(TEE_ObjectHandle object)
     }
 
 #ifdef OPENSSL_ENABLE
-    tee_crypto_free_opensssl_drbg();
+    tee_crypto_free_openssl_drbg();
 #endif
     tlogd("TEE_FreeTransientObject end!\n");
     return;

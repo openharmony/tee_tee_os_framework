@@ -11,12 +11,17 @@
  */
 #include "soft_hmac.h"
 #include <openssl/hmac.h>
+#ifdef OPENSSL_ENABLE
 #include <crypto/siphash.h>
 #include <siphash/siphash_local.h>
+#elif defined OPENSSL3_ENABLE
+#include <crypto/siphash.h>
+#endif
 #include <tee_log.h>
 #include "soft_gmssl.h"
 #include "soft_common_api.h"
 #include "soft_err.h"
+#include "crypto_inner_defines.h"
 
 static const uint32_t g_algorithm_hmac[] = {
     CRYPTO_TYPE_HMAC_MD5,

@@ -14,7 +14,11 @@ ifeq ($(CONFIG_CRYPTO_SUPPORT_EC25519),true)
 c-flags += -DCRYPTO_SSL_SUPPORT_EC25519
 endif
 
-c-flags += -DOPENSSL_ENABLE
+ifeq ($(CONFIG_CRYPTO_SOFT_ENGINE),openssl3)
+    c-flags += -DOPENSSL3_ENABLE
+else
+    c-flags += -DOPENSSL_ENABLE
+endif
 
 ifneq ($(CONFIG_TEE_CRYPTO_MGR_SERVER_64BIT), )
 c-flags += -DCRYPTO_MGR_SERVER_ENABLE
@@ -34,13 +38,27 @@ inc-flags += -I$(TEELIB)/libteemem/include
 inc-flags += -I$(TEELIB)/libssa/include
 inc-flags += -I$(PREBUILD_HEADER)/sys
 
-ifeq ($(CONFIG_CRYPTO_SOFT_ENGINE), openssl)
+ifneq ($(findstring $(CONFIG_CRYPTO_SOFT_ENGINE), openssl openssl3),)
 inc-flags += -I$(TEELIB)/libopenssl/openssl/include
 inc-flags += -I$(TEELIB)/libopenssl/openssl/crypto
 endif
 
 # Source files required to build the target
 libcrypto_hal_c_files += $(wildcard src/*.c) \
+                         $(wildcard src/stub/*.c) \
                          $(wildcard src/boringssl/*.c)
 
+ifeq ($(CONFIG_CRYPTO_SUPPORT_SOFT_ECC),true)
+c-flags += -DCRYPTO_SUPPORT_SOFT_ECC
+libcrypto_hal_c_files := $(filter-out src/stub/soft_ec_api.c, $(libcrypto_hal_c_files))
+else
+libcrypto_hal_c_files := $(filter-out src/boringssl/soft_ec_api.c, $(libcrypto_hal_c_files))
+endif
+
+ifeq ($(CONFIG_CRYPTO_SUPPORT_SOFT_SM2),true)
+c-flags += -DCRYPTO_SUPPORT_SOFT_SM2
+libcrypto_hal_c_files := $(filter-out src/stub/soft_gmssl_asym.c, $(libcrypto_hal_c_files))
+else
+libcrypto_hal_c_files := $(filter-out src/boringssl/soft_gmssl_asym.c, $(libcrypto_hal_c_files))
+endif
 include $(BUILD_LIB)/lib-common.mk
