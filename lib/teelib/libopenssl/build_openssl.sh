@@ -21,9 +21,8 @@ echo "before ./config "
 chmod +x ./config
 ./config
 make include/crypto/dso_conf.h
-echo -e "\033[32mCONFIG_CRYPTO_SOFT_ENGINE=$CONFIG_CRYPTO_SOFT_ENGINE\033[0m"
+
 if [ "$CONFIG_CRYPTO_SOFT_ENGINE" == "openssl3" ]; then
-    echo -e "\033[32mopenssl3 enabled\033[0m"
     make include/openssl/asn1.h
     make include/openssl/asn1t.h
     make include/openssl/bio.h

@@ -97,7 +97,7 @@ ARCH = aarch64
 include $(BUILD_CONFIG)/var.mk
 include $(BUILD_CONFIG)/plat_config_file.mk
 
-PHONY += GEN_CONF_FILE PATCH_OPENSSL
+PHONY += GEN_CONF_FILE PREBUILD_OPENSSL
 
 GEN_CONF_FILE:
 	echo "generated platautoconf.h "
@@ -114,7 +114,7 @@ GEN_CONF_FILE:
 	rm -rf $(PREBUILD_DIR)/headers/.config
 	cat $(CONFIG_FILE) | tee $(PREBUILD_DIR)/headers/.config
 
-PATCH_OPENSSL:
+PREBUILD_OPENSSL:
 	@bash $(TOPDIR)/lib/teelib/libopenssl/build_openssl.sh $(THIRDPARTY) $(TOPDIR)
 
 export CONFIG_CRYPTO_SOFT_ENGINE := $(CONFIG_CRYPTO_SOFT_ENGINE)

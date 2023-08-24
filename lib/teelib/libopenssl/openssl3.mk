@@ -2,12 +2,7 @@ SOURCE_DIR := $(TEELIB)/libopenssl
 OPENSSL_FILE_PATH := $(SOURCE_DIR)/openssl
 
 LOCAL_SRC_FILES := $(SOURCE_DIR)/src/openssl3_stub.c
-ifeq ($(CONFIG_BIG_ENDIAN),y)
-    LOCAL_SRC_FILES += $(SOURCE_DIR)/src/entropy_wireless.c
-else
-    LOCAL_SRC_FILES += $(SOURCE_DIR)/src/entropy.c
-endif
-
+LOCAL_SRC_FILES += $(SOURCE_DIR)/src/entropy.c
 LOCAL_SRC_FILES += $(OPENSSL_FILE_PATH)/crypto/aes/aes_cbc.c
 LOCAL_SRC_FILES += $(OPENSSL_FILE_PATH)/crypto/aes/aes_cfb.c
 LOCAL_SRC_FILES += $(OPENSSL_FILE_PATH)/crypto/aes/aes_core.c
@@ -264,7 +259,6 @@ LOCAL_SRC_FILES += $(OPENSSL_FILE_PATH)/crypto/modes/ofb128.c
 LOCAL_SRC_FILES += $(OPENSSL_FILE_PATH)/crypto/modes/siv128.c
 LOCAL_SRC_FILES += $(OPENSSL_FILE_PATH)/crypto/modes/wrap128.c
 LOCAL_SRC_FILES += $(OPENSSL_FILE_PATH)/crypto/modes/xts128.c
-#LOCAL_SRC_FILES += $(OPENSSL_FILE_PATH)/crypto/modes/xts128gb.c
 LOCAL_SRC_FILES += $(OPENSSL_FILE_PATH)/crypto/objects/o_names.c
 LOCAL_SRC_FILES += $(OPENSSL_FILE_PATH)/crypto/objects/obj_dat.c
 LOCAL_SRC_FILES += $(OPENSSL_FILE_PATH)/crypto/objects/obj_err.c
@@ -541,8 +535,6 @@ LOCAL_SRC_FILES += $(OPENSSL_FILE_PATH)/providers/implementations/signature/sm2_
 LOCAL_SRC_FILES += $(OPENSSL_FILE_PATH)/providers/implementations/storemgmt/file_store.c
 LOCAL_SRC_FILES += $(OPENSSL_FILE_PATH)/providers/implementations/storemgmt/file_store_any2obj.c
 LOCAL_SRC_FILES += $(OPENSSL_FILE_PATH)/ssl/record/tls_pad.c
-
-
 LOCAL_SRC_FILES += $(OPENSSL_FILE_PATH)/crypto/packet.c
 LOCAL_SRC_FILES += $(OPENSSL_FILE_PATH)/crypto/asn1_dsa.c
 LOCAL_SRC_FILES += $(OPENSSL_FILE_PATH)/crypto/bsearch.c
@@ -593,8 +585,6 @@ ifeq ($(CONFIG_OPENSSL_NO_ASM),true)
 endif
 
 CFILES := $(patsubst $(SOURCE_DIR)/%,%,$(LOCAL_SRC_FILES))
-
-#include $(HM_COMMON)/common.mk
 
 ifeq ($(CONFIG_OPENSSL_NO_ASM),true)
     A32_CFLAGS += -DOPENSSL_NO_ASM
