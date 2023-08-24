@@ -79,7 +79,7 @@ CPPFLAGS += -I$(TEELIB)/libteeagentcommon_client/include
 
 ifeq ($(CONFIG_CRYPTO_SOFT_ENGINE), openssl3)
 CFLAGS += -DOPENSSL3_ENABLE
-else 
+else
 CFLAGS += -DOPENSSL_ENABLE
 endif
 

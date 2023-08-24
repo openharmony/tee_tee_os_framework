@@ -146,4 +146,3 @@ TEE_Result aes_decrypt_rsa_private(const struct ecies_key_struct *ecies_data, co
 
     return TEE_SUCCESS;
 }
-
