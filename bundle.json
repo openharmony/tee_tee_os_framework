@@ -1,6 +1,6 @@
 {
     "name": "@openharmony/tee_os_framework",
-    "description": "tee os_framework",
+    "description": "tee_os_framework",
     "version": "1.0.0",
     "license": "Mulan PSL v2",
     "component": {
@@ -8,24 +8,15 @@
       "subsystem": "tee",
       "syscap": [],
       "features": [],
-      "adapted_system_type": [ "small", "standard" ],
-      "rom":"1635KB",
-      "ram":"16M", 
+      "adapted_system_type": [ "standard" ],
+      "rom":"2048KB",
+      "ram":"20M",
       "deps": {
         "components": [],
-        "third_party": [
-          "musl",
-          "bounds_checking_function"
-        ]
+        "third_party": []
       },
       "build": {
-        "sub_component": [
-          "//base/tee/tee_os_framework/:services",
-          "//base/tee/tee_os_framework/:libs",
-          "//base/tee/tee_os_framework/:drivers",
-          "//base/tee/tee_os_framework/:service",
-          "//base/tee/tee_os_framework/:build"
-        ],
+        "sub_component": [],
         "inner_kits": [],
         "test": []
       }

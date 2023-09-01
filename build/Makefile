@@ -60,7 +60,6 @@ endif
 
 export TEE_CLANG_DIR := ${TEE_COMPILER_DIR}/bin
 export TEE_SECUREC_DIR := $(THIRDPARTY)/bounds_checking_function
-
 export OLD_TOPDIR := $(TOPDIR)/config
 export TOOLS      := $(TOPDIR)/build/tools
 export VER
@@ -71,7 +70,6 @@ export FRAMEWORK_PATH := $(TOPDIR)/framework
 export SYSLIB := $(TOPDIR)/lib/syslib
 export SERVICES_PATH := $(TOPDIR)/services
 export DRIVERS_PATH := $(TOPDIR)/drivers
-export THIRDPARTY_LIBS := $(TOPDIR)/lib/thirdparty
 export CONFIG_PATH := $(TOPDIR)/config
 
 export BUILD_TOOLS := $(TOPDIR)/build/tools
