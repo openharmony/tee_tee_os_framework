@@ -10,5 +10,4 @@
 # PURPOSE.
 # See the Mulan PSL v2 for more details.
 
-FRAMEWORK_DIR=$(pwd)/../
-make TOPDIR=${FRAMEWORK_DIR} O=${FRAMEWORK_DIR}/output PREBUILD_ROOT=${FRAMEWORK_DIR}/prebuild clean -j
+make TOPDIR=${1} clean -j
