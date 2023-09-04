@@ -13,6 +13,7 @@ set -e
 third_party_ossl_path="$1/openssl"
 copy_path="$2/lib/teelib/libopenssl/"
 cp -r "${third_party_ossl_path}" "${copy_path}"
+rm "${copy_path}/openssl/bundle.json"
 
 cd "${copy_path}/openssl"
 
