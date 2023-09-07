@@ -1,14 +1,6 @@
---- opensslconf.h	2023-09-07 15:25:12.608148524 +0800
-+++ openssl_conf.h	2023-09-07 15:25:33.728148305 +0800
-@@ -1,17 +1,320 @@
- /*
-- * Copyright 2019-2021 The OpenSSL Project Authors. All Rights Reserved.
-+ * Copyright 2016-2020 The OpenSSL Project Authors. All Rights Reserved.
-  *
-- * Licensed under the Apache License 2.0 (the "License").  You may not use
-+ * Licensed under the OpenSSL license (the "License").  You may not use
-  * this file except in compliance with the License.  You can obtain a copy
-  * in the file LICENSE in the source distribution or at
+--- opensslconf.h	2023-09-07 16:19:15.478138375 +0800
++++ opensslconf1.h	2023-09-07 16:20:38.108136408 +0800
+@@ -7,11 +7,314 @@
   * https://www.openssl.org/source/license.html
   */
  
