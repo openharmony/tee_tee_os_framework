@@ -21,6 +21,7 @@ echo "before ./config "
 chmod +x ./config
 ./config
 make include/crypto/dso_conf.h
+cp "$2"/lib/teelib/libopenssl/include/bn_conf.h ./include/crypto/
 
 if [ "$CONFIG_CRYPTO_SOFT_ENGINE" == "openssl3" ]; then
     make include/openssl/asn1.h
@@ -50,10 +51,8 @@ if [ "$CONFIG_CRYPTO_SOFT_ENGINE" == "openssl3" ]; then
     make providers/common/include/prov/der_wrap.h
     make providers/common/der/der_rsa_gen.c
     make providers/common/der/der_wrap_gen.c
-    cp "$2"/lib/teelib/libopenssl/include/opensslconf3.h ./include/openssl/opensslconf.h
-    cp "$2"/lib/teelib/libopenssl/include/bn_conf.h ./include/crypto/
+    cd include/openssl && patch -p0 < ../../../include/preprocess-openssl3.patch
 else
-    cp "$2"/lib/teelib/libopenssl/include/opensslconf.h ./include/openssl/
-    cp "$2"/lib/teelib/libopenssl/include/bn_conf.h ./include/crypto/
+    cd include/openssl && patch -p0 < ../../../include/preprocess-openssl.patch
 fi
 
