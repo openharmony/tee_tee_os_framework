@@ -185,7 +185,7 @@ static TEE_Result tee_cmd_params_parse(const smc_cmd_t *cmd, TEE_Param **params)
     bool check = (TEE_PARAM_TYPE_GET(param_type, 0) != TEE_PARAM_TYPE_MEMREF_INPUT ||
                   TEE_PARAM_TYPE_GET(param_type, 1) != TEE_PARAM_TYPE_VALUE_INOUT ||
                   TEE_PARAM_TYPE_GET(param_type, OUTPUT_MEM_REF_INDEX) != TEE_PARAM_TYPE_MEMREF_OUTPUT ||
-                  TEE_PARAM_TYPE_GET(param_type, INPUT_VALUE_INDEX) != TEE_PARAM_TYPE_VALUE_INPUT);
+                  TEE_PARAM_TYPE_GET(param_type, INPUT_VALUE_INDEX) != TEE_PARAM_TYPE_VALUE_INOUT);
     if (check) {
         tloge("Bad expected parameter types");
         return TEE_ERROR_BAD_PARAMETERS;
