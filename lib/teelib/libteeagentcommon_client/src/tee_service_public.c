@@ -19,6 +19,13 @@ void tee_common_ipc_proc_cmd(const char *task_name,
                              uint32_t snd_cmd, const tee_service_ipc_msg *snd_msg,
                              uint32_t ack_cmd, tee_service_ipc_msg_rsp *rsp_msg)
 {
+#ifdef CONFIG_TEE_DYN_CLIENT_STUB
+    (void)task_name;
+    (void)snd_cmd;
+    (void)snd_msg;
+    (void)ack_cmd;
+    (void)rsp_msg;
+#else
     int32_t ret;
     cref_t ch = 0;
     struct tee_service_ipc_msg_req req_msg = {0};
@@ -49,4 +56,5 @@ void tee_common_ipc_proc_cmd(const char *task_name,
         tloge("release path failed, task=%s, ret=0x%x\n", task_name, ret);
         return;
     }
+#endif
 }

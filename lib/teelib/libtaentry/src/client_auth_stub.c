@@ -31,3 +31,28 @@ TEE_Result AddCaller_TA_all(void)
 {
     return TEE_SUCCESS;
 }
+
+TEE_Result tee_ext_get_caller_info(caller_info *caller_info_data, uint32_t length)
+{
+    (void)caller_info_data;
+    (void)length;
+    return TEE_ERROR_NOT_SUPPORTED;;
+}
+
+TEE_Result tee_ext_get_caller_userid(uint32_t *user_id)
+{
+    (void)user_id;
+    return TEE_ERROR_NOT_SUPPORTED;
+}
+
+TEE_Result AddCaller_CA(const uint8_t *cainfo_hash, uint32_t length)
+{
+    (void)cainfo_hash;
+    (void)length;
+    return TEE_SUCCESS;
+}
+
+uint32_t tee_get_session_type(void)
+{
+    return TEE_ERROR_NOT_SUPPORTED;
+}

@@ -38,6 +38,7 @@ TEE_InfoObjectData;
 TEE_Free;
 TEE_Malloc;
 TEE_MemCompare;
+TEE_CheckMemoryAccessRights;
 TEE_MemFill;
 TEE_MemMove;
 TEE_Realloc;
@@ -142,9 +143,11 @@ TEE_GetREETime;
 TEE_GetTAPersistentTime;
 TEE_SetTAPersistentTime;
 TEE_Wait;
+TEE_GetREETimeStr;
 
 /* extend API */
 AddCaller_CA_exec;
+AddCaller_CA;
 AddCaller_TA_all;
 tee_drv_open;
 tee_drv_ioctl;
@@ -416,7 +419,10 @@ RSA_get0_crt_params;
 
 /* may not be exported on OH platform */
 drv_call_new;
+uart_cprintf;
+uart_printf_func;
 tee_print;
+tee_print_driver;
 get_global_handle;
 set_global_handle;
 tee_secure_img_release_verify;
@@ -481,6 +487,93 @@ ipc_msg_q_recv;
 
 delete_all_ta2ta_session;
 clear_session_exception;
+
+/* STUB API Begin */
+/* RPMB API */
+tee_ext_rpmb_protect_cfg_blk_write;
+tee_ext_rpmb_protect_cfg_blk_read;
+tee_ext_rpmb_driver_write;
+tee_ext_rpmb_driver_read;
+tee_ext_rpmb_driver_remove;
+TEE_RPMB_FS_Init;
+TEE_RPMB_FS_Format;
+TEE_RPMB_FS_Write;
+TEE_RPMB_FS_Read;
+TEE_RPMB_FS_Rename;
+TEE_RPMB_FS_Rm;
+TEE_RPMB_FS_Stat;
+TEE_RPMB_FS_StatDisk;
+TEE_RPMB_FS_SetAttr;
+TEE_RPMB_FS_Erase;
+TEE_RPMB_KEY_Status;
+TEE_RPMB_TAVERSION_Process;
+
+/* SE API */
+TEE_SEServiceOpen;
+TEE_SEServiceClose;
+TEE_SEServiceGetReaders;
+TEE_SEReaderGetProperties;
+TEE_SEReaderGetName;
+TEE_SEReaderOpenSession;
+TEE_SEReaderCloseSessions;
+TEE_SESessionGetATR;
+TEE_SESessionIsClosed;
+TEE_SESessionClose;
+TEE_SESessionCloseChannels;
+TEE_SESessionOpenBasicChannel;
+TEE_SESessionOpenLogicalChannel;
+TEE_SEChannelClose;
+TEE_SEChannelSelectNext;
+TEE_SEChannelGetSelectResponse;
+TEE_SEChannelTransmit;
+TEE_SESecureChannelOpen;
+TEE_SESecureChannelClose;
+TEE_SEChannelGetID;
+
+/* TUI API */
+TEE_TUIInitSession;
+TEE_TUICloseSession;
+TEE_TUICheckTextFormat;
+TEE_TUIGetScreenInfo;
+TEE_TUIDisplayScreen;
+TEE_TUINotify_fp;
+TEE_TUISetInfo;
+TEE_TUISendEvent;
+TEE_TUISetLabel;
+
+/* RTC TIME API */
+tee_ext_create_timer;
+tee_ext_destory_timer;
+tee_ext_get_timer_expire;
+tee_ext_get_timer_remain;
+tee_get_secure_rtc_time;
+
+/* DYN SRV API */
+tee_srv_get_uuid_by_sender;
+tee_srv_unmap_from_task;
+tee_srv_map_from_task;
+tee_srv_cs_server_loop;
+tee_common_ipc_proc_cmd;
+
+/* Share MEM API */
+tee_alloc_sharemem_aux;
+tee_alloc_coherent_sharemem_aux;
+tee_free_sharemem;
+copy_from_sharemem;
+copy_to_sharemem;
+
+/* EXTEND API */
+tee_ext_get_caller_info;
+tee_ext_get_caller_userid;
+tee_get_session_type;
+tee_ext_get_device_unique_id;
+tee_ext_derive_key_iter;
+TEE_EXT_DeriveTARootKey;
+tee_ext_derive_ta_root_key_by_huk2;
+tee_ext_root_derive_key2_by_huk2;
+tee_ext_root_uuid_derive_key_by_huk2;
+get_heap_usage;
+/* STUB API End */
 
 local: *;
 };

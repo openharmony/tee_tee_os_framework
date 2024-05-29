@@ -197,6 +197,12 @@ err_out:
 
 int64_t tee_drv_open(const char *drv_name, const void *param, uint32_t param_len)
 {
+#ifdef CONFIG_TEE_DRV_STUB
+    (void)drv_name;
+    (void)param;
+    (void)param_len;
+    return -1;
+#else
     if (drv_name == NULL) {
         tloge("invalid drv name\n");
         return -1;
@@ -238,6 +244,7 @@ int64_t tee_drv_open(const char *drv_name, const void *param, uint32_t param_len
     }
 
     return fd;
+#endif
 }
 
 static int64_t send_ioctl_cmd(cref_t channel, int64_t fd, uint32_t cmd_id, const void *param, uint32_t param_len)
@@ -284,6 +291,12 @@ static int64_t send_ioctl_cmd(cref_t channel, int64_t fd, uint32_t cmd_id, const
 
 int64_t tee_drv_ioctl(int64_t fd, uint32_t cmd_id, const void *param, uint32_t param_len)
 {
+#ifdef CONFIG_TEE_DRV_STUB
+    (void)cmd_id;
+    (void)param;
+    (void)param_len;
+    return -1;
+#else
     struct drv_channel *drv_ch = get_drv_channel(fd);
     if (drv_ch == NULL) {
         tloge("get fd:0x%llx channel failed\n", fd);
@@ -293,6 +306,7 @@ int64_t tee_drv_ioctl(int64_t fd, uint32_t cmd_id, const void *param, uint32_t p
     int64_t func_ret = send_ioctl_cmd(drv_ch->drv_channel, fd, cmd_id, param, param_len);
     put_drv_channel(&drv_ch);
     return func_ret;
+#endif
 }
 
 static int64_t tee_drv_close_handle(int64_t fd)
@@ -311,6 +325,10 @@ static int64_t tee_drv_close_handle(int64_t fd)
 
 int64_t tee_drv_close(int64_t fd)
 {
+#ifdef CONFIG_TEE_DRV_STUB
+    (void)fd;
+    return -1;
+#else
     struct drv_channel *drv_ch = get_drv_channel(fd);
     if (drv_ch == NULL) {
         tloge("close get fd:0x%llx channel failed\n", fd);
@@ -330,6 +348,7 @@ int64_t tee_drv_close(int64_t fd)
         put_drv_channel(&drv_ch); /* pair with open */
 
     return ret;
+#endif
 }
 
 void tee_drv_task_exit(uint32_t exit_pid)
