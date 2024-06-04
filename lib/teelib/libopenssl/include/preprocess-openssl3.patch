@@ -27,10 +27,6 @@
 +# error OPENSSL_ALGORITHM_DEFINES no longer supported
 +#endif
 +
-+/*
-+ * OpenSSL was configured with the following options:
-+ */
-+
 +#ifdef linux
 +# undef linux
 +#endif
@@ -63,6 +59,9 @@
 +#endif
 +#ifndef OPENSSL_NO_SM4_XTS
 +# define OPENSSL_NO_SM4_XTS
++#endif
++#ifndef OPENSSL_NO_SM4
++# define OPENSSL_NO_SM4
 +#endif
 +#ifndef OPENSSL_NO_PQCHYBRID
 +# define OPENSSL_NO_PQCHYBRID

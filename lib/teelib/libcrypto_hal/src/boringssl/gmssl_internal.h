@@ -19,7 +19,9 @@
 #else
 #include <crypto/sm3.h>
 #endif
+#ifndef OPENSSL_NO_SM4
 #include <crypto/sm4.h>
+#endif
 #include <crypto/evp.h>
 #include <openssl/evp.h>
 #ifdef CRYPTO_SUPPORT_SOFT_ECC
