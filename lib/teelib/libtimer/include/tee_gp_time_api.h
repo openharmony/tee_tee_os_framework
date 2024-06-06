@@ -19,5 +19,5 @@ void TEE_GetREETime(TEE_Time *time);
 TEE_Result TEE_Wait(uint32_t mill_second);
 TEE_Result TEE_SetTAPersistentTime(TEE_Time *time);
 TEE_Result TEE_GetTAPersistentTime(TEE_Time *time);
-
+void TEE_GetREETimeStr(char *time_str, uint32_t time_str_len);
 #endif

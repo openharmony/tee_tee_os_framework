@@ -8,17 +8,15 @@
 # PURPOSE.
 # See the Mulan PSL v2 for more details.
 
-MODULE := libteeagentcommon_client${TARG}.a
+# Targets
+MODULE := libtee_stub${TARG}.a
 
-libteeagentcommon_client_c_files += $(wildcard src/*.c)
+# This library only provides 32-bit headers of libbteeos.
+# If we want 64-bit headers of libteeos, we should depend on libac temporarily.
 
-inc-flags += -I$(TEELIB)/libteeagentcommon_client/include
-inc-flags += -I$(TEELIB)/libteeos/include/tee
-inc-flags += -I$(TEELIB)/libteeos/include/legacy
-inc-flags += -I$(TEELIB)/libteemem/include
-#c-flags += -Wno-unused-parameter
-flags += -fno-builtin
-flags += -DCONFIG_TEE_DYN_CLIENT_STUB
-#c-flags += -Wall -Wno-parentheses -Wno-unused-parameter
+CPPFLAGS += -I$(TEELIB)/libtee_stub/include
+CPPFLAGS += -I$(TEELIB)/libteeos/include/tee
+
+CFILES := $(wildcard src/*.c)
 
 include $(BUILD_LIB)/lib-common.mk

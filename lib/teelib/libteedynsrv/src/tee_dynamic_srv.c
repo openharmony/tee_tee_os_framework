@@ -30,6 +30,11 @@
 
 TEE_Result tee_srv_get_uuid_by_sender(uint32_t sender, TEE_UUID *uuid)
 {
+#ifdef CONFIG_TEE_DYN_SRV_STUB
+    (void)sender;
+    (void)uuid;
+    return TEE_ERROR_NOT_SUPPORTED;
+#else
     spawn_uuid_t sender_uuid;
 
     if (uuid == NULL)
@@ -46,10 +51,18 @@ TEE_Result tee_srv_get_uuid_by_sender(uint32_t sender, TEE_UUID *uuid)
         return TEE_ERROR_GENERIC;
     }
     return TEE_SUCCESS;
+#endif
 }
 
 int tee_srv_map_from_task(uint32_t in_task_id, uint32_t va_addr, uint32_t size, uint32_t *virt_addr)
 {
+#ifdef CONFIG_TEE_DYN_SRV_STUB
+    (void)in_task_id;
+    (void)va_addr;
+    (void)size;
+    (void)virt_addr;
+    return TEE_ERROR_NOT_SUPPORTED;
+#else
     uint64_t vaddr = 0;
     int ret;
 
@@ -63,13 +76,20 @@ int tee_srv_map_from_task(uint32_t in_task_id, uint32_t va_addr, uint32_t size, 
         *virt_addr = 0;
 
     return ret;
+#endif
 }
 
 void tee_srv_unmap_from_task(uint32_t va_addr, uint32_t size)
 {
+#ifdef CONFIG_TEE_DYN_SRV_STUB
+    (void)va_addr;
+    (void)size;
+#else
     (void)munmap((void *)(uintptr_t)va_addr, size);
+#endif
 }
 
+#ifndef CONFIG_TEE_DYN_SRV_STUB
 /* msg can be null, which means we do not care return msg */
 static void tee_task_entry_wait_msg(uint32_t want_cmd, uint8_t *msg, uint32_t size, uint32_t want_sdr)
 {
@@ -182,11 +202,18 @@ static void tee_srv_dispatch(const char *task_name, const struct srv_dispatch_t 
         }
     }
 }
+#endif
 
 void tee_srv_cs_server_loop(const char *task_name, const struct srv_dispatch_t *dispatch, uint32_t n_dispatch,
     struct srv_thread_init_info *cur_thread)
 {
     (void)cur_thread;
+#ifdef CONFIG_TEE_DYN_SRV_STUB
+    (void)task_name;
+    (void)dispatch;
+    (void)n_dispatch;
+    (void)cur_thread;
+#else
     if (task_name == NULL || dispatch == NULL || n_dispatch == 0) {
         tloge("param invalid\n");
         return;
@@ -195,4 +222,5 @@ void tee_srv_cs_server_loop(const char *task_name, const struct srv_dispatch_t *
     tlogi("------------------enter to %s srv_cs_server_loop------------------\n", task_name);
 
     tee_srv_dispatch(task_name, dispatch, n_dispatch);
+#endif
 }

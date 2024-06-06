@@ -18,6 +18,7 @@ inc-flags += -I$(TEELIB)/libdrv/include
 inc-flags += -I$(TEELIB)/libteeos/include/tee
 inc-flags += -I$(TEELIB)/libteeos/include/legacy
 inc-flags += -I$(TEELIB)/libteeconfig/include
+inc-flags += -I$(TEELIB)/libstub/include
 inc-flags += -I$(PREBUILD_HEADER)/sys
 
 include $(BUILD_LIB)/lib-common.mk

@@ -23,4 +23,6 @@ inc-flags += -I$(PREBUILD_HEADER)/sys
 include $(BUILD_CONFIG)/feature-macro.mk
 include $(BUILD_LIB)/lib-common.mk
 
+flags += -DCONFIG_TEE_DYN_SRV_STUB
+
 

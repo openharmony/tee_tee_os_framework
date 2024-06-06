@@ -32,3 +32,4 @@ endif
 
 include $(BUILD_LIB)/lib-common.mk
 flags += $(TRUSTEDCORE_PLATFORM_FLAGS)
+flags += -DCONFIG_TEE_TIME_STUB

@@ -27,6 +27,9 @@ struct time_offset {
 
 void TEE_GetSystemTime(TEE_Time *time)
 {
+#ifdef CONFIG_TEE_TIME_STUB
+    (void)time;
+#else
     struct timer_ops_t *time_ops = NULL;
     uint64_t time_stamp;
 
@@ -40,10 +43,14 @@ void TEE_GetSystemTime(TEE_Time *time)
     time_stamp = time_ops->read_time_stamp();
     time->seconds = UPPER_32_BITS(time_stamp);
     time->millis  = LOWER_32_BITS(time_stamp) / NS_PER_MSEC;
+#endif
 }
 
 void TEE_GetREETime(TEE_Time *time)
 {
+#ifdef CONFIG_TEE_TIME_STUB
+    (void)time;
+#else
     int32_t ret;
     if (time == NULL) {
         tloge("invalid param\n");
@@ -55,18 +62,31 @@ void TEE_GetREETime(TEE_Time *time)
         tloge("get time of data failed\n");
         return;
     }
+#endif
+}
+
+void TEE_GetREETimeStr(char *time_str, uint32_t time_str_len)
+{
+    (void)time_str;
+    (void)time_str_len;
 }
 
 TEE_Result TEE_Wait(uint32_t mill_second)
 {
+#ifdef CONFIG_TEE_TIME_STUB
+    (void)mill_second;
+    return TEE_ERROR_NOT_SUPPORTED;
+#else
     struct timer_ops_t *time_ops = NULL;
     time_ops = get_time_ops();
     if (time_ops == NULL)
         return TMR_ERR;
 
     return time_ops->sleep(mill_second);
+#endif
 }
 
+#ifndef CONFIG_TEE_TIME_STUB
 static uint32_t get_rtc_time(void)
 {
     struct timer_ops_t *time_ops = NULL;
@@ -76,9 +96,14 @@ static uint32_t get_rtc_time(void)
 
     return time_ops->get_rtc_seconds();
 }
+#endif
 
 TEE_Result TEE_SetTAPersistentTime(TEE_Time *time)
 {
+#ifdef CONFIG_TEE_TIME_STUB
+    (void)time;
+    return TEE_ERROR_NOT_SUPPORTED;
+#else
     struct time_offset offset_val = { 0 };
     uint32_t seconds;
     TEE_Result ret;
@@ -119,8 +144,10 @@ TEE_Result TEE_SetTAPersistentTime(TEE_Time *time)
 
     TEE_CloseObject(object);
     return ret;
+#endif
 }
 
+#ifndef CONFIG_TEE_TIME_STUB
 static TEE_Result persistent_time_check(TEE_Time *time, const struct time_offset *offset_val)
 {
     uint32_t seconds;
@@ -156,9 +183,14 @@ static TEE_Result persistent_time_check(TEE_Time *time, const struct time_offset
 
     return TEE_SUCCESS;
 }
+#endif
 
 TEE_Result TEE_GetTAPersistentTime(TEE_Time *time)
 {
+#ifdef CONFIG_TEE_TIME_STUB
+    (void)time;
+    return TEE_ERROR_NOT_SUPPORTED;
+#else
     struct time_offset offset_val = { 0 };
     TEE_ObjectHandle object = NULL;
     uint32_t count = 0;
@@ -196,4 +228,5 @@ TEE_Result TEE_GetTAPersistentTime(TEE_Time *time)
     }
 
     return TEE_SUCCESS;
+#endif
 }

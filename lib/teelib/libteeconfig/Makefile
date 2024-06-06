@@ -14,6 +14,8 @@ MODULE := libteeconfig$(TARG).a
 
 flags += -fno-builtin
 
+flags += -DCONFIG_TEE_DRV_STUB
+
 ifeq ($(CONFIG_TEE_MISC_DRIVER_64BIT), false)
 flags += -DCONFIG_TEE_MISC_DRIVER
 endif

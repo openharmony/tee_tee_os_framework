@@ -16,15 +16,15 @@
 # compile libs rules
 
 include $(BUILD_CONFIG)/arch_config.mk
-libtee_shared_a32: libteeconfig libtimer libteeagentcommon_client libcrypto_hal libswcrypto_engine $(crypto_lib) libteedynsrv
-libtee_shared: libteeconfig libtimer libteeagentcommon_client libcrypto_hal libswcrypto_engine $(crypto_lib) libteedynsrv
+libtee_shared_a32: libteeconfig libtimer libteeagentcommon_client libcrypto_hal libswcrypto_engine $(crypto_lib) libteedynsrv libtee_stub
+libtee_shared: libteeconfig libtimer libteeagentcommon_client libcrypto_hal libswcrypto_engine $(crypto_lib) libteedynsrv libtee_stub
 
 libdrv_shared_a32: #libteeconfig_a32
 libdrv_shared: #libteeconfig
 
 teelib := libcrypto_hal libtimer libagent libagent_base libdrv libteeos libpermission_service \
 	libswcrypto_engine libtaentry libteeagentcommon_client libcrypto libteeconfig libteemem \
-	libssa libhuk libteedynsrv libopenssl libse libipc_hal
+	libssa libhuk libteedynsrv libopenssl libipc_hal libtee_stub
 syslib := libelf_verify libspawn_common libelf_verify_key libdynconfmgr libdynconfbuilder
 drvlib := #libdrv_frame
 

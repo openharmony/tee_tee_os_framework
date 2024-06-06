@@ -100,3 +100,10 @@ int32_t copy_to_sharemem(uintptr_t src, uint32_t src_size, uint32_t dst_task, ui
 
     return 0;
 }
+
+void *tee_alloc_coherent_sharemem_aux(const struct tee_uuid *uuid, uint32_t size)
+{
+    (void)uuid;
+    (void)size;
+    return NULL;
+}
