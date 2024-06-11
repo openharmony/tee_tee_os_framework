@@ -1,6 +1,6 @@
 --- opensslconf.h	2023-09-07 15:30:27.028144288 +0800
 +++ opensslconf3.h	2023-09-07 16:16:15.768149039 +0800
-@@ -7,11 +7,361 @@
+@@ -7,11 +7,360 @@
   * https://www.openssl.org/source/license.html
   */
  
