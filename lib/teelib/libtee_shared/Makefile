@@ -18,7 +18,7 @@ inc-flags += -I$(TEELIB)/libdrv/include
 inc-flags += -I$(TEELIB)/libteeos/include/tee
 inc-flags += -I$(TEELIB)/libteeos/include/legacy
 inc-flags += -I$(TEELIB)/libteeconfig/include
-inc-flags += -I$(TEELIB)/libstub/include
+inc-flags += -I$(TEELIB)/libtee_stub/include
 inc-flags += -I$(PREBUILD_HEADER)/sys
 
 include $(BUILD_LIB)/lib-common.mk
@@ -68,7 +68,7 @@ ${BUILD_DIR}/$(EXPORT_FILE): $(EXPORT_FILE)
 	@${CC} ${flags} -P -E -o $@ -x c $<
 ld-flags := -lcrypto_hal$(TARG) -ltimer$(TARG) -lagent$(TARG) -lagent_base$(TARG) -ldrv$(TARG) \
     -lteeos$(TARG) -lpermission_service$(TARG) -lswcrypto_engine$(TARG) -ltaentry$(TARG) -lteeagentcommon_client$(TARG) -lcrypto$(TARG) \
-    -lteeconfig$(TARG) -lteemem$(TARG) -lssa$(TARG) -lhuk${TARG} -lteedynsrv$(TARG) -lipc_hal$(TARG)
+    -lteeconfig$(TARG) -lteemem$(TARG) -lssa$(TARG) -lhuk${TARG} -lteedynsrv$(TARG) -lipc_hal$(TARG)  -ltee_stub$(TARG)
 
 
 ifeq ($(CONFIG_CRYPTO_SOFT_ENGINE),mbedtls)

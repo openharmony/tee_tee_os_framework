@@ -67,8 +67,7 @@ void TEE_GetREETime(TEE_Time *time)
 
 void TEE_GetREETimeStr(char *time_str, uint32_t time_str_len)
 {
-    (void)time_str;
-    (void)time_str_len;
+    (void)memset_s(time_str, time_str_len, '0', time_str_len);
 }
 
 TEE_Result TEE_Wait(uint32_t mill_second)

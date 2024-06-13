@@ -208,6 +208,14 @@ int32_t TEE_MemCompare(const void *buffer1, const void *buffer2, size_t size)
         return COMPARE_EQUAL;
 }
 
+TEE_Result TEE_CheckMemoryAccessRights(uint32_t accessFlags, const void *buffer, size_t size)
+{
+    (void)accessFlags;
+    (void)buffer;
+    (void)size;
+    return TEE_ERROR_NOT_SUPPORTED;
+}
+
 void TEE_SetInstanceData(void *instanceData)
 {
     g_instance_data = instanceData;
