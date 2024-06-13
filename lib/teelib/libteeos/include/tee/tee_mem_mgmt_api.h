@@ -130,6 +130,18 @@ void *TEE_Realloc(void *buffer, size_t new_size);
  */
 int32_t TEE_MemCompare(const void *buffer1, const void *buffer2, size_t size);
 
+/**
+ * @brief Checks whether this TA has the requested permissions to access a buffer.
+ *
+ * @param accessFlags Indicates the access permissions to check.
+ * @param buffer Indicates the pointer to the target buffer.
+ * @param size Indicates the size of the buffer to check.
+ *
+ * @return Returns <b>TEE_SUCCESS</b> if the TA has the requested permissions.
+ * @return Returns <b>TEE_ERROR_ACCESS_DENIED</b> otherwise.
+ */
+TEE_Result TEE_CheckMemoryAccessRights(uint32_t accessFlags, const void *buffer, size_t size);
+
 /*
  * A global variable used to share in different Session of same Instance
  *
