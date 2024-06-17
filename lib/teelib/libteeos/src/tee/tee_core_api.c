@@ -242,7 +242,7 @@ void TEE_Panic(TEE_Result panicCode)
 {
     PARAM_NOT_USED(panicCode);
     tloge("TEE Panic with panicCode 0x%x\n", panicCode);
-    abort();
+    // abort();
 }
 
 void init_tee_internal_api(void)
