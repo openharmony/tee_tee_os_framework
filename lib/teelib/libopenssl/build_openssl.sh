@@ -50,8 +50,11 @@ if [ "$CONFIG_CRYPTO_SOFT_ENGINE" == "openssl3" ]; then
     make providers/common/include/prov/der_rsa.h
     make providers/common/include/prov/der_sm2.h
     make providers/common/include/prov/der_wrap.h
+    make providers/common/include/prov/der_ecx.h
     make providers/common/der/der_rsa_gen.c
     make providers/common/der/der_wrap_gen.c
+    make providers/common/der/der_ec_gen.c
+    make providers/common/der/der_ecx_gen.c
     cd include/openssl && patch -p0 < ../../../include/preprocess-openssl3.patch
 else
     cd include/openssl && patch -p0 < ../../../include/preprocess-openssl.patch

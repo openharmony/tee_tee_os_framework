@@ -26,6 +26,11 @@ inc-flags += -I$(PREBUILD_HEADER)/sys
 ifneq ($(findstring $(CONFIG_CRYPTO_SOFT_ENGINE), openssl openssl3),)
 inc-flags += -I$(TEELIB)/libopenssl/openssl/include
 inc-flags += -I$(TEELIB)/libopenssl/openssl/crypto
+inc-flags += -I$(TEELIB)/libopenssl/openssl/include/openssl
+endif
+
+ifeq ($(CONFIG_CRYPTO_SUPPORT_SOFT_ECC),true)
+c-flags += -DCRYPTO_SUPPORT_SOFT_ECC
 endif
 
 libswcrypto_engine_c_files += $(wildcard src/*.c)
