@@ -18,26 +18,36 @@ TEE test suit is based on Open Harmony hcpptest framework, which can refer to th
 |  Folder   |  Introduce  |
 |  ----  |  ----  |
 | driver  | driver related code |
-| ca  | REE related code，which is the testcase definition. |
-| ta  | TEE related code |
+| ca  | REE related test code，which is the testcase definition. |
+| ta  | TEE related test code |
 | utils  | test AW and public code |
 
 ## Build
+### Build CA 
 
     # build with the system:
     hb build --gn-args build_xts=true
 
-## Test Execution
-Note: The absolute path for running the CA during the test must be the same as the absolute path for running the CA specified by AddCaller_CA_exec func in the test TA. In this example, the CA named tee_test_store in the TA is used as an example to describe the test command. You can specify another name in the actual test.
+    # For rk3568：
+    First, copy the tee directory from the ca directory to the test/xts/acts directory, then add the configuration tee directory to the test/xts/acts/test_packages.gni file, and execute the  following compile command
+    cd test/xts/acts
+    /build.sh product_name=rk3568 system_size=standard target_subsystem=tee
+    The compiled CA in "out/rk3568/suites/acts/acts/testcases"。
+### Build TA 
 
-By default, the CA compiled by the system is named tee_client.bin, and the absolute path of the CA specified in the TA is /system/bin/tee_test_store. During the test, you need to rename the CA tee_test_store and place it in /system/bin. Run with the absolute path name. (You can also change the absolute path of the CA specified in the TA to the actual absolute path of the current system and recompile the TA.)
+
+## Test Execution
+Note: The absolute path for running the CA during the test must be the same as the absolute path for running the CA specified by AddCaller_CA_exec func in the test TA. In this example, the CA named tee_test_client_api in the TA is used as an example to describe the test command. You can specify another name in the actual test.
+
+Place the test TA (sec file) in the same level directory as the test CA, and both can be placed in the/vendor/bin/directory.
 
 ### TEE SDK compatibility test
 1. Execute all test cases.
-Enter the command line window of the tested system, Enter "/system/bin/tee_test_store"
+Enter the command line window of the tested system, Enter "/system/bin/tee_test_client_api"
 
 2. Execute some test cases.
-For details, see the commands provided by the hcpptest framework.
+For details, see the commands provided by the hcpptest framework.  
+Supports the use of wildcard characters "*", for example /vendor/bin/tee_test_client_api --gtest_filter=*EmptyTest.InvokeCommand*
 
 
 ## Reference
