@@ -1,0 +1,8 @@
+gpd.ta.appID:   		09090909-0808-0707-0303-030305070901
+gpd.ta.service_name:		test_store_api
+gpd.ta.singleInstance:		true
+gpd.ta.multiSession: 		false
+gpd.ta.instanceKeepAlive:	false
+gpd.ta.objectEnumEnable:    true
+gpd.ta.dataSize:		8192000
+gpd.ta.stackSize:		819200

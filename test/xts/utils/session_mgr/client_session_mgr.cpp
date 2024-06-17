@@ -25,7 +25,7 @@ TEEC_Result ClientSessionMgr::Start(TEEC_UUID *uuid)
 
     result = TEEC_InitializeContext(NULL, &context);
     if (result != TEEC_SUCCESS) {
-        TEST_PRINT_INFO("TEEC_InitializeContext failed\n");
+        TEST_PRINT_ERROR("TEEC_InitializeContext failed\n");
         return result;
     }
 

@@ -1,0 +1,7 @@
+gpd.ta.appID:   		e7d4c078-b19f-4f97-a22d-f4afd6ae7a0e
+gpd.ta.service_name:		test_time_api
+gpd.ta.singleInstance:          true
+gpd.ta.multiSession: 		true
+gpd.ta.instanceKeepAlive:	false
+gpd.ta.dataSize:		819200
+gpd.ta.stackSize:		81920
