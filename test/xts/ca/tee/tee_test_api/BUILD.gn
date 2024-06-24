@@ -13,11 +13,12 @@
 
 import("//test/xts/tools/build/suite.gni")
 
-ohos_moduletest_suite("tee_test_client_api") {
+ohos_moduletest_suite("tee_test_client_api_vendor") {
   tee_dev_kit_dir   = "//base/tee/tee_dev_kit"
   tee_test_root_dir = "//base/tee/tee_os_framework/test/xts"
 
   sources = [
+    tee_test_root_dir + "/utils/main.cpp",
     tee_test_root_dir + "/utils/public_test/public_test.cpp",
     tee_test_root_dir + "/utils/session_mgr/client_session_mgr.cpp",
 
@@ -54,11 +55,54 @@ ohos_moduletest_suite("tee_test_client_api") {
   ]
 }
 
+ohos_moduletest_suite("tee_test_client_api_system") {
+  tee_dev_kit_dir   = "//base/tee/tee_dev_kit"
+  tee_test_root_dir = "//base/tee/tee_os_framework/test/xts"
+
+  sources = [
+    tee_test_root_dir + "/utils/main.cpp",
+    tee_test_root_dir + "/utils/public_test/public_test.cpp",
+    tee_test_root_dir + "/utils/session_mgr/client_session_mgr.cpp",
+
+    tee_test_root_dir + "/ca/client_api/src/invokecommand_test.cpp",
+    tee_test_root_dir + "/ca/client_api/src/initializecontext_test.cpp",
+    tee_test_root_dir + "/ca/client_api/src/opensession_test.cpp",
+    tee_test_root_dir + "/ca/client_api/src/closesession_test.cpp",
+    tee_test_root_dir + "/ca/client_api/src/finalizecontext_test.cpp",
+    tee_test_root_dir + "/ca/client_api/src/registersharedmemory_test.cpp",
+    tee_test_root_dir + "/ca/client_api/src/releasesharedmemory_test.cpp",
+    tee_test_root_dir + "/ca/client_api/src/allocatesharedmemory_test.cpp",
+  ]
+  
+  include_dirs = [
+    tee_dev_kit_dir + "/sdk/thirdparty/open_source/bounds_checking_function/include/libhwsecurec",
+    "//base/tee/tee_client/interfaces/kits/c/include",
+    tee_test_root_dir + "/utils",
+    tee_test_root_dir + "/utils/include",
+    tee_test_root_dir + "/utils/public_test",
+    tee_test_root_dir + "/utils/cmd_id",
+    tee_test_root_dir + "/ca/client_api/common",
+
+    "//third_party/googletest/googletest/include",
+  ]
+
+  deps = [
+      "//base/tee/tee_client/interfaces/kits/c:libteec",
+      "//third_party/bounds_checking_function:libsec_shared",
+  ]
+  cflags = [ "-Wno-error" ]
+  ldflags = [
+    "-lm",
+    "-lpthread",
+  ]
+}
+
 ohos_moduletest_suite("tee_test_tcf_api") {
   tee_dev_kit_dir   = "//base/tee/tee_dev_kit"
   tee_test_root_dir = "//base/tee/tee_os_framework/test/xts"
 
   sources = [
+    tee_test_root_dir + "/utils/main.cpp",
     tee_test_root_dir + "/utils/public_test/public_test.cpp",
     tee_test_root_dir + "/utils/session_mgr/client_session_mgr.cpp",
 
@@ -80,6 +124,7 @@ ohos_moduletest_suite("tee_test_tcf_api") {
     tee_test_root_dir + "/ca/tcf_api/src/mem/tee_instance_test.cpp",
     tee_test_root_dir + "/ca/tcf_api/src/other/internal_client_api_test.cpp",
     tee_test_root_dir + "/ca/tcf_api/src/other/tee_panic_test.cpp",
+    tee_test_root_dir + "/ca/tcf_api/src/other/tee_otherapi_test.cpp",
     tee_test_root_dir + "/ca/tcf_api/src/common_test.cpp",
   ]
 
@@ -115,6 +160,7 @@ ohos_moduletest_suite("tee_test_time_api") {
   tee_dev_kit_dir   = "//base/tee/tee_dev_kit"
   tee_test_root_dir = "//base/tee/tee_os_framework/test/xts"
   sources = [
+    tee_test_root_dir + "/utils/main.cpp",
     tee_test_root_dir + "/utils/public_test/public_test.cpp",
     tee_test_root_dir + "/utils/session_mgr/client_session_mgr.cpp",
 
@@ -154,6 +200,7 @@ ohos_moduletest_suite("tee_test_arithmetic_api") {
   tee_dev_kit_dir   = "//base/tee/tee_dev_kit"
   tee_test_root_dir = "//base/tee/tee_os_framework/test/xts"
   sources = [
+    tee_test_root_dir + "/utils/main.cpp",
     tee_test_root_dir + "/utils/public_test/public_test.cpp",
     tee_test_root_dir + "/utils/session_mgr/client_session_mgr.cpp",
 
@@ -190,6 +237,7 @@ ohos_moduletest_suite("tee_test_crypto_api") {
   tee_test_root_dir = "//base/tee/tee_os_framework/test/xts"
 
   sources = [
+    tee_test_root_dir + "/utils/main.cpp",
     tee_test_root_dir + "/utils/public_test/public_test.cpp",
     tee_test_root_dir + "/utils/session_mgr/client_session_mgr.cpp",
 
@@ -224,6 +272,7 @@ ohos_moduletest_suite("tee_test_trusted_storage_api") {
   tee_dev_kit_dir   = "//base/tee/tee_dev_kit"
   tee_test_root_dir = "//base/tee/tee_os_framework/test/xts"
   sources = [
+    tee_test_root_dir + "/utils/main.cpp",
     tee_test_root_dir + "/utils/public_test/public_test.cpp",
     tee_test_root_dir + "/utils/session_mgr/client_session_mgr.cpp",
     tee_test_root_dir + "/ca/trusted_storage_api/src/tee_test_trusted_storage_api.cpp",
@@ -249,6 +298,46 @@ ohos_moduletest_suite("tee_test_trusted_storage_api") {
   ]
 
   cflags = [ "-Wno-error" ]
+  ldflags = [
+    "-lm",
+    "-lpthread",
+  ]
+}
+
+ohos_moduletest_suite("tee_test_device_api") {
+
+  tee_dev_kit_dir   = "//base/tee/tee_dev_kit"
+  tee_test_root_dir = "//base/tee/tee_os_framework/test/xts"
+  sources = [
+    tee_test_root_dir + "/utils/main.cpp",
+    tee_test_root_dir + "/utils/public_test/public_test.cpp",
+    tee_test_root_dir + "/utils/session_mgr/client_session_mgr.cpp",
+
+    tee_test_root_dir + "/ca/device_api/src/tee_test_device_api.cpp",
+  ]
+
+  include_dirs = [
+    tee_dev_kit_dir + "/sdk/thirdparty/open_source/bounds_checking_function/include/libhwsecurec",
+    "//base/tee/tee_client/interfaces/kits/c/include",
+
+    tee_test_root_dir + "/utils",
+    tee_test_root_dir + "/utils/include",
+    tee_test_root_dir + "/utils/public_test",
+    tee_test_root_dir + "/utils/cmd_id",
+    tee_test_root_dir + "/ca/device_api/common",
+
+    "//third_party/googletest/googletest/include",
+  ]
+
+  deps = [
+      "//base/tee/tee_client/frameworks/build/standard:libteec_vendor",
+      "//third_party/bounds_checking_function:libsec_shared",
+  ]
+
+  cflags = [ 
+    "-Wno-error",
+    "-DTEST_STUB", 
+  ]
   ldflags = [
     "-lm",
     "-lpthread",

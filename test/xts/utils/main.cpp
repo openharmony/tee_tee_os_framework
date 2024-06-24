@@ -17,8 +17,24 @@
 #include "gtest/gtest.h"
 using namespace std;
 
+static int IsTEESupport()
+{
+    FILE *fp = popen("pidof teecd", "r");
+    char buffer[10] = { 0 };
+    if (fgets(buffer, 10, fp) == NULL)
+        return 1;
+    else
+        return 0;
+}
+
 int main(int32_t argc, char** argv)
 {
     testing::InitGoogleTest(&argc, argv);
+    int rc = IsTEESupport();
+    if (rc == 1) {
+        printf("[========]this device not support TEE, so test stop!\n");
+        return 1;
+    }
+
     return RUN_ALL_TESTS();
 }

@@ -1,0 +1,7 @@
+gpd.ta.appID:   		634d4152-542d-4353-4c54-d3016a171f11
+gpd.ta.service_name:		test_device_api
+gpd.ta.singleInstance:               true
+gpd.ta.multiSession: 		false
+gpd.ta.instanceKeepAlive:	false
+gpd.ta.dataSize:		1817600
+gpd.ta.stackSize:		81920

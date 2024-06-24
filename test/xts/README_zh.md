@@ -36,16 +36,25 @@ TEE 测试套件REE侧是基于Open Harmony的hcpptest编写。测试框架可�
     将测试TA源码放到SDK目录中，参考demo TA的编译，源码和配置文件使用待编译的TA即可。
 
 ## 测试执行
-注意，测试时CA运行的绝对路径要与测试TA中AddCaller_CA_exec指定的CA运行绝对路径保持一致，本例以TA中指定的CA名称为tee_test_client_api为例来介绍测试命令。
+注意，测试时CA运行的绝对路径要与测试TA中AddCaller_CA_exec指定的CA运行绝对路径保持一致，本例以TA中指定的CA名称为tee_test_client_api_vendor为例来介绍测试命令。
 测试TA（sec文件）放到与测试CA同级目录下，可以均放在/vendor/bin/目录下。
 
 ### TEE sdk兼容性测试
 
 1. 执行全部用例 
-   进入被测试系统命令行窗口，输入："/vendor/bin/tee_test_client_api"
+   进入被测试系统命令行窗口，输入："/vendor/bin/tee_test_client_api_vendor"
 
 2. 执行部分用例
-   参考hcpptest框架提供的命令。支持使用通配符*，例如 /vendor/bin/tee_test_client_api --gtest_filter=*EmptyTest.InvokeCommand*
+   参考hcpptest框架提供的命令。支持使用通配符*，例如 /vendor/bin/tee_test_client_api_vendor --gtest_filter=*EmptyTest.InvokeCommand*
 
+3. 当前已有的tee xts 测试CA 列表:
+/vendor/bin/tee_test_client_api_vendor
+/system/bin/tee_test_client_api_system
+/vendor/bin/tee_test_tcf_api
+/vendor/bin/tee_test_time_api
+/vendor/bin/tee_test_arithmetic_api
+/vendor/bin/tee_test_trusted_storage_api
+/vendor/bin/tee_test_crypto_api
+/vendor/bin/tee_test_device_api
 ## 参考仓
     - xts_acts

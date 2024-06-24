@@ -12,13 +12,14 @@
 
 #include <string.h>
 #include <securec.h>
-#include <tee_core_api.h>
-#include <tee_ext_api.h>
-#include <tee_log.h>
-#include <tee_mem_mgmt_api.h>
-#include <tee_property_api.h>
-#include <test_tcf_cmdid.h>
-#include <test_comm_cmdid.h>
+#include "tee_core_api.h"
+#include "tee_ext_api.h"
+#include "tee_log.h"
+#include "tee_mem_mgmt_api.h"
+#include "tee_property_api.h"
+#include "test_tcf_cmdid.h"
+#include "test_comm_cmdid.h"
+#include "tee_sharemem_ops.h"
 
 #define CA_PKGN_VENDOR "/vendor/bin/tee_test_tcf_api"
 #define CA_PKGN_SYSTEM "/system/bin/tee_test_tcf_api"
@@ -61,6 +62,13 @@ char *g_teeOutput = "TEEMEM_OUTPUT";
 char *g_teeInout = "the param is TEEMEM_INOUT";
 uint32_t g_teeOutputLen;
 uint32_t g_teeInoutLen;
+
+#define  HASH_LENGTH 32
+static uint8_t g_caller_hash[HASH_LENGTH] = {
+    /* cmdline = "/vendor/bin/tee_test_tcf_api", ca uid = 0 */
+    0xcf, 0x39, 0x22, 0xa5, 0xf9, 0xf6, 0x09, 0xb7, 0x3f, 0x8e, 0xd0, 0xb4, 0xca, 0xc8, 0x93, 0x54,
+    0xb4, 0xfa, 0x81, 0x8f, 0x22, 0xc2, 0xf6, 0xe0, 0x1b, 0x21, 0x6f, 0x03, 0x3a, 0x61, 0x9a, 0x0a,
+};
 
 static TEE_Result CmdTEEGetPropertyAsString(uint32_t nParamTypes, TEE_Param pParams[4])
 {
@@ -551,6 +559,50 @@ static TEE_Result TestTypeBuffer(uint32_t paramTypes, TEE_Param params[4])
     return ret;
 }
 
+static TEE_Result TestShareMem(uint32_t paramTypes, TEE_Param params[4])
+{
+    (void)paramTypes;
+    uint32_t sender_task_id = params[1].value.a;
+    uint32_t size = params[1].value.b;
+    uint32_t *buffer = malloc(size);
+    if (buffer == NULL) {
+        tloge("malloc failed!\n");
+        return TEE_ERROR_GENERIC;
+    }
+    uint64_t addr = params[0].value.a;
+    addr = addr << 32;
+    addr |= params[0].value.b;
+
+    int32_t ret = copy_from_sharemem(sender_task_id, addr, size, (uintptr_t)buffer, size);
+    if (ret != 0) {
+        tloge("copy_from_sharemem failed!\n");
+        goto clean;
+    }
+
+    for (uint32_t i = 0; i < size / sizeof(uint32_t); i++)
+    {
+        if (buffer[i] != 0x41) {
+            tloge("buffer[%d]=0x%x, not equal 0x41.\n", i, buffer[i]);
+            goto clean;
+        }
+    }
+    tlogi("test copy_from_sharemem success!\n"); 
+
+    (void)memset_s(buffer, size, 0x42, size);
+    ret = copy_to_sharemem((uintptr_t)buffer, size, sender_task_id, addr, size);
+    if (ret != 0) {
+        tloge("copy_to_sharemem failed!\n");
+        goto clean;
+    }
+    tlogi("test copy_to_sharemem end!\n"); 
+
+    return TEE_SUCCESS;
+clean:
+    params[2].value.a = 1;
+    free(buffer);
+    return TEE_SUCCESS;  // let param transmit to ta1 success
+}
+
 static TEE_Result CmdTEEMalloc(uint32_t nParamTypes, TEE_Param pParams[4])
 {
     size_t nSize;
@@ -646,10 +698,67 @@ static TEE_Result CmdTEEPanic(uint32_t nParamTypes, TEE_Param pParams[4])
     return TEE_SUCCESS;
 }
 
+static TEE_Result TestPrintAPI(uint32_t nParamTypes, TEE_Param pParams[4])
+{
+    (void)nParamTypes;
+    tee_print(LOG_LEVEL_INFO, "This sentence was printed by tee_print, input value = 0x%x, input string = %s\n", 
+        pParams[0].value.a, pParams[1].memref.buffer);
+#if 0
+    tee_print_driver(LOG_LEVEL_INFO, "DRV", "This printed by tee_print_driver, inputvalue = 0x%x, inputstring = %s\n", 
+        pParams[0].value.a, pParams[1].memref.buffer);
+    uart_cprintf("This sentence was printed by uart_cprint, input value = 0x%x, input string = %s\n", 
+        pParams[0].value.a, pParams[1].memref.buffer);
+    uart_printf_func("This sentence was printed by uart_print_func, input value = 0x%x, input string = %s\n", 
+        pParams[0].value.a, pParams[1].memref.buffer);
+#endif
+    return TEE_SUCCESS;
+}
+
+static TEE_Result TestGetInfoAPI(uint32_t nParamTypes, TEE_Param pParams[4])
+{
+    (void)nParamTypes;
+    TEE_Result ret = TEE_SUCCESS;
+    uint32_t mem_usage;
+    mem_usage = get_heap_usage(1);
+    tlogi("[%s] get_heap_usage is success, mem_usage = 0x%x\n", __func__, mem_usage);
+    pParams[0].value.a = mem_usage;
+
+    uint32_t userid = 0;
+    ret = tee_ext_get_caller_userid(&userid);
+    if (ret != TEE_SUCCESS) {
+        tlogi("[%s] tee_ext_get_caller_userid failed, get userid = 0x%x, ret=0x%x\n", __func__, userid, ret);
+        return ret;
+    }
+    pParams[0].value.b = userid;
+
+    uint32_t session_type = SESSION_FROM_UNKNOWN;  
+    session_type = tee_get_session_type();
+    tlogi("[%s] after tee_get_session_type, session_type = 0x%x\n", __func__, session_type);
+    pParams[1].value.a = session_type;
+
+    caller_info caller_info_data = { 0 };
+    caller_info_data.session_type = SESSION_FROM_UNKNOWN;
+    ret = tee_ext_get_caller_info(&caller_info_data, sizeof(caller_info));
+    if (ret != TEE_SUCCESS) {
+        tlogi("[%s] tee_ext_get_caller_info failed, ret=0x%x\n", __func__, ret);
+        return ret;
+    }
+    tlogi("[%s] after tee_ext_get_caller_info, session_type = 0x%x\n", __func__, caller_info_data.session_type);
+    pParams[1].value.b = caller_info_data.session_type;
+
+    return ret;
+}
+
 TEE_Result TA_CreateEntryPoint(void)
 {
     tlogi("---- TA_CreateEntryPoint ---------");
     TEE_Result ret;
+
+    ret = AddCaller_CA(g_caller_hash, HASH_LENGTH);
+    if (ret != TEE_SUCCESS) {
+        tloge("AddCaller_CA failed, ret: 0x%x", ret);
+        return ret;
+    }
 
     ret = AddCaller_CA_exec(CA_PKGN_VENDOR, CA_UID);
     if (ret != TEE_SUCCESS) {
@@ -708,9 +817,12 @@ struct testFunc g_testTable[] = {
     { CMD_TEE_GetPropertyNameEnumerator, CmdTEEGetPropertyName },
     { CMD_TEE_OpenTASession, CmdTEEOpenTASession },
     { TEE_TEST_BUFFER, TestTypeBuffer },
+    { TEE_TEST_SHAREMEM, TestShareMem },
     { CMD_TEE_Malloc, CmdTEEMalloc },
     { CMD_TEE_Realloc, CmdTEERealloc },
     { CMD_TEE_Panic, CmdTEEPanic },
+    { CMD_TEST_PRINT, TestPrintAPI },
+    { CMD_TEST_GETINFO, TestGetInfoAPI },
 };
 
 uint32_t g_testTableSize = sizeof(g_testTable) / sizeof(g_testTable[0]);

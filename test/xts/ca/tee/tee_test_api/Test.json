@@ -18,12 +18,14 @@
                 "chmod -R 777 /data/local/tmp/*",
                 "mkdir /data/local/tmp/gl_cts",
                 "tar zxvf /data/local/tmp/vkgldata.tar.gz -C /data/local/tmp/gl_cts",
-                "cp -r /data/local/tmp/tee_test_client_api /vendor/bin/",
+                "cp -r /data/local/tmp/tee_test_client_api_vendor /vendor/bin/",
+                "cp -r /data/local/tmp/tee_test_client_api_system /system/bin/",
                 "cp -r /data/local/tmp/tee_test_tcf_api /vendor/bin/",
                 "cp -r /data/local/tmp/tee_test_time_api /vendor/bin/",
                 "cp -r /data/local/tmp/tee_test_arithmetic_api /vendor/bin/",
                 "cp -r /data/local/tmp/tee_test_trusted_storage_api /vendor/bin/",
                 "cp -r /data/local/tmp/tee_test_crypto_api /vendor/bin/",
+                "cp -r /data/local/tmp/tee_test_device_api /vendor/bin/",
                 "chmod 777 /vendor/bin/tee_test*"
             ],
             "push": [
@@ -36,12 +38,14 @@
             "run-command": [
                 "remount",
                 "mkdir /data/test",
-                "/vendor/bin/tee_test_client_api",
+                "/vendor/bin/tee_test_client_api_vendor",
+                "/system/bin/tee_test_client_api_system",
                 "/vendor/bin/tee_test_tcf_api",
                 "/vendor/bin/tee_test_time_api",
                 "/vendor/bin/tee_test_arithmetic_api",
                 "/vendor/bin/tee_test_trusted_storage_api",
-                "/vendor/bin/tee_test_crypto_api"
+                "/vendor/bin/tee_test_crypto_api",
+                "/vendor/bin/tee_test_device_api"
             ]
         }
     ]
