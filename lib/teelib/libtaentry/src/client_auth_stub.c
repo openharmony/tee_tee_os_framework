@@ -54,5 +54,5 @@ TEE_Result AddCaller_CA(const uint8_t *cainfo_hash, uint32_t length)
 
 uint32_t tee_get_session_type(void)
 {
-    return TEE_ERROR_NOT_SUPPORTED;
+    return 0;
 }

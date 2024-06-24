@@ -233,3 +233,39 @@ void __attribute__((weak)) tee_print(LOG_LEVEL log_level, const char *fmt, ...)
 
     va_end(ap);
 }
+
+void __attribute__((weak)) tee_print_driver(LOG_LEVEL log_level, const char *log_tag, const char *fmt, ...)
+{
+    va_list ap;
+
+    if (log_tag == NULL || fmt == NULL)
+        return;
+    va_start(ap, fmt);
+
+    tee_print_helper(log_tag, DRIVER_SOURCE, log_level, fmt, ap);
+
+    va_end(ap);
+}
+
+void uart_cprintf(const char *fmt, ...)
+{
+    va_list ap;
+    if (fmt == NULL)
+        return;
+    va_start(ap, fmt);
+
+    tee_print_helper(g_debug_prefix, COMMON_SOURCE, LOG_LEVEL_INFO, fmt, ap);
+
+    va_end(ap);
+}
+void uart_printf_func(const char *fmt, ...)
+{
+    va_list ap;
+    if (fmt == NULL)
+        return;
+    va_start(ap, fmt);
+
+    tee_print_helper(g_debug_prefix, COMMON_SOURCE, LOG_LEVEL_INFO, fmt, ap);
+
+    va_end(ap);
+}

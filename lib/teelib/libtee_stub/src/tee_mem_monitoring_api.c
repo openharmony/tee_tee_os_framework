@@ -4,5 +4,5 @@
 uint32_t get_heap_usage(bool show)
 {
     (void)show;
-    return TEE_ERROR_NOT_SUPPORTED;
+    return 0;
 }
