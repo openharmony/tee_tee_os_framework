@@ -41,6 +41,7 @@ inc-flags += -I$(PREBUILD_HEADER)/sys
 ifneq ($(findstring $(CONFIG_CRYPTO_SOFT_ENGINE), openssl openssl3),)
 inc-flags += -I$(TEELIB)/libopenssl/openssl/include
 inc-flags += -I$(TEELIB)/libopenssl/openssl/crypto
+inc-flags += -I$(TEELIB)/libopenssl/openssl/ohos_lite
 endif
 
 # Source files required to build the target

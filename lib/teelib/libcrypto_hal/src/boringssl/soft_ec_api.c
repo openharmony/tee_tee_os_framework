@@ -13,9 +13,13 @@
 #include "soft_ec_api.h"
 #include <ec/ec_local.h>
 #include <crypto/evp.h>
+#include <crypto/ec.h>
 #include <openssl/ecdh.h>
 #include <openssl/ecdsa.h>
 #include <openssl/bn.h>
+#include <openssl/ec.h>
+#include <openssl/evp.h>
+#include <openssl/core_names.h>
 #include <securec.h>
 #include <tee_log.h>
 #include "crypto_inner_interface.h"
@@ -72,25 +76,25 @@ static int32_t generate_ed25519_keypair(uint32_t key_size, struct ecc_pub_key_t 
         return get_soft_crypto_error(CRYPTO_BAD_PARAMETERS);
     }
 
-    ECX_KEY *ed25519_key = EVP_PKEY_get0(pkey);
-    if ((ed25519_key == NULL) || (ed25519_key->privkey == NULL)) {
-        tloge("Evp get failed\n");
+    size_t pub_key_buf_len = ECC_KEY_LEN;
+    size_t prv_key_buf_len = ECC_KEY_LEN;
+
+    if (EVP_PKEY_get_octet_string_param(pkey, OSSL_PKEY_PARAM_PRIV_KEY, private_key->r, sizeof(private_key->r), &prv_key_buf_len) == 0)
+    {
+        tloge("Get private key failed\n");
         EVP_PKEY_free(pkey);
-        return CRYPTO_BAD_PARAMETERS;
+        return CRYPTO_ERROR_SECURITY;
     }
 
-    errno_t rc = memcpy_s(public_key->x, public_key->x_len, ed25519_key->pubkey, ED25519_PUBLIC_KEY_LEN);
-    if (rc != EOK) {
-        tloge("Copy failed, rc=%d\n", rc);
+    if (EVP_PKEY_get_octet_string_param(pkey, OSSL_PKEY_PARAM_PUB_KEY, public_key->x, sizeof(public_key->x), &pub_key_buf_len) == 0)
+    {
+        tloge("Get public key failed\n");
         EVP_PKEY_free(pkey);
         return CRYPTO_ERROR_SECURITY;
     }
-    rc = memcpy_s(private_key->r, private_key->r_len, ed25519_key->privkey, ED25519_PRI_KEY_LEN);
+
     EVP_PKEY_free(pkey);
-    if (rc != EOK) {
-        tloge("Copy failed, rc=%d\n", rc);
-        return CRYPTO_ERROR_SECURITY;
-    }
+
     public_key->x_len = ED25519_PUBLIC_KEY_LEN;
     private_key->r_len = ED25519_PRI_KEY_LEN;
     return CRYPTO_SUCCESS;
@@ -484,7 +488,7 @@ int32_t soft_crypto_ecc_generate_keypair(uint32_t key_size, uint32_t curve,
     if (check)
         return generate_ecc_keypair(curve, key_size, public_key, private_key);
 
-    return sm2_generate_keypair(key_size, curve, public_key, private_key);
+    return CRYPTO_NOT_SUPPORTED;
 }
 
 int32_t soft_crypto_ecc_encrypt(uint32_t alg_type, const struct ecc_pub_key_t *public_key,
@@ -499,7 +503,7 @@ int32_t soft_crypto_ecc_encrypt(uint32_t alg_type, const struct ecc_pub_key_t *p
     }
 
     if (alg_type == CRYPTO_TYPE_SM2_PKE)
-        return sm2_encrypt_decypt(public_key, ENC_MODE, data_in, data_out);
+        return CRYPTO_NOT_SUPPORTED;
 
     return CRYPTO_NOT_SUPPORTED;
 }
@@ -516,7 +520,7 @@ int32_t soft_crypto_ecc_decrypt(uint32_t alg_type, const struct ecc_priv_key_t *
     }
 
     if (alg_type == CRYPTO_TYPE_SM2_PKE)
-        return sm2_encrypt_decypt(private_key, DEC_MODE, data_in, data_out);
+        return CRYPTO_NOT_SUPPORTED;
 
     return CRYPTO_NOT_SUPPORTED;
 }
@@ -566,9 +570,6 @@ int32_t soft_crypto_ecc_sign_digest(uint32_t alg_type, const struct ecc_priv_key
         return CRYPTO_BAD_PARAMETERS;
     }
 
-    if (alg_type == CRYPTO_TYPE_SM2_DSA_SM3)
-        return sm2_sign_verify(private_key, SIGN_MODE, digest, signature);
-
     if (alg_type == CRYPTO_TYPE_ED25519)
         return ed25519_sign_digest(signature, digest, private_key);
 
@@ -617,9 +618,6 @@ int32_t soft_crypto_ecc_verify_digest(uint32_t alg_type, const struct ecc_pub_ke
         tloge("bad params");
         return CRYPTO_BAD_PARAMETERS;
     }
-
-    if (alg_type == CRYPTO_TYPE_SM2_DSA_SM3)
-        return sm2_sign_verify(public_key, VERIFY_MODE, digest, (struct memref_t *)signature);
 
     if (alg_type == CRYPTO_TYPE_ED25519)
         return ed25519_verify_digest(signature, digest, public_key);

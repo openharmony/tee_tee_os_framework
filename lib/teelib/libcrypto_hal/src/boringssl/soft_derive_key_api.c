@@ -13,7 +13,7 @@
 #include "soft_derive_key_api.h"
 #include <crypto/evp.h>
 #ifdef CRYPTO_SUPPORT_SOFT_ECC
-#include <ec/ec_local.h>
+#include <crypto/ec/ec_local.h>
 #include <openssl/ecdh.h>
 #endif
 #include <openssl/evp.h>

@@ -17,6 +17,7 @@ A32_CFLAGS += -w -Wno-unused-parameter -Wno-int-conversion
 CPPFLAGS += -I$(TEELIB)/libopenssl/include
 CPPFLAGS += -I$(TEELIB)/libopenssl/openssl
 CPPFLAGS += -I$(TEELIB)/libopenssl/openssl/include
+CPPFLAGS += -I$(TEELIB)/libopenssl/openssl/include/internal
 CPPFLAGS += -I$(TEELIB)/libopenssl/openssl/include/crypto
 CPPFLAGS += -I$(TEELIB)/libopenssl/openssl/include/openssl
 CPPFLAGS += -I$(TEELIB)/libopenssl/openssl/crypto
@@ -32,6 +33,7 @@ CPPFLAGS += -I$(TEELIB)/libopenssl/openssl/crypto/siphash
 CPPFLAGS += -I$(PREBUILD_DIR)/headers/libc
 
 CPPFLAGS += -I$(TEELIB)/libopenssl/openssl/providers/common/include
+CPPFLAGS += -I$(TEELIB)/libopenssl/openssl/providers/common/include/prov
 CPPFLAGS += -I$(TEELIB)/libopenssl/openssl/providers/implementations/include
 
 ifeq (${CONFIG_CRYPTO_SOFT_ENGINE},openssl3)
@@ -44,6 +46,9 @@ ifeq ($(CONFIG_OPENSSL_NO_ASM),true)
 	LOCAL_SRC_FILES += $(OPENSSL_CRYPTO_PATH)/mem_clr.c
 endif
 
+ifeq ($(CONFIG_CRYPTO_SUPPORT_SOFT_ECC),true)
+CFLAGS += -DCRYPTO_SUPPORT_SOFT_ECC
+endif
 
 ASFLAGS := $(filter-out -march=armv8-a+nofp, $(ASFLAGS)) -march=armv8-a
 CFLAGS := $(filter-out -fno-builtin-memcpy, $(CFLAGS))
