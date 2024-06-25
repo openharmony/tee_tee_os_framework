@@ -46,6 +46,10 @@ typedef enum {
     LOG_LEVEL_ON    = 5,
 } LOG_LEVEL;
 
+void uart_cprintf(const char *fmt, ...);
+void uart_printf_func(const char *fmt, ...);
+void tee_print_driver(LOG_LEVEL log_level, const char *log_tag, const char *fmt, ...);
+
 void tee_print(LOG_LEVEL log_level, const char *fmt, ...);
 extern const char *g_debug_prefix;
 

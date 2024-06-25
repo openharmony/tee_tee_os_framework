@@ -107,3 +107,13 @@ void *tee_alloc_coherent_sharemem_aux(const struct tee_uuid *uuid, uint32_t size
     (void)size;
     return NULL;
 }
+
+void *tee_alloc_sharemem_aux(const struct tee_uuid *uuid, uint32_t size)
+{
+    return alloc_sharemem_aux(uuid, size);
+}
+
+uint32_t tee_free_sharemem(void *addr, uint32_t size)
+{
+    return free_sharemem(addr, size);
+}
