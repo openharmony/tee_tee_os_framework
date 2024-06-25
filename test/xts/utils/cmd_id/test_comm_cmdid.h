@@ -17,6 +17,7 @@ typedef enum {
     TEE_TEST_BUFFER,
     TEE_TEST_ALLTYPE,
     TEE_TEST_WRITE_OVERFOLW,
+    TEE_TEST_SHAREMEM,
 } CommCmdId;
 
 #endif

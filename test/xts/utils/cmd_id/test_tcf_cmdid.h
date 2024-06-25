@@ -39,6 +39,9 @@ typedef enum {
     CMD_TEE_InvokeTACommand,
     CMD_TEE_CloseTASession,
     CMD_TEE_Panic,
+    CMD_TEST_PRINT,
+    CMD_TEST_GETINFO,
+    CMD_TEE_ShareMemAPI,
 } TCFCmdId;
 
 #define INPUT_ISNULL 1

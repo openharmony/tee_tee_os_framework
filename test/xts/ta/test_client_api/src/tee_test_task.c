@@ -17,8 +17,8 @@
 #include <tee_mem_mgmt_api.h>
 #include <securec.h>
 
-#define CA_PKGN_VENDOR "/vendor/bin/tee_test_client_api"
-#define CA_PKGN_SYSTEM "/system/bin/tee_test_client_api"
+#define CA_PKGN_VENDOR "/vendor/bin/tee_test_client_api_vendor"
+#define CA_PKGN_SYSTEM "/system/bin/tee_test_client_api_system"
 #define CA_UID 0
 
 // The test case uses the same string to pass the input and output test of buffer during REE and tee communication

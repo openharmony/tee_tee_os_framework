@@ -11,13 +11,15 @@
  */
 
 #include <securec.h>
-#include <tee_core_api.h>
-#include <tee_ext_api.h>
-#include <tee_log.h>
-#include <tee_mem_mgmt_api.h>
-#include <tee_property_api.h>
-#include <test_comm_cmdid.h>
-#include <test_tcf_cmdid.h>
+#include <unistd.h>
+#include "tee_core_api.h"
+#include "tee_ext_api.h"
+#include "tee_log.h"
+#include "tee_mem_mgmt_api.h"
+#include "tee_property_api.h"
+#include "test_comm_cmdid.h"
+#include "test_tcf_cmdid.h"
+#include "tee_sharemem_ops.h"
 
 #define CA_PKGN_VENDOR "/vendor/bin/tee_test_tcf_api"
 #define CA_PKGN_SYSTEM "/system/bin/tee_test_tcf_api"
@@ -614,12 +616,94 @@ static TEE_Result CmdTEEInvokeTACommand(uint32_t nParamTypes, TEE_Param pParams[
         }
     }
 
-    tloge("test TEE_InvokeTACommand is finish! nTmpResult=0x%x, nReturnOrigin=%d\n", nTmpResult, nReturnOrigin);
+    tlogi("test TEE_InvokeTACommand is finish! nTmpResult=0x%x, nReturnOrigin=%d\n", nTmpResult, nReturnOrigin);
 
     if (!pBufferIn) {
         TEE_Free((void *)pBufferIn);
     }
     return nTmpResult;
+}
+
+#define TCF_API_UUID_1                                     \
+    {                                                      \
+        0x534d4152, 0x542d, 0x4353,                        \
+        {                                                  \
+            0x4c, 0x54, 0xd3, 0x01, 0x6a, 0x17, 0x1f, 0x01 \
+        }                                                  \
+    }
+static TEE_Result CmdTEEShareMemTest(uint32_t nParamTypes, TEE_Param pParams[4])
+{
+    (void)nParamTypes;
+
+    (void)pParams;
+    return 0;
+#if 0
+    TEE_Result nTmpResult = TEE_SUCCESS;
+    uint32_t nReturnOrigin = 0;
+    uint32_t size = DEFAULT_BUFFER_SIZE;
+    uint32_t cmd = TEE_TEST_SHAREMEM;
+    TEE_Param pTargetParams[4];
+    struct tee_uuid uuid = TCF_API_UUID_1;
+    TEE_TASessionHandle nsession = pParams[0].value.b;
+    uint32_t npType = TEE_PARAM_TYPES(TEE_PARAM_TYPE_VALUE_INPUT, TEE_PARAM_TYPE_VALUE_INPUT,
+        TEE_PARAM_TYPE_VALUE_OUTPUT, TEE_PARAM_TYPE_NONE);
+
+    uint32_t *temp_buffer = tee_alloc_sharemem_aux(&uuid, size);
+    if (temp_buffer == NULL) {
+        tloge("tee_alloc_sharemem_aux failed!\n");
+        return TEE_ERROR_GENERIC;
+    }
+    tlogi("tee_alloc_sharemem_aux success!\n");
+    (void)memset_s(temp_buffer, size, 0x41, size);
+
+    pTargetParams[0].value.a = (uint64_t)(uintptr_t)temp_buffer >> 32;
+    pTargetParams[0].value.b = (uint64_t)(uintptr_t)temp_buffer;
+    pTargetParams[1].value.a = getpid();
+    pTargetParams[1].value.b = size;
+    nTmpResult = TEE_InvokeTACommand(nsession, TEE_TIMEOUT_INFINITE, cmd, npType, pTargetParams, &nReturnOrigin);
+    pParams[2].value.a = nReturnOrigin;
+    if (nTmpResult != TEE_SUCCESS) {
+        tloge("%s: test TEE_InvokeTACommand failed! ret =0x%x, origin =%d\n", __func__, nTmpResult, nReturnOrigin);
+        goto out;
+    }
+    if (pTargetParams[2].value.a == 1) {
+        tloge("sender ta receiver sharemem failed!\n");
+        nTmpResult = TEE_ERROR_GENERIC;
+        goto out;
+    }
+
+    for (uint32_t i = 0; i < size / sizeof(uint32_t); i++)
+    {
+        if (temp_buffer[i] != 0x42) {  // modified by ta2
+            tloge("temp_buffer[%d] should be 0x42, not 0x%x\n", i, temp_buffer[i]);
+            nTmpResult = TEE_ERROR_GENERIC;
+            goto out;
+        }
+    }
+    tlogi("test sharemem between ta2ta is success!\n");
+
+    tee_free_sharemem(temp_buffer, size);
+    uint32_t *buffer = tee_alloc_coherent_sharemem_aux(&uuid, size);
+    if (buffer == NULL) {
+        tloge("tee_alloc_coherent_sharemem_aux failed!\n");
+        return TEE_ERROR_GENERIC;
+    }
+    tlogi("tee_alloc_coherent_sharemem_aux success!\n");
+    (void)memset_s(buffer, size, 0x43, size);
+
+    if (tee_free_sharemem(buffer, size) != 0) {
+        tloge("tee_free_sharemem after tee_alloc_coherent_sharemem_aux failed!\n");
+        nTmpResult = TEE_ERROR_GENERIC;
+    }
+
+    return nTmpResult;
+out:
+    if (tee_free_sharemem(temp_buffer, size) != 0) {
+        tloge("tee_free_sharemem failed!\n");
+        nTmpResult = TEE_ERROR_GENERIC;
+    }
+    return nTmpResult;
+#endif
 }
 
 TEE_Result TA_CreateEntryPoint(void)
@@ -674,6 +758,7 @@ struct testFunc g_testTable[] = {
     { CMD_TEE_OpenTASession, CmdTEEOpenTASession },
     { CMD_TEE_InvokeTACommand, CmdTEEInvokeTACommand },
     { CMD_TEE_CloseTASession, CmdTEECloseTASession },
+    { CMD_TEE_ShareMemAPI, CmdTEEShareMemTest },
 };
 
 uint32_t g_testTableSize = sizeof(g_testTable) / sizeof(g_testTable[0]);

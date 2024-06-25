@@ -33,6 +33,7 @@ list(APPEND ca_sources
     src/mem/tee_instance_test.cpp
     src/other/internal_client_api_test.cpp
     src/other/tee_panic_test.cpp
+    src/other/tee_otherapi_test.cpp
 )
 
 ca_compile_pub(
