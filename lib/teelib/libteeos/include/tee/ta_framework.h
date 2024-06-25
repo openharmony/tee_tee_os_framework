@@ -262,6 +262,7 @@ struct ta_init_msg {
     void *misc_mem; /* misc agent share mem */
     struct ta_property prop;
     uint32_t login_method;
+    void *time_data;
     TEE_Time sys_time;
     uint32_t rtc_time;
 };
