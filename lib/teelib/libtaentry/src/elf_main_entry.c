@@ -265,7 +265,7 @@ struct init_build_param {
     char *non_standard_property;
 };
 
-static void tee_task_entry_init_for_build(struct init_build_param *param, struct ta_to_global_msg *ret_msg,
+static void __attribute__((noinline)) tee_task_entry_init_for_build(struct init_build_param *param, struct ta_to_global_msg *ret_msg,
                                           const struct ta_routine_info *append_args)
 {
     uint32_t cmd;
@@ -416,7 +416,7 @@ static bool get_caller_flag(const struct ta_routine_info *append_args)
     return append_args->addcaller_flag;
 }
 
-static TEE_Result open_session_handle(struct init_build_param *init_param,
+static TEE_Result __attribute__((noinline)) open_session_handle(struct init_build_param *init_param,
                                       const struct global_to_ta_msg *entry_msg,
                                       const struct ta_routine_info *append_args,
                                       void **session_context)
