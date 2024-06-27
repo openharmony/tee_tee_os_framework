@@ -57,12 +57,12 @@ int32_t copy_from_sharemem(uint32_t src_task, uint64_t src, uint32_t src_size, u
     ret = memcpy_s((void *)dst, dst_size, (void *)(uintptr_t)temp_dst, src_size);
     if (ret != EOK) {
         tloge("copy buffer from sharemem failed\n");
-        if (munmap((void *)(uintptr_t)temp_dst, src_size) != 0)
+        if (unmap_sharemem((void *)(uintptr_t)temp_dst, src_size) != 0)
             tloge("unmap temp dst failed in from sharemem\n");
         return -1;
     }
 
-    if (munmap((void *)(uintptr_t)temp_dst, src_size) != 0) {
+    if (unmap_sharemem((void *)(uintptr_t)temp_dst, src_size) != 0) {
         tloge("something wrong, unmap temp dst failed in from sharemem\n");
         return -1;
     }
@@ -88,12 +88,12 @@ int32_t copy_to_sharemem(uintptr_t src, uint32_t src_size, uint32_t dst_task, ui
     ret = memcpy_s((void *)(uintptr_t)temp_dst, dst_size, (void *)src, src_size);
     if (ret != EOK) {
         tloge("copy buffer to sharemem failed\n");
-        if (munmap((void *)(uintptr_t)temp_dst, dst_size) != 0)
+        if (unmap_sharemem((void *)(uintptr_t)temp_dst, dst_size) != 0)
             tloge("unmap temp dst failed in to sharemem\n");
         return -1;
     }
 
-    if (munmap((void *)(uintptr_t)temp_dst, dst_size) != 0) {
+    if (unmap_sharemem((void *)(uintptr_t)temp_dst, dst_size) != 0) {
         tloge("something wrong, unmap temp dst failed in to sharemem\n");
         return -1;
     }

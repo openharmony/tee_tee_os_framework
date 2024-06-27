@@ -59,7 +59,7 @@ static void huk_srv_task_unmap(uint64_t virt_addr, uint32_t size)
 {
     if (virt_addr == 0)
         return;
-    if (munmap((void *)(uintptr_t)virt_addr, size) != 0)
+    if (unmap_sharemem((void *)(uintptr_t)virt_addr, size) != 0)
         tloge("huk srv unmap error\n");
 }
 
