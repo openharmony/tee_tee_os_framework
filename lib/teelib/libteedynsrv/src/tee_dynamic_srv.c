@@ -85,7 +85,7 @@ void tee_srv_unmap_from_task(uint32_t va_addr, uint32_t size)
     (void)va_addr;
     (void)size;
 #else
-    (void)munmap((void *)(uintptr_t)va_addr, size);
+    (void)unmap_sharemem((void *)(uintptr_t)va_addr, size);
 #endif
 }
 

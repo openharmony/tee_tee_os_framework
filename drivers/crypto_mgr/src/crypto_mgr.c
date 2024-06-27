@@ -45,7 +45,7 @@ static int32_t crypto_ioctl_alloc_ctx_buf(struct drv_data *drv, uint32_t cmd, un
         tloge("Get ctx size failed, ctx size=%d\n", ctx_size);
         return CRYPTO_BAD_PARAMETERS;
     }
-    uint8_t *ctx_buffer = (uint8_t *)malloc_coherent((size_t)ctx_size);
+    uint8_t *ctx_buffer = (uint8_t *)malloc((size_t)ctx_size);
     if (ctx_buffer == NULL) {
         tloge("Malloc ctx buffer failed, ctx size=%d\n", ctx_size);
         return CRYPTO_OVERFLOW;

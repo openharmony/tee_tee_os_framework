@@ -678,7 +678,7 @@ void ssa_unmap_from_task(uint32_t task_id, uintptr_t va_addr, uint32_t size, boo
         return;
     }
 
-    (void)munmap((void *)va_addr, size);
+    (void)unmap_sharemem((void *)va_addr, size);
 }
 
 static void ssa_write_attributes(const uint8_t *attributes, uint32_t attributes_len, struct sfd_t *sfd,

@@ -455,7 +455,7 @@ static TEE_Result map_memref_for_gtask(bool ta2ta, const smc_cmd_t *cmd, tee_par
                                              p.memref.size, ta2ta);
         if (ret != TEE_SUCCESS) {
             tloge("failed to refcount the memory\n");
-            if (munmap(*ree_addr, p.memref.size) != 0)
+            if (unmap_sharemem(*ree_addr, p.memref.size) != 0)
                 tloge("munmap ree_addr failed\n");
             return ret;
         }
@@ -616,8 +616,13 @@ static TEE_Result map_cmd_to_operation(bool ta2ta, uint32_t *operation_size, con
     if (mapped) {
         ret = task_add_mem_region(cmd->event_nr, 0, (uint64_t)(uintptr_t)(*operation), *operation_size, ta2ta);
         if (ret != TEE_SUCCESS) {
-            if (munmap(*operation, *operation_size) != 0)
-                tloge("unmap operation failed\n");
+            if (ta2ta) {
+                if (unmap_sharemem(*operation, *operation_size) != 0)
+                    tloge("unmap sharemem operation failed\n");
+            } else {
+                if (task_unmap(0, (uint64_t)*operation, *operation_size) != 0)
+                    tloge("task unmap operation failed\n");
+            }
             return ret;
         }
     }
@@ -804,7 +809,7 @@ TEE_Result map_secure_operation(uint64_t tacmd, smc_cmd_t *out_cmd, uint32_t tas
         ret = TEE_ERROR_GENERIC;
     }
 
-    if (munmap(cmd, sizeof(smc_cmd_t)) != 0)
+    if (unmap_sharemem(cmd, sizeof(smc_cmd_t)) != 0)
         tloge("unmap cmd failed\n");
     return ret;
 }

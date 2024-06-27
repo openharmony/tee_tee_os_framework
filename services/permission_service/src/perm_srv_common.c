@@ -37,7 +37,7 @@ void perm_srv_unmap_from_task(uint64_t vaddr, uint32_t size)
     if (vaddr == 0)
         return;
 
-    if (munmap((void *)(uintptr_t)vaddr, size) != 0)
+    if (unmap_sharemem((void *)(uintptr_t)vaddr, size) != 0)
         tloge("perm unmap error\n");
 }
 

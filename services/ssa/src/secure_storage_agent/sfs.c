@@ -527,7 +527,7 @@ static TEE_Result cal_construct_block(struct sfd_t *sfd, uint32_t data_size)
     struct block_info_t *last_block_pos = NULL;
     uint32_t block_size = CRYPT_BLOCK_SIZE_V3;
     uint8_t *buffer = NULL;
-    buffer = malloc_coherent(CRYPT_BLOCK_SIZE_V3);
+    buffer = malloc(CRYPT_BLOCK_SIZE_V3);
     if (buffer == NULL)
         return TEE_ERROR_OUT_OF_MEMORY;
 
