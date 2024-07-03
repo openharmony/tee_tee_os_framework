@@ -422,7 +422,8 @@ static struct prop_item *find_pseuprop_item(TEE_PropSetHandle set, const char *n
 
     if (name == NULL)
         return NULL;
-    if (strnlen(name, MAX_PROPERTY_NAME_LEN) >= MAX_PROPERTY_NAME_LEN)
+    if (strnlen(name, MAX_PROPERTY_NAME_LEN) >= MAX_PROPERTY_NAME_LEN ||
+        strnlen(name, MAX_PROPERTY_NAME_LEN) == 0)
         return NULL;
 
     uint32_t index = sel_prop_set(set);
@@ -1167,9 +1168,10 @@ TEE_Result TEE_GetPropertyName(TEE_PropSetHandle enumerator, void *nameBuffer, s
     }
 
     check = ((handle->set == TEE_PROPSET_UNKNOW) || (handle->item == NULL) || (handle->item->name == NULL) ||
-             (strnlen(handle->item->name, MAX_PROPERTY_NAME_LEN) >= MAX_PROPERTY_NAME_LEN));
+             (strnlen(handle->item->name, MAX_PROPERTY_NAME_LEN) >= MAX_PROPERTY_NAME_LEN) ||
+             (strnlen(handle->item->name, MAX_PROPERTY_NAME_LEN) == 0));
     if (check) {
-        tloge("item no found\n");
+        tloge("item no found or name invalid\n");
         return TEE_ERROR_ITEM_NOT_FOUND;
     }
 
@@ -1207,6 +1209,10 @@ TEE_Result TEE_GetNextProperty(TEE_PropSetHandle enumerator)
     }
 
     handle->item = dlist_entry(handle->item->list.next, struct prop_item, list);
+    if (strcmp(handle->item->name, "") == 0) {
+        tloge("next name is 0, error");
+        return TEE_ERROR_ITEM_NOT_FOUND;
+    }
     return TEE_SUCCESS;
 }
 
