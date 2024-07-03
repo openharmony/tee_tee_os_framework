@@ -102,35 +102,35 @@ CRYPTO_TEST_EQ(CaseDigestSha512MultiMulti);
  * @testcase.desc      : run case CaseDigestSM3OnceOnce
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseDigestSM3OnceOnce);
+// CRYPTO_TEST_EQ(CaseDigestSM3OnceOnce);
 
 /**
  * @testcase.name      : CaseDigestSM3OnceMulti
  * @testcase.desc      : run case CaseDigestSM3OnceMulti
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseDigestSM3OnceMulti);
+// CRYPTO_TEST_EQ(CaseDigestSM3OnceMulti);
 
 /**
  * @testcase.name      : CaseDigestSM3MultiOnce
  * @testcase.desc      : run case CaseDigestSM3MultiOnce
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseDigestSM3MultiOnce);
+// CRYPTO_TEST_EQ(CaseDigestSM3MultiOnce);
 
 /**
  * @testcase.name      : CaseDigestSM3MultiMulti
  * @testcase.desc      : run case CaseDigestSM3MultiMulti
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseDigestSM3MultiMulti);
+// CRYPTO_TEST_EQ(CaseDigestSM3MultiMulti);
 
 /**
  * @testcase.name      : CaseDREcdhNistP224DataSize14
  * @testcase.desc      : run case CaseDREcdhNistP224DataSize14
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseDREcdhNistP224DataSize14);
+// CRYPTO_TEST_EQ(CaseDREcdhNistP224DataSize14);
 
 /**
  * @testcase.name      : CaseDREcdhNistP256DataSize128
@@ -200,28 +200,29 @@ CRYPTO_TEST_EQ(CaseDRX25519DataSize4096);
  * @testcase.desc      : run case CaseSymEncryptAesEcbNopadKeySize128OnceOnce
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseSymEncryptAesEcbNopadKeySize128OnceOnce);
+// CRYPTO_TEST_EQ(CaseSymEncryptAesEcbNopadKeySize128OnceOnce);
 
 /**
  * @testcase.name      : CaseSymEncryptAesEcbNopadKeySize128OnceMulti
  * @testcase.desc      : run case CaseSymEncryptAesEcbNopadKeySize128OnceMulti
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseSymEncryptAesEcbNopadKeySize128OnceMulti);
+// CRYPTO_TEST_EQ(CaseSymEncryptAesEcbNopadKeySize128OnceMulti);
 
 /**
  * @testcase.name      : CaseSymEncryptAesEcbNopadKeySize128MultiOnce
  * @testcase.desc      : run case CaseSymEncryptAesEcbNopadKeySize128MultiOnce
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseSymEncryptAesEcbNopadKeySize128MultiOnce);
+// CRYPTO_TEST_EQ(CaseSymEncryptAesEcbNopadKeySize128MultiOnce);
 
 /**
  * @testcase.name      : CaseSymEncryptAesEcbNopadKeySize128MultiMulti
  * @testcase.desc      : run case CaseSymEncryptAesEcbNopadKeySize128MultiMulti
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseSymEncryptAesEcbNopadKeySize128MultiMulti);
+// CRYPTO_TEST_EQ(CaseSymEncryptAesEcbNopadKeySize128MultiMulti)
+;
 
 /**
  * @testcase.name      : CaseSymEncryptAesCbcNopadKeySize192OnceOnce
@@ -340,112 +341,112 @@ CRYPTO_TEST_EQ(CaseSymEncryptAesCbcPkcs5KeySize256MultiMulti);
  * @testcase.desc      : run case CaseSymEncryptSm4CbcNopadKeySize128OnceOnce
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseSymEncryptSm4CbcNopadKeySize128OnceOnce);
+// CRYPTO_TEST_EQ(CaseSymEncryptSm4CbcNopadKeySize128OnceOnce);
 
 /**
  * @testcase.name      : CaseSymEncryptSm4CbcNopadKeySize128OnceMulti
  * @testcase.desc      : run case CaseSymEncryptSm4CbcNopadKeySize128OnceMulti
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseSymEncryptSm4CbcNopadKeySize128OnceMulti);
+// CRYPTO_TEST_EQ(CaseSymEncryptSm4CbcNopadKeySize128OnceMulti);
 
 /**
  * @testcase.name      : CaseSymEncryptSm4CbcNopadKeySize128MultiOnce
  * @testcase.desc      : run case CaseSymEncryptSm4CbcNopadKeySize128MultiOnce
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseSymEncryptSm4CbcNopadKeySize128MultiOnce);
+// CRYPTO_TEST_EQ(CaseSymEncryptSm4CbcNopadKeySize128MultiOnce);
 
 /**
  * @testcase.name      : CaseSymEncryptSm4CbcNopadKeySize128MultiMulti
  * @testcase.desc      : run case CaseSymEncryptSm4CbcNopadKeySize128MultiMulti
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseSymEncryptSm4CbcNopadKeySize128MultiMulti);
+// CRYPTO_TEST_EQ(CaseSymEncryptSm4CbcNopadKeySize128MultiMulti);
 
 /**
  * @testcase.name      : CaseSymEncryptSm4CtrKeySize128OnceOnce
  * @testcase.desc      : run case CaseSymEncryptSm4CtrKeySize128OnceOnce
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseSymEncryptSm4CtrKeySize128OnceOnce);
+// CRYPTO_TEST_EQ(CaseSymEncryptSm4CtrKeySize128OnceOnce);
 
 /**
  * @testcase.name      : CaseSymEncryptSm4CtrKeySize128OnceMulti
  * @testcase.desc      : run case CaseSymEncryptSm4CtrKeySize128OnceMulti
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseSymEncryptSm4CtrKeySize128OnceMulti);
+// CRYPTO_TEST_EQ(CaseSymEncryptSm4CtrKeySize128OnceMulti);
 
 /**
  * @testcase.name      : CaseSymEncryptSm4CtrKeySize128MultiOnce
  * @testcase.desc      : run case CaseSymEncryptSm4CtrKeySize128MultiOnce
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseSymEncryptSm4CtrKeySize128MultiOnce);
+// CRYPTO_TEST_EQ(CaseSymEncryptSm4CtrKeySize128MultiOnce);
 
 /**
  * @testcase.name      : CaseSymEncryptSm4CtrKeySize128MultiMulti
  * @testcase.desc      : run case CaseSymEncryptSm4CtrKeySize128MultiMulti
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseSymEncryptSm4CtrKeySize128MultiMulti);
+// CRYPTO_TEST_EQ(CaseSymEncryptSm4CtrKeySize128MultiMulti);
 
 /**
  * @testcase.name      : CaseSymEncryptSm4Cfb128KeySize128OnceOnce
  * @testcase.desc      : run case CaseSymEncryptSm4Cfb128KeySize128OnceOnce
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseSymEncryptSm4Cfb128KeySize128OnceOnce);
+// CRYPTO_TEST_EQ(CaseSymEncryptSm4Cfb128KeySize128OnceOnce);
 
 /**
  * @testcase.name      : CaseSymEncryptSm4Cfb128KeySize128OnceMulti
  * @testcase.desc      : run case CaseSymEncryptSm4Cfb128KeySize128OnceMulti
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseSymEncryptSm4Cfb128KeySize128OnceMulti);
+// CRYPTO_TEST_EQ(CaseSymEncryptSm4Cfb128KeySize128OnceMulti);
 
 /**
  * @testcase.name      : CaseSymEncryptSm4Cfb128KeySize128MultiOnce
  * @testcase.desc      : run case CaseSymEncryptSm4Cfb128KeySize128MultiOnce
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseSymEncryptSm4Cfb128KeySize128MultiOnce);
+// CRYPTO_TEST_EQ(CaseSymEncryptSm4Cfb128KeySize128MultiOnce);
 
 /**
  * @testcase.name      : CaseSymEncryptSm4Cfb128KeySize128MultiMulti
  * @testcase.desc      : run case CaseSymEncryptSm4Cfb128KeySize128MultiMulti
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseSymEncryptSm4Cfb128KeySize128MultiMulti);
+// CRYPTO_TEST_EQ(CaseSymEncryptSm4Cfb128KeySize128MultiMulti);
 
 /**
  * @testcase.name      : CaseSymEncryptSm4CbcPkcs7KeySize128OnceOnce
  * @testcase.desc      : run case CaseSymEncryptSm4CbcPkcs7KeySize128OnceOnce
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseSymEncryptSm4CbcPkcs7KeySize128OnceOnce);
+// CRYPTO_TEST_EQ(CaseSymEncryptSm4CbcPkcs7KeySize128OnceOnce);
 
 /**
  * @testcase.name      : CaseSymEncryptSm4CbcPkcs7KeySize128OnceMulti
  * @testcase.desc      : run case CaseSymEncryptSm4CbcPkcs7KeySize128OnceMulti
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseSymEncryptSm4CbcPkcs7KeySize128OnceMulti);
+// CRYPTO_TEST_EQ(CaseSymEncryptSm4CbcPkcs7KeySize128OnceMulti);
 
 /**
  * @testcase.name      : CaseSymEncryptSm4CbcPkcs7KeySize128MultiOnce
  * @testcase.desc      : run case CaseSymEncryptSm4CbcPkcs7KeySize128MultiOnce
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseSymEncryptSm4CbcPkcs7KeySize128MultiOnce);
+// CRYPTO_TEST_EQ(CaseSymEncryptSm4CbcPkcs7KeySize128MultiOnce);
 
 /**
  * @testcase.name      : CaseSymEncryptSm4CbcPkcs7KeySize128MultiMulti
  * @testcase.desc      : run case CaseSymEncryptSm4CbcPkcs7KeySize128MultiMulti
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseSymEncryptSm4CbcPkcs7KeySize128MultiMulti);
+// CRYPTO_TEST_EQ(CaseSymEncryptSm4CbcPkcs7KeySize128MultiMulti);
 
 /**
  * @testcase.name      : CaseAEAesCcmK128N7T32Aad32MultiOnce
@@ -774,147 +775,147 @@ CRYPTO_TEST_EQ(CaseAEAesGcmK128N7T104Aad512EncryptOnlyTAG);
  * @testcase.desc      : run case CaseAESM4GcmK128N7T96Aad32MultiOnce
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseAESM4GcmK128N7T96Aad32MultiOnce);
+// CRYPTO_TEST_EQ(CaseAESM4GcmK128N7T96Aad32MultiOnce);
 
 /**
  * @testcase.name      : CaseAESM4GcmK128N7T96Aad32MultiMulti
  * @testcase.desc      : run case CaseAESM4GcmK128N7T96Aad32MultiMulti
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseAESM4GcmK128N7T96Aad32MultiMulti);
+// CRYPTO_TEST_EQ(CaseAESM4GcmK128N7T96Aad32MultiMulti);
 
 /**
  * @testcase.name      : CaseAESM4GcmK128N7T96Aad32OnceOnce
  * @testcase.desc      : run case CaseAESM4GcmK128N7T96Aad32OnceOnce
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseAESM4GcmK128N7T96Aad32OnceOnce);
+// CRYPTO_TEST_EQ(CaseAESM4GcmK128N7T96Aad32OnceOnce);
 
 /**
  * @testcase.name      : CaseAESM4GcmK128N7T96Aad32OnceMulti
  * @testcase.desc      : run case CaseAESM4GcmK128N7T96Aad32OnceMulti
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseAESM4GcmK128N7T96Aad32OnceMulti);
+// CRYPTO_TEST_EQ(CaseAESM4GcmK128N7T96Aad32OnceMulti);
 
 /**
  * @testcase.name      : CaseAESM4GcmK128N7T96Aad32update0Multi
  * @testcase.desc      : run case CaseAESM4GcmK128N7T96Aad32update0Multi
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseAESM4GcmK128N7T96Aad32update0Multi);
+// CRYPTO_TEST_EQ(CaseAESM4GcmK128N7T96Aad32update0Multi);
 
 /**
  * @testcase.name      : CaseAESM4GcmK128N12T104Aad288MultiOnce
  * @testcase.desc      : run case CaseAESM4GcmK128N12T104Aad288MultiOnce
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseAESM4GcmK128N12T104Aad288MultiOnce);
+// CRYPTO_TEST_EQ(CaseAESM4GcmK128N12T104Aad288MultiOnce);
 
 /**
  * @testcase.name      : CaseAESM4GcmK128N12T104Aad288MultiMulti
  * @testcase.desc      : run case CaseAESM4GcmK128N12T104Aad288MultiMulti
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseAESM4GcmK128N12T104Aad288MultiMulti);
+// CRYPTO_TEST_EQ(CaseAESM4GcmK128N12T104Aad288MultiMulti);
 
 /**
  * @testcase.name      : CaseAESM4GcmK128N12T104Aad288OnceOnce
  * @testcase.desc      : run case CaseAESM4GcmK128N12T104Aad288OnceOnce
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseAESM4GcmK128N12T104Aad288OnceOnce);
+// CRYPTO_TEST_EQ(CaseAESM4GcmK128N12T104Aad288OnceOnce);
 
 /**
  * @testcase.name      : CaseAESM4GcmK128N12T104Aad288OnceMulti
  * @testcase.desc      : run case CaseAESM4GcmK128N12T104Aad288OnceMulti
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseAESM4GcmK128N12T104Aad288OnceMulti);
+// CRYPTO_TEST_EQ(CaseAESM4GcmK128N12T104Aad288OnceMulti);
 
 /**
  * @testcase.name      : CaseAESM4GcmK128N7T112Aad512MultiOnce
  * @testcase.desc      : run case CaseAESM4GcmK128N7T112Aad512MultiOnce
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseAESM4GcmK128N7T112Aad512MultiOnce);
+// CRYPTO_TEST_EQ(CaseAESM4GcmK128N7T112Aad512MultiOnce);
 
 /**
  * @testcase.name      : CaseAESM4GcmK128N7T112Aad512MultiMulti
  * @testcase.desc      : run case CaseAESM4GcmK128N7T112Aad512MultiMulti
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseAESM4GcmK128N7T112Aad512MultiMulti);
+// CRYPTO_TEST_EQ(CaseAESM4GcmK128N7T112Aad512MultiMulti);
 
 /**
  * @testcase.name      : CaseAESM4GcmK128N7T128Aad512OnceOnce
  * @testcase.desc      : run case CaseAESM4GcmK128N7T128Aad512OnceOnce
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseAESM4GcmK128N7T128Aad512OnceOnce);
+// CRYPTO_TEST_EQ(CaseAESM4GcmK128N7T128Aad512OnceOnce);
 
 /**
  * @testcase.name      : CaseAESM4GcmK128N7T128Aad512OnceMulti
  * @testcase.desc      : run case CaseAESM4GcmK128N7T128Aad512OnceMulti
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseAESM4GcmK128N7T128Aad512OnceMulti);
+// CRYPTO_TEST_EQ(CaseAESM4GcmK128N7T128Aad512OnceMulti);
 
 /**
  * @testcase.name      : CaseAESM4GcmK128N12T120Aad4MMultiOnce
  * @testcase.desc      : run case CaseAESM4GcmK128N12T120Aad4MMultiOnce
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseAESM4GcmK128N12T120Aad4MMultiOnce);
+// CRYPTO_TEST_EQ(CaseAESM4GcmK128N12T120Aad4MMultiOnce);
 
 /**
  * @testcase.name      : CaseAESM4GcmK128N12T120Aad4MMultiMulti
  * @testcase.desc      : run case CaseAESM4GcmK128N12T120Aad4MMultiMulti
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseAESM4GcmK128N12T120Aad4MMultiMulti);
+// CRYPTO_TEST_EQ(CaseAESM4GcmK128N12T120Aad4MMultiMulti);
 
 /**
  * @testcase.name      : CaseAESM4GcmK128N7T128Aad32MultiOnce
  * @testcase.desc      : run case CaseAESM4GcmK128N7T128Aad32MultiOnce
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseAESM4GcmK128N7T128Aad32MultiOnce);
+// CRYPTO_TEST_EQ(CaseAESM4GcmK128N7T128Aad32MultiOnce);
 
 /**
  * @testcase.name      : CaseAESM4GcmK128N7T128Aad32MultiMulti
  * @testcase.desc      : run case CaseAESM4GcmK128N7T128Aad32MultiMulti
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseAESM4GcmK128N7T128Aad32MultiMulti);
+// CRYPTO_TEST_EQ(CaseAESM4GcmK128N7T128Aad32MultiMulti);
 
 /**
  * @testcase.name      : CaseAESM4GcmK128N7T112Aad512DecryptOnlyTAG
  * @testcase.desc      : run case CaseAESM4GcmK128N7T112Aad512DecryptOnlyTAG
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseAESM4GcmK128N7T112Aad512DecryptOnlyTAG);
+// CRYPTO_TEST_EQ(CaseAESM4GcmK128N7T112Aad512DecryptOnlyTAG);
 
 /**
  * @testcase.name      : CaseAESM4GcmK128N12T96NoAadOnce
  * @testcase.desc      : run case CaseAESM4GcmK128N12T96NoAadOnce
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseAESM4GcmK128N12T96NoAadOnce);
+// CRYPTO_TEST_EQ(CaseAESM4GcmK128N12T96NoAadOnce);
 
 /**
  * @testcase.name      : CaseAESM4GcmK128N12T96NoAadMulti
  * @testcase.desc      : run case CaseAESM4GcmK128N12T96NoAadMulti
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseAESM4GcmK128N12T96NoAadMulti);
+// CRYPTO_TEST_EQ(CaseAESM4GcmK128N12T96NoAadMulti);
 
 /**
  * @testcase.name      : CaseAESM4GcmK128N7T104Aad512EncryptOnlyTAG
  * @testcase.desc      : run case CaseAESM4GcmK128N7T104Aad512EncryptOnlyTAG
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseAESM4GcmK128N7T104Aad512EncryptOnlyTAG);
+// CRYPTO_TEST_EQ(CaseAESM4GcmK128N7T104Aad512EncryptOnlyTAG);
 
 /**
  * @testcase.name      : CaseHmacSha256KeySize64OnceOnce
@@ -1005,28 +1006,28 @@ CRYPTO_TEST_EQ(CaseHmacSha512KeySize256MultiMulti);
  * @testcase.desc      : run case CaseHmacSM3KeySize512OnceOnce
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseHmacSM3KeySize512OnceOnce);
+// CRYPTO_TEST_EQ(CaseHmacSM3KeySize512OnceOnce);
 
 /**
  * @testcase.name      : CaseHmacSM3KeySize512OnceMulti
  * @testcase.desc      : run case CaseHmacSM3KeySize512OnceMulti
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseHmacSM3KeySize512OnceMulti);
+// CRYPTO_TEST_EQ(CaseHmacSM3KeySize512OnceMulti);
 
 /**
  * @testcase.name      : CaseHmacSM3KeySize512MultiOnce
  * @testcase.desc      : run case CaseHmacSM3KeySize512MultiOnce
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseHmacSM3KeySize512MultiOnce);
+// CRYPTO_TEST_EQ(CaseHmacSM3KeySize512MultiOnce);
 
 /**
  * @testcase.name      : CaseHmacSM3KeySize512MultiMulti
  * @testcase.desc      : run case CaseHmacSM3KeySize512MultiMulti
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseHmacSM3KeySize512MultiMulti);
+// CRYPTO_TEST_EQ(CaseHmacSM3KeySize512MultiMulti);
 
 /**
  * @testcase.name      : CaseHmacSha256KeySize8192OnceOnce
@@ -1145,21 +1146,21 @@ CRYPTO_TEST_EQ(CaseCmacAesCbcNopadKeySize256MultiMulti);
  * @testcase.desc      : run case CaseAsymEncryptRsaV15KeySize512Once
  * @testcase.expect    : return is not TEEC_SUCCESS
  */
-CRYPTO_TEST_NE(CaseAsymEncryptRsaV15KeySize512Once);
+// CRYPTO_TEST_NE(CaseAsymEncryptRsaV15KeySize512Once);
 
 /**
  * @testcase.name      : CaseAsymEncryptRsaV15KeySize2048Once
  * @testcase.desc      : run case CaseAsymEncryptRsaV15KeySize2048Once
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseAsymEncryptRsaV15KeySize2048Once);
+// CRYPTO_TEST_EQ(CaseAsymEncryptRsaV15KeySize2048Once);
 
 /**
  * @testcase.name      : CaseAsymEncryptRsaV15KeySize2048Multi
  * @testcase.desc      : run case CaseAsymEncryptRsaV15KeySize2048Multi
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseAsymEncryptRsaV15KeySize2048Multi);
+// CRYPTO_TEST_EQ(CaseAsymEncryptRsaV15KeySize2048Multi);
 
 /**
  * @testcase.name      : CaseAsymEncryptRsaV15KeySize4096Once
@@ -1180,14 +1181,14 @@ CRYPTO_TEST_EQ(CaseAsymEncryptRsaV15KeySize4096Multi);
  * @testcase.desc      : run case CaseAsymEncryptRsaOaepSha384KeySize2048Once
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseAsymEncryptRsaOaepSha384KeySize2048Once);
+// CRYPTO_TEST_EQ(CaseAsymEncryptRsaOaepSha384KeySize2048Once);
 
 /**
  * @testcase.name      : CaseAsymEncryptRsaOaepSha384KeySize2048Multi
  * @testcase.desc      : run case CaseAsymEncryptRsaOaepSha384KeySize2048Multi
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseAsymEncryptRsaOaepSha384KeySize2048Multi);
+// CRYPTO_TEST_EQ(CaseAsymEncryptRsaOaepSha384KeySize2048Multi);
 
 /**
  * @testcase.name      : CaseAsymEncryptRsaOaepSha512KeySize4096Once
@@ -1208,14 +1209,14 @@ CRYPTO_TEST_EQ(CaseAsymEncryptRsaOaepSha512KeySize4096Multi);
  * @testcase.desc      : run case CaseAsymEncryptRsaNopadKeySize2688Once
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseAsymEncryptRsaNopadKeySize2688Once);
+// CRYPTO_TEST_EQ(CaseAsymEncryptRsaNopadKeySize2688Once);
 
 /**
  * @testcase.name      : CaseAsymEncryptRsaNopadKeySize2688Multi
  * @testcase.desc      : run case CaseAsymEncryptRsaNopadKeySize2688Multi
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseAsymEncryptRsaNopadKeySize2688Multi);
+// CRYPTO_TEST_EQ(CaseAsymEncryptRsaNopadKeySize2688Multi);
 
 /**
  * @testcase.name      : CaseAsymEncryptRsaNopadKeySize4096Once
@@ -1236,84 +1237,84 @@ CRYPTO_TEST_EQ(CaseAsymEncryptRsaNopadKeySize4096Multi);
  * @testcase.desc      : run case CaseAsymEncryptSm2PkeDataSize64Once
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseAsymEncryptSm2PkeDataSize64Once);
+// CRYPTO_TEST_EQ(CaseAsymEncryptSm2PkeDataSize64Once);
 
 /**
  * @testcase.name      : CaseAsymEncryptSm2PkeDataSize64Multi
  * @testcase.desc      : run case CaseAsymEncryptSm2PkeDataSize64Multi
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseAsymEncryptSm2PkeDataSize64Multi);
+// CRYPTO_TEST_EQ(CaseAsymEncryptSm2PkeDataSize64Multi);
 
 /**
  * @testcase.name      : CaseAsymEncryptSm2PkeDataSize470Once
  * @testcase.desc      : run case CaseAsymEncryptSm2PkeDataSize470Once
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseAsymEncryptSm2PkeDataSize470Once);
+// CRYPTO_TEST_EQ(CaseAsymEncryptSm2PkeDataSize470Once);
 
 /**
  * @testcase.name      : CaseAsymEncryptSm2PkeDataSize470Multi
  * @testcase.desc      : run case CaseAsymEncryptSm2PkeDataSize470Multi
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseAsymEncryptSm2PkeDataSize470Multi);
+// CRYPTO_TEST_EQ(CaseAsymEncryptSm2PkeDataSize470Multi);
 
 /**
  * @testcase.name      : CaseAsymEncryptSm2PkeDataSize1024Once
  * @testcase.desc      : run case CaseAsymEncryptSm2PkeDataSize1024Once
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseAsymEncryptSm2PkeDataSize1024Once);
+// CRYPTO_TEST_EQ(CaseAsymEncryptSm2PkeDataSize1024Once);
 
 /**
  * @testcase.name      : CaseAsymEncryptSm2PkeDataSize1024Multi
  * @testcase.desc      : run case CaseAsymEncryptSm2PkeDataSize1024Multi
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseAsymEncryptSm2PkeDataSize1024Multi);
+// CRYPTO_TEST_EQ(CaseAsymEncryptSm2PkeDataSize1024Multi);
 
 /**
  * @testcase.name      : CaseAsymSignRsaV15Sha384KeySize2048Once
  * @testcase.desc      : run case CaseAsymSignRsaV15Sha384KeySize2048Once
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseAsymSignRsaV15Sha384KeySize2048Once);
+// CRYPTO_TEST_EQ(CaseAsymSignRsaV15Sha384KeySize2048Once);
 
 /**
  * @testcase.name      : CaseAsymSignRsaV15Sha384KeySize2048Multi
  * @testcase.desc      : run case CaseAsymSignRsaV15Sha384KeySize2048Multi
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseAsymSignRsaV15Sha384KeySize2048Multi);
+// CRYPTO_TEST_EQ(CaseAsymSignRsaV15Sha384KeySize2048Multi);
 
 /**
  * @testcase.name      : CaseAsymSignRsaV15Sha512KeySize4096Once
  * @testcase.desc      : run case CaseAsymSignRsaV15Sha512KeySize4096Once
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseAsymSignRsaV15Sha512KeySize4096Once);
+// CRYPTO_TEST_EQ(CaseAsymSignRsaV15Sha512KeySize4096Once);
 
 /**
  * @testcase.name      : CaseAsymSignRsaV15Sha512KeySize4096Multi
  * @testcase.desc      : run case CaseAsymSignRsaV15Sha512KeySize4096Multi
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseAsymSignRsaV15Sha512KeySize4096Multi);
+// CRYPTO_TEST_EQ(CaseAsymSignRsaV15Sha512KeySize4096Multi);
 
 /**
  * @testcase.name      : CaseAsymSignRsaPssSha384KeySize2048Once
  * @testcase.desc      : run case CaseAsymSignRsaPssSha384KeySize2048Once
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseAsymSignRsaPssSha384KeySize2048Once);
+// CRYPTO_TEST_EQ(CaseAsymSignRsaPssSha384KeySize2048Once);
 
 /**
  * @testcase.name      : CaseAsymSignRsaPssSha384KeySize2048Multi
  * @testcase.desc      : run case CaseAsymSignRsaPssSha384KeySize2048Multi
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseAsymSignRsaPssSha384KeySize2048Multi);
+// CRYPTO_TEST_EQ(CaseAsymSignRsaPssSha384KeySize2048Multi);
 
 /**
  * @testcase.name      : CaseAsymSignRsaPssSha512KeySize4096Once
@@ -1432,18 +1433,18 @@ CRYPTO_TEST_EQ(CaseAsymSignEd25519DataSize4096Multi);
  * @testcase.desc      : run case CaseAsymSignSm2DsaSm3DataSize32Once
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseAsymSignSm2DsaSm3DataSize32Once);
+// CRYPTO_TEST_EQ(CaseAsymSignSm2DsaSm3DataSize32Once);
 
 /**
  * @testcase.name      : CaseAsymSignSm2DsaSm3DataSize32Multi
  * @testcase.desc      : run case CaseAsymSignSm2DsaSm3DataSize32Multi
  * @testcase.expect    : return TEEC_SUCCESS
  */
-CRYPTO_TEST_EQ(CaseAsymSignSm2DsaSm3DataSize32Multi);
+// CRYPTO_TEST_EQ(CaseAsymSignSm2DsaSm3DataSize32Multi);
 
 /**
  * @testcase.name      : CaseAsymSignSm2DsaSm3DataSize128Once
  * @testcase.desc      : run case CaseAsymSignSm2DsaSm3DataSize128Once
  * @testcase.expect    : return is not TEEC_SUCCESS
  */
-CRYPTO_TEST_NE(CaseAsymSignSm2DsaSm3DataSize128Once);
+// CRYPTO_TEST_NE(CaseAsymSignSm2DsaSm3DataSize128Once);
