@@ -831,7 +831,7 @@ TEE_Result unmap_secure_operation(const smc_cmd_t *cmd)
 
     dlist_for_each_entry_safe(mem, tmp, &(g_cur_session->map_mem), struct mem_region_ns, list) {
         if (cmd->event_nr == mem->event_nr && mem->ta2ta) {
-            if (task_unmap(mem->task_id, mem->addr, mem->size) != 0)
+            if (unmap_sharemem((void *)(uintptr_t)mem->addr, mem->size) != 0)
                 tloge("s unmap failed\n");
             dlist_delete(&mem->list);
             TEE_Free(mem);
