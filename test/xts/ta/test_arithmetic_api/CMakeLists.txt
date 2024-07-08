@@ -35,5 +35,5 @@ ta_compile_pub(
     COMPILE_OPTS
 
     COMPILE_DEFS
-    API_LEVEL=3
+    API_LEVEL=2
 )

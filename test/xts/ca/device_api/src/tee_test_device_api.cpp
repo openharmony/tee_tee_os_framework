@@ -30,7 +30,7 @@ using namespace testing::ext;
  *                       TEE_SEChannelGetSelectResponse, TEE_SEChannelTransmit, TEE_SEChannelGetID API
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, Test_SEAPI, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, Test_SEAPI, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;
@@ -55,7 +55,7 @@ TEE_TEST(EmptyTest, Test_SEAPI, Function | MediumTest | Level0)
  * @testcase.desc      : test TEE_SEChannelSelectNext API
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, Test_SEChannelSelectNext, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, Test_SEChannelSelectNext, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;
@@ -80,7 +80,7 @@ TEE_TEST(EmptyTest, Test_SEChannelSelectNext, Function | MediumTest | Level0)
  * @testcase.desc      : test TEE_SESecureChannelOpen, TEE_SESecureChannelClose API
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, Test_SESECURECHANNELOPENCLOSE, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, Test_SESECURECHANNELOPENCLOSE, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;
@@ -106,7 +106,7 @@ TEE_TEST(EmptyTest, Test_SESECURECHANNELOPENCLOSE, Function | MediumTest | Level
  *                       TEE_TUIDisplayScreen, TEE_TUINotify_fp, TEE_TUISetInfo, TEE_TUISendEvent, TEE_TUISetLabel API
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, Test_TUIAPI, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, Test_TUIAPI, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;
@@ -134,7 +134,7 @@ TEE_TEST(EmptyTest, Test_TUIAPI, Function | MediumTest | Level0)
  *                       tee_ext_rpmb_driver_write, tee_ext_rpmb_driver_read, tee_ext_rpmb_driver_remove API
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, Test_RPMBAPI, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, Test_RPMBAPI, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;
@@ -161,7 +161,7 @@ TEE_TEST(EmptyTest, Test_RPMBAPI, Function | MediumTest | Level0)
  *                       tee_ext_root_derive_key2_by_huk2, tee_ext_root_uuid_derive_key_by_huk2 API
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, Test_HUKAPI, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, Test_HUKAPI, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;

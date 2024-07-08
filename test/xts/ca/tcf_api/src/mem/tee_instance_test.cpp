@@ -25,7 +25,7 @@ using namespace testing::ext;
  * @testcase.desc      : test TA call TEE_SetInstanceData and TEE_GetInstanceData to use instance data
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(TCF2Test, TEE_Set_And_GetInstanceData_With_Success, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_Set_And_GetInstanceData_With_Success, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -50,7 +50,7 @@ TEE_TEST(TCF2Test, TEE_Set_And_GetInstanceData_With_Success, Function | MediumTe
  * @testcase.desc      : test TA call TEE_SetInstanceData and TEE_GetInstanceData to use instance data is null
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(TCF2Test, TEE_Set_And_GetInstanceData_With_InstanceDataIsNull, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_Set_And_GetInstanceData_With_InstanceDataIsNull, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -74,7 +74,7 @@ TEE_TEST(TCF2Test, TEE_Set_And_GetInstanceData_With_InstanceDataIsNull, Function
  * too short
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(TCF2Test, TEE_Set_And_GetInstanceData_With_GetSizeTooShort, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_Set_And_GetInstanceData_With_GetSizeTooShort, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;

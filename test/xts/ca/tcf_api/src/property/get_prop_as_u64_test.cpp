@@ -25,7 +25,7 @@ using namespace testing::ext;
  * @testcase.desc      : test TA call TEE_GetPropertyAsU64 to get value of  SMC_TA_TESTU64
  * @testcase.expect    : return TEEC_SUCCESS
 */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsU64_WithoutEnum_TESTU64, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsU64_WithoutEnum_TESTU64, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -48,7 +48,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsU64_WithoutEnum_TESTU64, Function | MediumTe
  * @testcase.desc      : test TA call TEE_GetPropertyAsU64 for name is null
  * @testcase.expect    : return TEEC_ERROR_ITEM_NOT_FOUND
 */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsU64_WithoutEnum_NameIsNull, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsU64_WithoutEnum_NameIsNull, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
 
@@ -67,7 +67,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsU64_WithoutEnum_NameIsNull, Function | Mediu
  * @testcase.desc      : test TA call TEE_GetPropertyAsU64 for name value is zero
  * @testcase.expect    : return TEEC_ERROR_ITEM_NOT_FOUND
 */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsU64_WithoutEnum_NameIsZero, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsU64_WithoutEnum_NameIsZero, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
 
@@ -85,7 +85,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsU64_WithoutEnum_NameIsZero, Function | Mediu
  * @testcase.desc      : test TA call TEE_GetPropertyAsU64 for value is null
  * @testcase.expect    : return TEEC_ERROR_BAD_PARAMETERS
 */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsU64_WithoutEnum_ValueIsNull, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsU64_WithoutEnum_ValueIsNull, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
 
@@ -108,7 +108,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsU64_WithoutEnum_ValueIsNull, Function | Medi
  * @testcase.desc      : test TA call TEE_GetPropertyAsU64 while Name Not Found
  * @testcase.expect    : return TEEC_ERROR_ITEM_NOT_FOUND
 */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsU64_WithoutEnum_NameNotFound, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsU64_WithoutEnum_NameNotFound, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
 
@@ -130,7 +130,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsU64_WithoutEnum_NameNotFound, Function | Med
  * @testcase.desc      : test TA call TEE_GetPropertyAsU64 while Name type is not U64
  * @testcase.expect    : return TEEC_ERROR_BAD_FORMAT
 */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsU64_WithoutEnum_NameNotU64, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsU64_WithoutEnum_NameNotU64, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
 

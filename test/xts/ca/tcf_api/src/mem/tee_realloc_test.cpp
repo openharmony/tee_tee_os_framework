@@ -26,7 +26,7 @@ using namespace testing::ext;
  * @testcase.desc      : test TA call TEE_Realloc to alloc buffer with newsize is 0
  * @testcase.expect    : return TEEC_ERROR_OUT_OF_MEMORY
  */
-TEE_TEST(TCF2Test, TEE_Realloc_With_NewSizeIsZero, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_Realloc_With_NewSizeIsZero, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TestMemData value = { 0 };
@@ -44,7 +44,7 @@ TEE_TEST(TCF2Test, TEE_Realloc_With_NewSizeIsZero, Function | MediumTest | Level
  * @testcase.desc      : test TA call TEE_Realloc to alloc buffer with newsize exceed heaplimit
  * @testcase.expect    : return TEEC_ERROR_OUT_OF_MEMORY
  */
-TEE_TEST(TCF2Test, TEE_Realloc_With_SizeExceedHeapLimit, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_Realloc_With_SizeExceedHeapLimit, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TestMemData value = { 0 };
@@ -68,7 +68,7 @@ TEE_TEST(TCF2Test, TEE_Realloc_With_SizeExceedHeapLimit, Function | MediumTest |
  * @testcase.desc      : test TA call TEE_Realloc to alloc buffer with buffer is null
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(TCF2Test, TEE_Realloc_With_BufferIsNull, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_Realloc_With_BufferIsNull, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TestMemData value = { 0 };
@@ -89,7 +89,7 @@ TEE_TEST(TCF2Test, TEE_Realloc_With_BufferIsNull, Function | MediumTest | Level0
  * @testcase.desc      : test TA call TEE_Realloc to alloc buffer with newsize is same as oldsize
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(TCF2Test, TEE_Realloc_With_SameSize, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_Realloc_With_SameSize, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TestMemData value = { 0 };
@@ -109,7 +109,7 @@ TEE_TEST(TCF2Test, TEE_Realloc_With_SameSize, Function | MediumTest | Level0)
  * @testcase.desc      : test TA call TEE_Realloc to alloc buffer with newsize is less than oldsize
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(TCF2Test, TEE_Realloc_With_LessSize, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_Realloc_With_LessSize, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TestMemData value = { 0 };
@@ -129,7 +129,7 @@ TEE_TEST(TCF2Test, TEE_Realloc_With_LessSize, Function | MediumTest | Level0)
  * @testcase.desc      : test TA call TEE_Realloc to alloc buffer with newsize is greater than oldsize
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(TCF2Test, TEE_Realloc_With_GreaterSize, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_Realloc_With_GreaterSize, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TestMemData value = { 0 };

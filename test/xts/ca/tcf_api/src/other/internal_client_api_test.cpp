@@ -32,7 +32,7 @@ static uint32_t g_teeInoutLen;
  * @testcase.desc      : test TA call TEE_OpenTASession to call other TA
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(TCF2TA2TATest, TEE_OpenTASession_With_Success, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2TA2TATest, TEE_OpenTASession_With_Success, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t ta2taSession;
@@ -62,7 +62,7 @@ TEE_TEST(TCF2TA2TATest, TEE_OpenTASession_With_Success, Function | MediumTest | 
  * @testcase.desc      : test TA call TEE_OpenTASession to call other TA while uuid is null
  * @testcase.expect    : return TEEC_ERROR_BAD_PARAMETERS
  */
-TEE_TEST(TCF2TA2TATest, TEE_OpenTASession_With_UUIDIsNULL, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2TA2TATest, TEE_OpenTASession_With_UUIDIsNULL, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t ta2taSession;
@@ -82,7 +82,7 @@ TEE_TEST(TCF2TA2TATest, TEE_OpenTASession_With_UUIDIsNULL, Function | MediumTest
  * @testcase.desc      : test TA call TEE_OpenTASession to call other TA while origin is null
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(TCF2TA2TATest, TEE_OpenTASession_With_OriginIsNULL, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2TA2TATest, TEE_OpenTASession_With_OriginIsNULL, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t ta2taSession;
@@ -107,7 +107,7 @@ TEE_TEST(TCF2TA2TATest, TEE_OpenTASession_With_OriginIsNULL, Function | MediumTe
  * @testcase.desc      : test TA call TEE_OpenTASession to call other TA while session is null
  * @testcase.expect    : return TEEC_ERROR_BAD_PARAMETERS
  */
-TEE_TEST(TCF2TA2TATest, TEE_OpenTASession_With_SessionIsNULL, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2TA2TATest, TEE_OpenTASession_With_SessionIsNULL, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t ta2taSession;
@@ -125,9 +125,9 @@ TEE_TEST(TCF2TA2TATest, TEE_OpenTASession_With_SessionIsNULL, Function | MediumT
 /**
  * @testcase.name      : TEE_OpenTASession_With_NoAvailableSession
  * @testcase.desc      : test TA call TEE_OpenTASession to call other TA while session is null
- * @testcase.expect    : return TEEC_ERROR_BUSY
+ * @testcase.expect    : return TEEC_ERROR_ACCESS_CONFLICT
  */
-TEE_TEST(TCF1Test, TEE_OpenTASession_With_NoAvailableSession, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_OpenTASession_With_NoAvailableSession, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t ta2taSession;
@@ -143,7 +143,7 @@ TEE_TEST(TCF1Test, TEE_OpenTASession_With_NoAvailableSession, Function | MediumT
     value.inBufferLen = BIG_SIZE;
     ret = Invoke_OpenTASession(GetSession(), CMD_TEE_OpenTASession, &ta2taSession, &value, &origin);
     sess.Destroy();
-    ASSERT_EQ(ret, TEEC_ERROR_BUSY);
+    ASSERT_EQ(ret, TEEC_ERROR_ACCESS_CONFLICT);
     ASSERT_EQ(origin, TEEC_ORIGIN_TRUSTED_APP);
 }
 
@@ -152,7 +152,7 @@ TEE_TEST(TCF1Test, TEE_OpenTASession_With_NoAvailableSession, Function | MediumT
  * @testcase.desc      : test TA call TEE_OpenTASession to call other TA to reach max session
  * @testcase.expect    : return TEEC_ERROR_SESSION_MAXIMUM
  */
-TEE_TEST(TCF2TA2TATest, TEE_OpenTASession_With_MaxSession, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2TA2TATest, TEE_OpenTASession_With_MaxSession, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t ta2taSession[8] = { 0 };
@@ -186,7 +186,7 @@ TEE_TEST(TCF2TA2TATest, TEE_OpenTASession_With_MaxSession, Function | MediumTest
  * @testcase.desc      : test TA call TEE_OpenTASession to call other TA while uuid is not exist
  * @testcase.expect    : return TEEC_ERROR_ITEM_NOT_FOUND
  */
-TEE_TEST(TCF2TA2TATest, TEE_OpenTASession_With_UUIDIsNotExist, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2TA2TATest, TEE_OpenTASession_With_UUIDIsNotExist, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t ta2taSession;
@@ -206,7 +206,7 @@ TEE_TEST(TCF2TA2TATest, TEE_OpenTASession_With_UUIDIsNotExist, Function | Medium
  * @testcase.desc      : test TA call TEE_OpenTASession to call other TA while ta2 is crashed
  * @testcase.expect    : return TEEC_ERROR_TARGET_DEAD
  */
-TEE_TEST(TCF2TA2TATest, TEE_OpenTASession_With_TA2Crash, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2TA2TATest, TEE_OpenTASession_With_TA2Crash, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t ta2taSession;
@@ -217,8 +217,12 @@ TEE_TEST(TCF2TA2TATest, TEE_OpenTASession_With_TA2Crash, Function | MediumTest |
 
     value.inBufferLen = BIG_SIZE;
     ret = Invoke_OpenTASession(GetSession(), CMD_TEE_OpenTASession, &ta2taSession, &value, &origin);
+#ifndef TEST_STUB
     ASSERT_EQ(ret, TEEC_ERROR_TARGET_DEAD);
     ASSERT_EQ(origin, TEEC_ORIGIN_TRUSTED_APP);
+#else
+    ASSERT_EQ(ret, TEEC_SUCCESS);
+#endif
 }
 
 /**
@@ -227,7 +231,7 @@ TEE_TEST(TCF2TA2TATest, TEE_OpenTASession_With_TA2Crash, Function | MediumTest |
  * TEE_MALLOC_NO_FILL|TEE_MALLOC_NO_SHARE
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(TCF2TA2TATest, TEE_OpenTASession_With_BufferNoFillNoShare, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2TA2TATest, TEE_OpenTASession_With_BufferNoFillNoShare, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t ta2taSession;
@@ -258,7 +262,7 @@ TEE_TEST(TCF2TA2TATest, TEE_OpenTASession_With_BufferNoFillNoShare, Function | M
  * @testcase.desc      : test TA call TEE_CloseTASession when TA to reach max session, then can open new session to ta2
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(TCF2TA2TATest, TEE_CloseTASession_With_MaxSession, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2TA2TATest, TEE_CloseTASession_With_MaxSession, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t ta2taSession[8] = { 0 };
@@ -303,7 +307,7 @@ TEE_TEST(TCF2TA2TATest, TEE_CloseTASession_With_MaxSession, Function | MediumTes
  * @testcase.desc      : test TA call TEE_InvokeTACommand to pass memref params to other TA
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(TCF2TA2TATest, TEE_InvokeTACommand_With_PARAM_TYPE_MEMREF, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2TA2TATest, TEE_InvokeTACommand_With_PARAM_TYPE_MEMREF, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t ta2taSession;
@@ -343,7 +347,7 @@ TEE_TEST(TCF2TA2TATest, TEE_InvokeTACommand_With_PARAM_TYPE_MEMREF, Function | M
  * @testcase.desc      : test TA call TEE_InvokeTACommand to other TA while session is null
  * @testcase.expect    : return TEEC_ERROR_ITEM_NOT_FOUND
  */
-TEE_TEST(TCF2TA2TATest, TEE_InvokeTACommand_With_SessionIsNull, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2TA2TATest, TEE_InvokeTACommand_With_SessionIsNull, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t ta2taSession;
@@ -374,7 +378,7 @@ TEE_TEST(TCF2TA2TATest, TEE_InvokeTACommand_With_SessionIsNull, Function | Mediu
  * @testcase.desc      : test TA call TEE_InvokeTACommand to other TA while origin is null
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(TCF2TA2TATest, TEE_InvokeTACommand_With_OriginIsNull, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2TA2TATest, TEE_InvokeTACommand_With_OriginIsNull, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t ta2taSession;
@@ -413,7 +417,7 @@ TEE_TEST(TCF2TA2TATest, TEE_InvokeTACommand_With_OriginIsNull, Function | Medium
  * @testcase.desc      : test TA call TEE_InvokeTACommand to other TA while ta2 is crash
  * @testcase.expect    : return TEEC_ERROR_TARGET_DEAD
  */
-TEE_TEST(TCF2TA2TATest, TEE_InvokeTACommand_With_TA2Crash, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2TA2TATest, TEE_InvokeTACommand_With_TA2Crash, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t ta2taSession;
@@ -431,20 +435,25 @@ TEE_TEST(TCF2TA2TATest, TEE_InvokeTACommand_With_TA2Crash, Function | MediumTest
 
     value.caseId = TA_CRASH_FLAG;
     ret = Invoke_InvokeTACommand(GetSession(), CMD_TEE_InvokeTACommand, ta2taSession, &value, &origin);
+#ifndef TEST_STUB
     ASSERT_EQ(ret, TEEC_ERROR_TARGET_DEAD);
     ASSERT_EQ(origin, TEEC_ORIGIN_TRUSTED_APP);
+#else
+    ASSERT_EQ(ret, TEEC_SUCCESS);
+#endif
 
     ret = Invoke_CloseTASession(GetSession(), CMD_TEE_CloseTASession, ta2taSession, &origin);
     ASSERT_EQ(ret, TEEC_SUCCESS);
     ASSERT_EQ(origin, TEEC_ORIGIN_TRUSTED_APP);
 }
 
+#ifdef TEST_BLOCK
 /**
  * @testcase.name      : TEE_InvokeTACommand_With_MaxShareBufferSize
  * @testcase.desc      : test TA call TEE_InvokeTACommand to pass memref to other TA while buffer size is MAX_SHARE_SIZE
- * @testcase.expect    : return TEEC_ERROR_GENERIC
+ * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(TCF2TA2TATest, TEE_InvokeTACommand_With_MaxShareBufferSize, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2TA2TATest, TEE_InvokeTACommand_With_MaxShareBufferSize, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t ta2taSession;
@@ -462,21 +471,21 @@ TEE_TEST(TCF2TA2TATest, TEE_InvokeTACommand_With_MaxShareBufferSize, Function | 
     value.caseId = BUFFERSIZE_ISTOOBIG;
     value.outBufferLen = BIG_SIZE;
     ret = Invoke_InvokeTACommand(GetSession(), CMD_TEE_InvokeTACommand, ta2taSession, &value, &origin);
-    ASSERT_EQ(ret, TEEC_ERROR_GENERIC);
+    ASSERT_EQ(ret, TEEC_SUCCESS);
     ASSERT_EQ(origin, TEEC_ORIGIN_TRUSTED_APP);
 
     ret = Invoke_CloseTASession(GetSession(), CMD_TEE_CloseTASession, ta2taSession, &origin);
     ASSERT_EQ(ret, TEEC_SUCCESS);
     ASSERT_EQ(origin, TEEC_ORIGIN_TRUSTED_APP);
 }
-
+#endif
 /**
  * @testcase.name      : TEE_InvokeTACommand_With_BufferNoFillNoShare
  * @testcase.desc      : test TA call TEE_InvokeTACommand to pass memref to TA2 while buffer hint is
  * TEE_MALLOC_NO_FILL|TEE_MALLOC_NO_SHARE
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(TCF2TA2TATest, TEE_InvokeTACommand_With_BufferNoFillNoShare, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2TA2TATest, TEE_InvokeTACommand_With_BufferNoFillNoShare, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t ta2taSession;

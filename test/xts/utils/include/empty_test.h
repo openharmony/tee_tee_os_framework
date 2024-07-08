@@ -16,7 +16,7 @@
 #include <gtest/gtest.h>
 #include <test_defines.h>
 
-class EmptyTest : public ::testing::Test {
+class TeeBasicTestFram : public ::testing::Test {
 public:
     static void SetUpTestCase() {}
     static void TearDownTestCase() {}

@@ -29,7 +29,7 @@ enum TEST_TRUSTED_STORAGE_API_CMD_ID {
     CMD_RUN_BY_FUN_SEQ = 0,
 };
 
-class TrustedStorageTest : public EmptyTest {
+class TrustedStorageTest : public TeeBasicTestFram {
 protected:
     ClientSessionMgr session;
     TEEC_Operation operation = { 0 };

@@ -21,107 +21,167 @@
 
 using namespace testing::ext;
 
-TEEC_Context TCF1Test::context = { 0 };
-TEEC_Session TCF1Test::session = { 0 };
+TEEC_Context TeeTCF1Test::context = { 0 };
+TEEC_Session TeeTCF1Test::session = { 0 };
 
-void TCF1Test::SetUp()
+void TeeTCF1Test::SetUp()
 {
     TEEC_Operation operation = { 0 };
     TEEC_Result ret = TEEC_InitializeContext(NULL, &context);
-    ABORT_UNLESS(ret != TEEC_SUCCESS);
+    if (ret != TEEC_SUCCESS) {
+        TEST_PRINT_ERROR("TEEC_InitializeContext failed\n");
+        return;
+    }
     operation.started = 1;
     operation.paramTypes = TEEC_PARAM_TYPES(TEEC_NONE, TEEC_NONE, TEEC_NONE, TEEC_NONE);
     TEEC_UUID uuid = TCF_API_UUID_1;
-
+    char str[64] = { 0 };
+    sprintf(str,"/data/local/tmp/%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x.sec", uuid.timeLow, uuid.timeMid,
+        uuid.timeHiAndVersion, uuid.clockSeqAndNode[0], uuid.clockSeqAndNode[1], uuid.clockSeqAndNode[2],
+        uuid.clockSeqAndNode[3], uuid.clockSeqAndNode[4], uuid.clockSeqAndNode[5], uuid.clockSeqAndNode[6],
+        uuid.clockSeqAndNode[7]);
+    context.ta_path = (uint8_t *)str;
     ret = TEEC_OpenSession(&context, &session, &uuid, TEEC_LOGIN_IDENTIFY, NULL, &operation, NULL);
-    ABORT_UNLESS(ret != TEEC_SUCCESS);
+    if (ret != TEEC_SUCCESS) {
+        TEEC_FinalizeContext(&context);
+        TEST_PRINT_ERROR("TEEC_OpenSession failed\n");
+        return;
+    }
 }
 
-void TCF1Test::TearDown()
+void TeeTCF1Test::TearDown()
 {
     TEEC_CloseSession(&session);
     TEEC_FinalizeContext(&context);
 }
 
-TEEC_Context TCF2Test::context = { 0 };
-TEEC_Session TCF2Test::session = { 0 };
+TEEC_Context TeeTCF2Test::context = { 0 };
+TEEC_Session TeeTCF2Test::session = { 0 };
 
-void TCF2Test::SetUp()
+void TeeTCF2Test::SetUp()
 {
     TEEC_Operation operation = { 0 };
 
     TEEC_Result ret = TEEC_InitializeContext(NULL, &context);
-    ABORT_UNLESS(ret != TEEC_SUCCESS);
+    if (ret != TEEC_SUCCESS) {
+        TEST_PRINT_ERROR("TEEC_InitializeContext failed\n");
+        return;
+    }
 
     operation.started = 1;
     operation.paramTypes = TEEC_PARAM_TYPES(TEEC_NONE, TEEC_NONE, TEEC_NONE, TEEC_NONE);
 
     TEEC_UUID uuid = TCF_API_UUID_2;
+    char str[64] = { 0 };
+    sprintf(str,"/data/local/tmp/%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x.sec", uuid.timeLow, uuid.timeMid,
+        uuid.timeHiAndVersion, uuid.clockSeqAndNode[0], uuid.clockSeqAndNode[1], uuid.clockSeqAndNode[2],
+        uuid.clockSeqAndNode[3], uuid.clockSeqAndNode[4], uuid.clockSeqAndNode[5], uuid.clockSeqAndNode[6],
+        uuid.clockSeqAndNode[7]);
+    context.ta_path = (uint8_t *)str;
     ret = TEEC_OpenSession(&context, &session, &uuid, TEEC_LOGIN_IDENTIFY, NULL, &operation, NULL);
-    ABORT_UNLESS(ret != TEEC_SUCCESS);
+    if (ret != TEEC_SUCCESS) {
+        TEEC_FinalizeContext(&context);
+        TEST_PRINT_ERROR("TEEC_OpenSession failed\n");
+        return;
+    }
 }
 
-void TCF2Test::TearDown()
+void TeeTCF2Test::TearDown()
 {
     TEEC_CloseSession(&session);
     TEEC_FinalizeContext(&context);
 }
 
-TEEC_Context TCF2TA2TATest::context = { 0 };
-TEEC_Session TCF2TA2TATest::session = { 0 };
-TEEC_Session TCF2TA2TATest::session2 = { 0 };
+TEEC_Context TeeTCF2TA2TATest::context = { 0 };
+TEEC_Session TeeTCF2TA2TATest::session = { 0 };
+TEEC_Session TeeTCF2TA2TATest::session2 = { 0 };
 
-void TCF2TA2TATest::SetUp()
+void TeeTCF2TA2TATest::SetUp()
 {
     TEEC_Operation operation = { 0 };
 
     TEEC_Result ret = TEEC_InitializeContext(NULL, &context);
-    ABORT_UNLESS(ret != TEEC_SUCCESS);
+    if (ret != TEEC_SUCCESS) {
+        TEST_PRINT_ERROR("TEEC_InitializeContext failed\n");
+        return;
+    }
 
     operation.started = 1;
     operation.paramTypes = TEEC_PARAM_TYPES(TEEC_NONE, TEEC_NONE, TEEC_NONE, TEEC_NONE);
 
     TEEC_UUID uuid2 = TCF_API_UUID_1; // this is TA2 UUID
+    char str[64] = { 0 };
+    sprintf(str,"/data/local/tmp/%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x.sec", uuid2.timeLow, uuid2.timeMid,
+        uuid2.timeHiAndVersion, uuid2.clockSeqAndNode[0], uuid2.clockSeqAndNode[1], uuid2.clockSeqAndNode[2],
+        uuid2.clockSeqAndNode[3], uuid2.clockSeqAndNode[4], uuid2.clockSeqAndNode[5], uuid2.clockSeqAndNode[6],
+        uuid2.clockSeqAndNode[7]);
+    context.ta_path = (uint8_t *)str;
     ret = TEEC_OpenSession(&context, &session2, &uuid2, TEEC_LOGIN_IDENTIFY, NULL, &operation, NULL);
-    ABORT_UNLESS(ret != TEEC_SUCCESS);
+    if (ret != TEEC_SUCCESS) {
+        TEST_PRINT_ERROR("TEEC_OpenSession ta2 failed\n");
+        return;
+    }
 
     TEEC_UUID uuid = TCF_API_UUID_2; // this is TA1 UUID
+    memset(str, 0, 64);
+    sprintf(str,"/data/local/tmp/%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x.sec", uuid.timeLow, uuid.timeMid,
+        uuid.timeHiAndVersion, uuid.clockSeqAndNode[0], uuid.clockSeqAndNode[1], uuid.clockSeqAndNode[2],
+        uuid.clockSeqAndNode[3], uuid.clockSeqAndNode[4], uuid.clockSeqAndNode[5], uuid.clockSeqAndNode[6],
+        uuid.clockSeqAndNode[7]);
+    context.ta_path = (uint8_t *)str;    
     ret = TEEC_OpenSession(&context, &session, &uuid, TEEC_LOGIN_IDENTIFY, NULL, &operation, NULL);
-    ABORT_UNLESS(ret != TEEC_SUCCESS);
+    if (ret != TEEC_SUCCESS) {
+        TEEC_FinalizeContext(&context);
+        TEST_PRINT_ERROR("TEEC_OpenSession ta1 failed\n");
+        return;
+    }
 }
 
-void TCF2TA2TATest::TearDown()
+void TeeTCF2TA2TATest::TearDown()
 {
     TEEC_CloseSession(&session);
     TEEC_CloseSession(&session2);
     TEEC_FinalizeContext(&context);
 }
 
-TEEC_Context TCF1ENUM_Test::context = { 0 };
-TEEC_Session TCF1ENUM_Test::session = { 0 };
+TEEC_Context TeeTCF1EnumTest::context = { 0 };
+TEEC_Session TeeTCF1EnumTest::session = { 0 };
 
-void TCF1ENUM_Test::SetUpTestCase()
+void TeeTCF1EnumTest::SetUpTestCase()
 {
     TEEC_Operation operation = { 0 };
 
     TEEC_Result ret = TEEC_InitializeContext(NULL, &context);
-    ABORT_UNLESS(ret != TEEC_SUCCESS);
+    if (ret != TEEC_SUCCESS) {
+        TEST_PRINT_ERROR("TEEC_InitializeContext failed\n");
+        return;
+    }
 
     operation.started = 1;
     operation.paramTypes = TEEC_PARAM_TYPES(TEEC_NONE, TEEC_NONE, TEEC_NONE, TEEC_NONE);
 
     TEEC_UUID uuid = TCF_API_UUID_1;
+    char str[64] = { 0 };
+    sprintf(str,"/data/local/tmp/%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x.sec", uuid.timeLow, uuid.timeMid,
+        uuid.timeHiAndVersion, uuid.clockSeqAndNode[0], uuid.clockSeqAndNode[1], uuid.clockSeqAndNode[2],
+        uuid.clockSeqAndNode[3], uuid.clockSeqAndNode[4], uuid.clockSeqAndNode[5], uuid.clockSeqAndNode[6],
+        uuid.clockSeqAndNode[7]);
+    context.ta_path = (uint8_t *)str;
     ret = TEEC_OpenSession(&context, &session, &uuid, TEEC_LOGIN_IDENTIFY, NULL, &operation, NULL);
-    ABORT_UNLESS(ret != TEEC_SUCCESS);
+    if (ret != TEEC_SUCCESS) {
+        TEEC_FinalizeContext(&context);
+        TEST_PRINT_ERROR("TEEC_OpenSession failed\n");
+        return;
+    }
 }
 
-void TCF1ENUM_Test::TearDownTestCase()
+void TeeTCF1EnumTest::TearDownTestCase()
 {
     TEEC_CloseSession(&session);
     TEEC_FinalizeContext(&context);
 }
 
-void TCF1ENUM_Test::SetUp()
+void TeeTCF1EnumTest::SetUp()
 {
     TEEC_Result ret;
 
@@ -131,7 +191,7 @@ void TCF1ENUM_Test::SetUp()
     ABORT_UNLESS(ret != TEEC_SUCCESS);
 }
 
-void TCF1ENUM_Test::TearDown()
+void TeeTCF1EnumTest::TearDown()
 {
     value.cmd = CMD_TEE_FreePropertyEnumerator;
     Invoke_Operate_PropertyEnumerator(GetSession(), &value);
@@ -139,6 +199,9 @@ void TCF1ENUM_Test::TearDown()
 
 TEEC_Result Invoke_GetPropertyAsX(TEEC_Context *context, TEEC_Session *session, TestData *testData)
 {
+    if (session->session_id == 0)
+        return TEEC_ERROR_SESSION_NOT_EXIST;
+    
     TEEC_Result result = TEEC_FAIL;
     int rc;
     TEEC_Operation operation = { 0 };
@@ -201,6 +264,9 @@ clean:
 
 TEEC_Result Invoke_AllocatePropertyEnumerator(TEEC_Session *session, TestData *testData)
 {
+    if (session->session_id == 0)
+        return TEEC_ERROR_SESSION_NOT_EXIST;
+
     TEEC_Result result;
     TEEC_Operation operation = { 0 };
 
@@ -217,6 +283,9 @@ TEEC_Result Invoke_AllocatePropertyEnumerator(TEEC_Session *session, TestData *t
 
 TEEC_Result Invoke_Operate_PropertyEnumerator(TEEC_Session *session, TestData *testData)
 {
+    if (session->session_id == 0)
+        return TEEC_ERROR_SESSION_NOT_EXIST;
+
     TEEC_Result result;
     TEEC_Operation operation = { 0 };
     // Invoke command
@@ -255,6 +324,9 @@ TEEC_Result Invoke_Operate_PropertyEnumerator(TEEC_Session *session, TestData *t
 
 TEEC_Result Invoke_Malloc(TEEC_Session *session, uint32_t commandID, TestMemData *testData, uint32_t *origin)
 {
+    if (session->session_id == 0)
+        return TEEC_ERROR_SESSION_NOT_EXIST;
+
     TEEC_Result result;
     TEEC_Operation operation = { 0 };
 
@@ -272,6 +344,9 @@ TEEC_Result Invoke_Malloc(TEEC_Session *session, uint32_t commandID, TestMemData
 
 TEEC_Result Invoke_Realloc(TEEC_Session *session, uint32_t commandID, TestMemData *testData, char *output)
 {
+    if (session->session_id == 0)
+        return TEEC_ERROR_SESSION_NOT_EXIST;
+
     TEEC_Result result;
     TEEC_Operation operation = { 0 };
     char *buffer = NULL;
@@ -311,6 +386,9 @@ TEEC_Result Invoke_Realloc(TEEC_Session *session, uint32_t commandID, TestMemDat
 
 TEEC_Result Invoke_MemMove_Or_Fill(TEEC_Session *session, uint32_t commandID, TestMemData *testData, char *output)
 {
+    if (session->session_id == 0)
+        return TEEC_ERROR_SESSION_NOT_EXIST;
+
     TEEC_Result result;
     TEEC_Operation operation = { 0 };
     char *buffer = NULL;
@@ -341,6 +419,9 @@ TEEC_Result Invoke_MemMove_Or_Fill(TEEC_Session *session, uint32_t commandID, Te
 
 TEEC_Result Invoke_Free(TEEC_Session *session, uint32_t commandID, uint32_t caseNum, uint32_t *origin)
 {
+    if (session->session_id == 0)
+        return TEEC_ERROR_SESSION_NOT_EXIST;
+
     TEEC_Result result;
     TEEC_Operation operation = { 0 };
 
@@ -356,6 +437,9 @@ TEEC_Result Invoke_Free(TEEC_Session *session, uint32_t commandID, uint32_t case
 TEEC_Result Invoke_MemCompare(TEEC_Session *session, uint32_t commandID, TestMemData *testData, char *buffer1,
     char *buffer2)
 {
+    if (session->session_id == 0)
+        return TEEC_ERROR_SESSION_NOT_EXIST;
+
     TEEC_Result result = TEEC_SUCCESS;
     TEEC_Operation operation = { 0 };
 
@@ -376,6 +460,9 @@ TEEC_Result Invoke_MemCompare(TEEC_Session *session, uint32_t commandID, TestMem
 
 TEEC_Result Invoke_CheckMemoryAccessRights(TEEC_Session *session, uint32_t commandID, TestMemData *testData)
 {
+    if (session->session_id == 0)
+        return TEEC_ERROR_SESSION_NOT_EXIST;
+
     TEEC_Result result;
     TEEC_Operation operation = { 0 };
     char *buffer = NULL;
@@ -402,6 +489,9 @@ TEEC_Result Invoke_CheckMemoryAccessRights(TEEC_Session *session, uint32_t comma
 TEEC_Result Invoke_SetInstanceData(TEEC_Session *session, uint32_t commandID, char *buffer, uint32_t caseNum,
     uint32_t *origin)
 {
+    if (session->session_id == 0)
+        return TEEC_ERROR_SESSION_NOT_EXIST;
+
     TEEC_Result result = TEEC_SUCCESS;
     TEEC_Operation operation = { 0 };
 
@@ -419,6 +509,9 @@ TEEC_Result Invoke_SetInstanceData(TEEC_Session *session, uint32_t commandID, ch
 TEEC_Result Invoke_GetInstanceData(TEEC_Session *session, uint32_t commandID, char *buffer, uint32_t *bufSize,
     uint32_t *origin)
 {
+    if (session->session_id == 0)
+        return TEEC_ERROR_SESSION_NOT_EXIST;
+
     TEEC_Result result = TEEC_SUCCESS;
     TEEC_Operation operation = { 0 };
 
@@ -450,6 +543,9 @@ static void retrieveUint16toBuffer(uint8_t *buffer, uint16_t i)
 TEEC_Result Invoke_OpenTASession(TEEC_Session *session, uint32_t commandID, uint32_t *ta2taSession, TestData *testData,
     uint32_t *origin)
 {
+    if (session->session_id == 0)
+        return TEEC_ERROR_SESSION_NOT_EXIST;
+
     TEEC_Result result = TEEC_SUCCESS;
     TEEC_Operation operation = { 0 };
     uint8_t tempBuffer[16];
@@ -484,6 +580,9 @@ TEEC_Result Invoke_OpenTASession(TEEC_Session *session, uint32_t commandID, uint
 
 TEEC_Result Invoke_CloseTASession(TEEC_Session *session, uint32_t commandID, uint32_t ta2taSession, uint32_t *origin)
 {
+    if (session->session_id == 0)
+        return TEEC_ERROR_SESSION_NOT_EXIST;
+
     TEEC_Result result = TEEC_SUCCESS;
     TEEC_Operation operation = { 0 };
 
@@ -499,6 +598,9 @@ TEEC_Result Invoke_CloseTASession(TEEC_Session *session, uint32_t commandID, uin
 TEEC_Result Invoke_InvokeTACommand(TEEC_Session *session, uint32_t commandID, uint32_t ta2taSession, TestData *testData,
     uint32_t *origin)
 {
+    if (session->session_id == 0)
+        return TEEC_ERROR_SESSION_NOT_EXIST;
+
     TEEC_Result result = TEEC_SUCCESS;
     TEEC_Operation operation = { 0 };
 
@@ -521,6 +623,9 @@ TEEC_Result Invoke_InvokeTACommand(TEEC_Session *session, uint32_t commandID, ui
 
 uint32_t get_ta_data_size(TEEC_Context *context, TEEC_Session *session)
 {
+    if (session->session_id == 0)
+        return TEEC_ERROR_SESSION_NOT_EXIST;
+
     int rc;
     TestData value = { 0 };
     value.cmd = CMD_TEE_GetPropertyAsU32;
@@ -538,6 +643,9 @@ uint32_t get_ta_data_size(TEEC_Context *context, TEEC_Session *session)
 
 uint32_t get_ta_stack_size(TEEC_Context *context, TEEC_Session *session)
 {
+    if (session->session_id == 0)
+        return TEEC_ERROR_SESSION_NOT_EXIST;
+
     int rc;
     TestData value = { 0 };
     value.cmd = CMD_TEE_GetPropertyAsU32;
@@ -555,6 +663,9 @@ uint32_t get_ta_stack_size(TEEC_Context *context, TEEC_Session *session)
 
 TEEC_Result Invoke_Panic(TEEC_Session *session, uint32_t commandID, TEEC_Result panicCode, uint32_t *origin)
 {
+    if (session->session_id == 0)
+        return TEEC_ERROR_SESSION_NOT_EXIST;
+
     TEEC_Result result;
     TEEC_Operation operation = { 0 };
 

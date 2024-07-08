@@ -25,7 +25,7 @@ using namespace testing::ext;
  * @testcase.desc      : test TA call TEE_GetPropertyAsIdentity to get value of  SMC_TA_TESTIDENTITY
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(TCF2Test, TEE_GetPropertyAsIdentity_WithoutEnum_SMC_TA_TESTIDENTITY, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_GetPropertyAsIdentity_WithoutEnum_SMC_TA_TESTIDENTITY, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -46,7 +46,7 @@ TEE_TEST(TCF2Test, TEE_GetPropertyAsIdentity_WithoutEnum_SMC_TA_TESTIDENTITY, Fu
  * @testcase.desc      : test TA call TEE_GetPropertyAsIdentity for name is null
  * @testcase.expect    : return TEEC_ERROR_ITEM_NOT_FOUND
  */
-TEE_TEST(TCF2Test, TEE_GetPropertyAsIdentity_WithoutEnum_NameIsNull, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_GetPropertyAsIdentity_WithoutEnum_NameIsNull, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
 
@@ -65,7 +65,7 @@ TEE_TEST(TCF2Test, TEE_GetPropertyAsIdentity_WithoutEnum_NameIsNull, Function | 
  * @testcase.desc      : test TA call TEE_GetPropertyAsIdentity for name value is zero
  * @testcase.expect    : return TEEC_ERROR_ITEM_NOT_FOUND
  */
-TEE_TEST(TCF2Test, TEE_GetPropertyAsIdentity_WithoutEnum_NameIsZero, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_GetPropertyAsIdentity_WithoutEnum_NameIsZero, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
 
@@ -83,7 +83,7 @@ TEE_TEST(TCF2Test, TEE_GetPropertyAsIdentity_WithoutEnum_NameIsZero, Function | 
  * @testcase.desc      : test TA call TEE_GetPropertyAsIdentity for value buffer is null
  * @testcase.expect    : return TEEC_ERROR_BAD_PARAMETERS
  */
-TEE_TEST(TCF2Test, TEE_GetPropertyAsIdentity_WithoutEnum_ValueBufferIsNULL, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_GetPropertyAsIdentity_WithoutEnum_ValueBufferIsNULL, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
 
@@ -106,7 +106,7 @@ TEE_TEST(TCF2Test, TEE_GetPropertyAsIdentity_WithoutEnum_ValueBufferIsNULL, Func
  * @testcase.desc      : test TA call TEE_GetPropertyAsIdentity while Name Not Found
  * @testcase.expect    : return TEEC_ERROR_ITEM_NOT_FOUND
  */
-TEE_TEST(TCF2Test, TEE_GetPropertyAsIdentity_WithoutEnum_NameNotFound, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_GetPropertyAsIdentity_WithoutEnum_NameNotFound, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
 
@@ -128,7 +128,7 @@ TEE_TEST(TCF2Test, TEE_GetPropertyAsIdentity_WithoutEnum_NameNotFound, Function 
  * @testcase.desc      : test TA call TEE_GetPropertyAsIdentity while Name type is not Identity
  * @testcase.expect    : return TEEC_ERROR_BAD_FORMAT
  */
-TEE_TEST(TCF2Test, TEE_GetPropertyAsIdentity_WithoutEnum_NameNotIdentity, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_GetPropertyAsIdentity_WithoutEnum_NameNotIdentity, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
 
@@ -150,7 +150,7 @@ TEE_TEST(TCF2Test, TEE_GetPropertyAsIdentity_WithoutEnum_NameNotIdentity, Functi
  * @testcase.desc      : test TA call TEE_GetPropertyAsIdentity while Name type is not UUID, is string
  * @testcase.expect    : return TEEC_ERROR_BAD_FORMAT
  */
-TEE_TEST(TCF2Test, TEE_GetPropertyAsIdentity_WithoutEnum_NameNotUUID2, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_GetPropertyAsIdentity_WithoutEnum_NameNotUUID2, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
 

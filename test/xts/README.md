@@ -47,7 +47,7 @@ Enter the command line window of the tested system, Enter "/vendor/bin/tee_test_
 
 2. Execute some test cases.
 For details, see the commands provided by the hcpptest framework.  
-Supports the use of wildcard characters "*", for example /vendor/bin/tee_test_client_api_vendor --gtest_filter=*EmptyTest.InvokeCommand*
+Supports the use of wildcard characters "*", for example /vendor/bin/tee_test_client_api_vendor --gtest_filter=*TeeBasicTestFram.InvokeCommand*
 
 3. Current exist tee xts test CA list:
 /vendor/bin/tee_test_client_api_vendor

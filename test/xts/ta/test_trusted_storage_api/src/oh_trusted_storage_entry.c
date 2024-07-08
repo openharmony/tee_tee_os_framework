@@ -15,6 +15,7 @@
 
 #define SYSTEM_OH_TRUSTED_STORAGE "/system/bin/tee_test_store_api"
 #define VENDOR_OH_TRUSTED_STORAGE "/vendor/bin/tee_test_store_api"
+#define DATA_OH_TRUSTED_STORAGE "./tee_test_store_api"
 #define TEST_STORAGE_UID 0
 
 // TA_INVOKE_CMD
@@ -31,6 +32,9 @@ TEE_Result TA_CreateEntryPoint(void)
     if (ret != TEE_SUCCESS)
         return ret;
     ret = AddCaller_CA_exec(SYSTEM_OH_TRUSTED_STORAGE, TEST_STORAGE_UID);
+    if (ret != TEE_SUCCESS)
+        return ret;
+    ret = AddCaller_CA_exec(DATA_OH_TRUSTED_STORAGE, TEST_STORAGE_UID);
     if (ret != TEE_SUCCESS)
         return ret;
 

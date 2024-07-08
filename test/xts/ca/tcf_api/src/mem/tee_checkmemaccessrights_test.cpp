@@ -25,7 +25,7 @@ using namespace testing::ext;
  * @testcase.desc      : test TA call TEE_CheckMemoryAccessRights to check buffer whether has Access_Read right
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(TCF2Test, TEE_CheckMemoryAccessRights_With_Access_Read_Flag, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_CheckMemoryAccessRights_With_Access_Read_Flag, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TestMemData value = { 0 };
@@ -46,7 +46,7 @@ TEE_TEST(TCF2Test, TEE_CheckMemoryAccessRights_With_Access_Read_Flag, Function |
  * @testcase.desc      : test TA call TEE_CheckMemoryAccessRights to check buffer whether has Access_Write right
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(TCF2Test, TEE_CheckMemoryAccessRights_With_Access_Write_Flag, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_CheckMemoryAccessRights_With_Access_Write_Flag, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TestMemData value = { 0 };
@@ -67,7 +67,7 @@ TEE_TEST(TCF2Test, TEE_CheckMemoryAccessRights_With_Access_Write_Flag, Function 
  * @testcase.desc      : test TA call TEE_CheckMemoryAccessRights to check buffer while assigned buffer is freeed
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(TCF2Test, TEE_CheckMemoryAccessRights_With_BufferIsFree, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_CheckMemoryAccessRights_With_BufferIsFree, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TestMemData value = { 0 };
@@ -89,7 +89,7 @@ TEE_TEST(TCF2Test, TEE_CheckMemoryAccessRights_With_BufferIsFree, Function | Med
  * @testcase.desc      : test TA call TEE_CheckMemoryAccessRights while buffer is not alloced,it is on stack
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(TCF2Test, TEE_CheckMemoryAccessRights_With_BufferIsNotMalloc, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_CheckMemoryAccessRights_With_BufferIsNotMalloc, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TestMemData value = { 0 };
@@ -111,7 +111,7 @@ TEE_TEST(TCF2Test, TEE_CheckMemoryAccessRights_With_BufferIsNotMalloc, Function 
  * @testcase.desc      : test TA call TEE_CheckMemoryAccessRights to check buffer while size is zero
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(TCF2Test, TEE_CheckMemoryAccessRights_With_SizeIsZero, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_CheckMemoryAccessRights_With_SizeIsZero, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TestMemData value = { 0 };
@@ -133,7 +133,7 @@ TEE_TEST(TCF2Test, TEE_CheckMemoryAccessRights_With_SizeIsZero, Function | Mediu
  * @testcase.desc      : test TA call TEE_CheckMemoryAccessRights while buffer is global variable
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(TCF2Test, TEE_CheckMemoryAccessRights_With_GlobalVar, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_CheckMemoryAccessRights_With_GlobalVar, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TestMemData value = { 0 };
@@ -155,7 +155,7 @@ TEE_TEST(TCF2Test, TEE_CheckMemoryAccessRights_With_GlobalVar, Function | Medium
  * @testcase.desc      : test TA call TEE_CheckMemoryAccessRights while buffer is global variable
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(TCF2Test, TEE_CheckMemoryAccessRights_With_ReadRight_GlobalConstVar, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_CheckMemoryAccessRights_With_ReadRight_GlobalConstVar, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TestMemData value = { 0 };
@@ -177,7 +177,7 @@ TEE_TEST(TCF2Test, TEE_CheckMemoryAccessRights_With_ReadRight_GlobalConstVar, Fu
  * @testcase.desc      : test TA call TEE_CheckMemoryAccessRights to check buffer whether has Access_AnyOwner right
  * @testcase.expect    : return TEEC_ERROR_ACCESS_DENIED
  */
-TEE_TEST(TCF2Test, TEE_CheckMemoryAccessRights_With_Access_AnyOwner_Flag, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_CheckMemoryAccessRights_With_Access_AnyOwner_Flag, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TestMemData value = { 0 };
@@ -198,7 +198,7 @@ TEE_TEST(TCF2Test, TEE_CheckMemoryAccessRights_With_Access_AnyOwner_Flag, Functi
  * @testcase.desc      : test TA call TEE_CheckMemoryAccessRights to check buffer while flag is zero
  * @testcase.expect    : return TEEC_ERROR_ACCESS_DENIED
  */
-TEE_TEST(TCF2Test, TEE_CheckMemoryAccessRights_With_FlagIsZero, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_CheckMemoryAccessRights_With_FlagIsZero, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TestMemData value = { 0 };
@@ -219,7 +219,7 @@ TEE_TEST(TCF2Test, TEE_CheckMemoryAccessRights_With_FlagIsZero, Function | Mediu
  * @testcase.desc      : test TA call TEE_CheckMemoryAccessRights to check buffer while assigned buffer is null
  * @testcase.expect    : return TEEC_ERROR_ACCESS_DENIED
  */
-TEE_TEST(TCF2Test, TEE_CheckMemoryAccessRights_With_BufferIsNull, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_CheckMemoryAccessRights_With_BufferIsNull, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TestMemData value = { 0 };
@@ -241,7 +241,7 @@ TEE_TEST(TCF2Test, TEE_CheckMemoryAccessRights_With_BufferIsNull, Function | Med
  * @testcase.desc      : test TA call TEE_CheckMemoryAccessRights to check buffer while assigned buffer is param type
  * @testcase.expect    : return TEEC_ERROR_ACCESS_DENIED
  */
-TEE_TEST(TCF2Test, TEE_CheckMemoryAccessRights_With_BufferIsParam, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_CheckMemoryAccessRights_With_BufferIsParam, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TestMemData value = { 0 };
@@ -263,7 +263,7 @@ TEE_TEST(TCF2Test, TEE_CheckMemoryAccessRights_With_BufferIsParam, Function | Me
  * @testcase.desc      : test TA call TEE_CheckMemoryAccessRights while buffer is global variable
  * @testcase.expect    : return TEEC_ERROR_ACCESS_DENIED
  */
-TEE_TEST(TCF2Test, TEE_CheckMemoryAccessRights_With_WriteRight_GlobalConstVar, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_CheckMemoryAccessRights_With_WriteRight_GlobalConstVar, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TestMemData value = { 0 };
@@ -285,7 +285,7 @@ TEE_TEST(TCF2Test, TEE_CheckMemoryAccessRights_With_WriteRight_GlobalConstVar, F
  * @testcase.desc      : test TA call TEE_CheckMemoryAccessRights to check buffer while size is too big
  * @testcase.expect    : return TEEC_ERROR_ACCESS_DENIED
  */
-TEE_TEST(TCF2Test, TEE_CheckMemoryAccessRights_With_SizeIsTooBig, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_CheckMemoryAccessRights_With_SizeIsTooBig, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TestMemData value = { 0 };

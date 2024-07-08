@@ -55,7 +55,7 @@ static char g_offset300[] = "offset is 300";
  * @testcase.desc      : call TEEC_InvokeCommand With session is not open
  * @testcase.expect    : return TEEC_ERROR_BAD_PARAMETERS
  */
-TEE_TEST(EmptyTest, InvokeCommand_WithSessionNotOpen, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, InvokeCommand_WithSessionNotOpen, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -81,7 +81,7 @@ TEE_TEST(EmptyTest, InvokeCommand_WithSessionNotOpen, Function | MediumTest | Le
  * @testcase.desc      : call TEEC_InvokeCommand With session is closed
  * @testcase.expect    : return TEEC_ERROR_BAD_PARAMETERS
  */
-TEE_TEST(EmptyTest, InvokeCommand_WithSessionIsClose, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, InvokeCommand_WithSessionIsClose, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -107,7 +107,7 @@ TEE_TEST(EmptyTest, InvokeCommand_WithSessionIsClose, Function | MediumTest | Le
  * @testcase.desc      : call TEEC_InvokeCommand Without operation
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, InvokeCommand_WithoutOperation, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, InvokeCommand_WithoutOperation, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -126,7 +126,7 @@ TEE_TEST(EmptyTest, InvokeCommand_WithoutOperation, Function | MediumTest | Leve
  * @testcase.desc      : call TEEC_InvokeCommand Without Origin
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, InvokeCommand_WithoutOrigin, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, InvokeCommand_WithoutOrigin, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TEEC_UUID testId = CLIENTAPI_UUID_1;
@@ -147,7 +147,7 @@ TEE_TEST(EmptyTest, InvokeCommand_WithoutOrigin, Function | MediumTest | Level0)
  * @testcase.desc      : call TEEC_InvokeCommand Without session
  * @testcase.expect    : return TEEC_ERROR_BAD_PARAMETERS
  */
-TEE_TEST(EmptyTest, InvokeCommand_WithoutSession, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, InvokeCommand_WithoutSession, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -170,7 +170,7 @@ TEE_TEST(EmptyTest, InvokeCommand_WithoutSession, Function | MediumTest | Level0
  * @testcase.desc      : call TEEC_InvokeCommand With paramtype is value
  * @testcase.expect    : return TEEC_SUCCESS, TA can modify input value and return to CA
  */
-TEE_TEST(EmptyTest, InvokeCommand_WithOperationIsValue, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, InvokeCommand_WithOperationIsValue, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -209,7 +209,7 @@ TEE_TEST(EmptyTest, InvokeCommand_WithOperationIsValue, Function | MediumTest | 
  * @testcase.desc      : call TEEC_InvokeCommand With paramtype is TempMem
  * @testcase.expect    : return TEEC_SUCCESS, TA can modify input tempmem and return to CA
  */
-TEE_TEST(EmptyTest, InvokeCommand_WithOperationIsTempMem, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, InvokeCommand_WithOperationIsTempMem, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -288,7 +288,7 @@ static TEEC_Result MemSharedAllocShmem(TEEC_Context *context, TEEC_SharedMemory 
  * @testcase.desc      : call TEEC_InvokeCommand With paramtype is PartialMem
  * @testcase.expect    : return TEEC_SUCCESS, TA can modify input PartialMem and return to CA
  */
-TEE_TEST(EmptyTest, InvokeCommand_WithOperationIsPartialMem, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, InvokeCommand_WithOperationIsPartialMem, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -350,7 +350,7 @@ TEE_TEST(EmptyTest, InvokeCommand_WithOperationIsPartialMem, Function | MediumTe
  * @testcase.desc      : call TEEC_InvokeCommand With tempMem is null
  * @testcase.expect    : return TEEC_ERROR_BAD_PARAMETERS
  */
-TEE_TEST(EmptyTest, InvokeCommand_WithOperationIsTempMemIsNULL, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, InvokeCommand_WithOperationIsTempMemIsNULL, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -375,7 +375,7 @@ TEE_TEST(EmptyTest, InvokeCommand_WithOperationIsTempMemIsNULL, Function | Mediu
  * @testcase.desc      : call TEEC_InvokeCommand With Operation is Not Start
  * @testcase.expect    : return TEEC_ERROR_NOT_IMPLEMENTED
  */
-TEE_TEST(EmptyTest, InvokeCommand_WithOperationNotStart, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, InvokeCommand_WithOperationNotStart, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -399,7 +399,7 @@ TEE_TEST(EmptyTest, InvokeCommand_WithOperationNotStart, Function | MediumTest |
  * @testcase.desc      : call TEEC_InvokeCommand With ParamType is temp while operation is memref
  * @testcase.expect    : return TEEC_ERROR_COMMUNICATION
  */
-TEE_TEST(EmptyTest, InvokeCommand_WithOperationTypeTempUsePartial, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, InvokeCommand_WithOperationTypeTempUsePartial, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -432,7 +432,7 @@ TEE_TEST(EmptyTest, InvokeCommand_WithOperationTypeTempUsePartial, Function | Me
  * @testcase.desc      : call TEEC_InvokeCommand With ParamType is partial while operation is tmpref
  * @testcase.expect    : return TEEC_ERROR_BAD_PARAMETERS
  */
-TEE_TEST(EmptyTest, InvokeCommand_WithOperationTypePartialUseTemp, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, InvokeCommand_WithOperationTypePartialUseTemp, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -457,7 +457,7 @@ TEE_TEST(EmptyTest, InvokeCommand_WithOperationTypePartialUseTemp, Function | Me
  * @testcase.desc      : call TEEC_InvokeCommand With ParamType is partial while memref.buffer is assign
  * @testcase.expect    : return TEEC_ERROR_BAD_PARAMETERS
  */
-TEE_TEST(EmptyTest, InvokeCommand_WithOperationTypePartialIsNULL, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, InvokeCommand_WithOperationTypePartialIsNULL, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -482,7 +482,7 @@ TEE_TEST(EmptyTest, InvokeCommand_WithOperationTypePartialIsNULL, Function | Med
  * @testcase.desc      : call TEEC_InvokeCommand With ParamType is partial while memref offset+size > sharedMem.size
  * @testcase.expect    : return TEEC_ERROR_BAD_PARAMETERS
  */
-TEE_TEST(EmptyTest, InvokeCommand_WithOperationTypePartialSizeIsExceed, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, InvokeCommand_WithOperationTypePartialSizeIsExceed, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -515,7 +515,7 @@ TEE_TEST(EmptyTest, InvokeCommand_WithOperationTypePartialSizeIsExceed, Function
  * @testcase.desc      : call TEEC_InvokeCommand With ParamType is partial while memref.size = 0
  * @testcase.expect    : return TEEC_ERROR_BAD_PARAMETERS
  */
-TEE_TEST(EmptyTest, InvokeCommand_WithOperationTypePartialSizeIsZero, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, InvokeCommand_WithOperationTypePartialSizeIsZero, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -549,7 +549,7 @@ TEE_TEST(EmptyTest, InvokeCommand_WithOperationTypePartialSizeIsZero, Function |
  * TEEC_AllocateSharedMemory allocated
  * @testcase.expect    : return TEEC_ERROR_BAD_PARAMETERS
  */
-TEE_TEST(EmptyTest, InvokeCommand_WithMemrefPartialBufferIsWrong, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, InvokeCommand_WithMemrefPartialBufferIsWrong, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -589,7 +589,7 @@ TEE_TEST(EmptyTest, InvokeCommand_WithMemrefPartialBufferIsWrong, Function | Med
  * @testcase.desc      : call TEEC_InvokeCommand With Context is already Finalized
  * @testcase.expect    : return TEEC_ERROR_BAD_PARAMETERS
  */
-TEE_TEST(EmptyTest, InvokeCommand_WithContextIsAlreadyFinalize, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, InvokeCommand_WithContextIsAlreadyFinalize, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -615,7 +615,7 @@ TEE_TEST(EmptyTest, InvokeCommand_WithContextIsAlreadyFinalize, Function | Mediu
  * @testcase.desc      : call TEEC_InvokeCommand With paramType is all kind of type
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, InvokeCommand_WithOperationAllType, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, InvokeCommand_WithOperationAllType, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -678,7 +678,7 @@ TEE_TEST(EmptyTest, InvokeCommand_WithOperationAllType, Function | MediumTest | 
  * @testcase.desc      : call TEEC_InvokeCommand With paramType is TEMP_INPUT and size is 1024k
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, InvokeCommand_WithMemrefTempInput1024k, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, InvokeCommand_WithMemrefTempInput1024k, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -713,7 +713,7 @@ TEE_TEST(EmptyTest, InvokeCommand_WithMemrefTempInput1024k, Function | MediumTes
  * @testcase.desc      : call TEEC_InvokeCommand With paramType is TEMP_OUTPUT and size is 1024k
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, InvokeCommand_WithMemrefTempOutput1024k, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, InvokeCommand_WithMemrefTempOutput1024k, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -749,7 +749,7 @@ TEE_TEST(EmptyTest, InvokeCommand_WithMemrefTempOutput1024k, Function | MediumTe
  * @testcase.desc      : call TEEC_InvokeCommand With paramType is TEMP_INOUT and size is 1024k
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, InvokeCommand_WithMemrefTempInout1024k, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, InvokeCommand_WithMemrefTempInout1024k, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -785,7 +785,7 @@ TEE_TEST(EmptyTest, InvokeCommand_WithMemrefTempInout1024k, Function | MediumTes
  * @testcase.desc      : call TEEC_InvokeCommand With paramType is TEMP_INOUT and size is 1024k + 1
  * @testcase.expect    : return TEEC_ERROR_ACCESS_DENIED
  */
-TEE_TEST(EmptyTest, InvokeCommand_WithMemrefTempInoutExceed1024k, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, InvokeCommand_WithMemrefTempInoutExceed1024k, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -818,7 +818,7 @@ TEE_TEST(EmptyTest, InvokeCommand_WithMemrefTempInoutExceed1024k, Function | Med
  * @testcase.desc      : call TEEC_InvokeCommand With paramType is WHOLE and size is 2048k
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, InvokeCommand_WithMemrefWhole2048k, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, InvokeCommand_WithMemrefWhole2048k, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -853,7 +853,7 @@ TEE_TEST(EmptyTest, InvokeCommand_WithMemrefWhole2048k, Function | MediumTest | 
  * @testcase.desc      : call TEEC_InvokeCommand With paramType is WHOLE and sharedMem.size is 2048k + 1
  * @testcase.expect    : return TEEC_ERROR_OUT_OF_MEMORY
  */
-TEE_TEST(EmptyTest, InvokeCommand_WithMemrefWholeExceed2048k, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, InvokeCommand_WithMemrefWholeExceed2048k, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -888,7 +888,7 @@ TEE_TEST(EmptyTest, InvokeCommand_WithMemrefWholeExceed2048k, Function | MediumT
  * @testcase.desc      : call TEEC_InvokeCommand With paramType is PARTIAL_INPUT and size is 2048k
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, InvokeCommand_WithMemrefPartialInput2048k, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, InvokeCommand_WithMemrefPartialInput2048k, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -928,7 +928,7 @@ TEE_TEST(EmptyTest, InvokeCommand_WithMemrefPartialInput2048k, Function | Medium
  * @testcase.desc      : call TEEC_InvokeCommand With paramType is PARTIAL_OUTPUT and size is 2048k
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, InvokeCommand_WithMemrefPartialOutput2048k, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, InvokeCommand_WithMemrefPartialOutput2048k, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -969,7 +969,7 @@ TEE_TEST(EmptyTest, InvokeCommand_WithMemrefPartialOutput2048k, Function | Mediu
  * @testcase.desc      : call TEEC_InvokeCommand With paramType is PARTIAL_INOUT and size is 2048k
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, InvokeCommand_WithMemrefPartialInout2048k, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, InvokeCommand_WithMemrefPartialInout2048k, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -1010,7 +1010,7 @@ TEE_TEST(EmptyTest, InvokeCommand_WithMemrefPartialInout2048k, Function | Medium
  * @testcase.desc      : call TEEC_InvokeCommand With paramType is PARTIAL_INOUT and size is 2048k + 1
  * @testcase.expect    : return TEEC_ERROR_OUT_OF_MEMORY
  */
-TEE_TEST(EmptyTest, InvokeCommand_WithMemrefPartialInoutExceed2048k, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, InvokeCommand_WithMemrefPartialInoutExceed2048k, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -1052,7 +1052,7 @@ TEE_TEST(EmptyTest, InvokeCommand_WithMemrefPartialInoutExceed2048k, Function | 
  * [2] size > tee size, [3] size > tee size
  * @testcase.expect    : return TEEC_ERROR_SHORT_BUFFER
  */
-TEE_TEST(EmptyTest, InvokeCommand_ReturnLenWithMemrefTempOutput, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, InvokeCommand_ReturnLenWithMemrefTempOutput, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -1109,7 +1109,7 @@ TEE_TEST(EmptyTest, InvokeCommand_ReturnLenWithMemrefTempOutput, Function | Medi
  * [2] size < tee size [3] size < tee size
  * @testcase.expect    : return TEEC_ERROR_SHORT_BUFFER
  */
-TEE_TEST(EmptyTest, InvokeCommand_ReturnLenWithMemrefTempInout, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, InvokeCommand_ReturnLenWithMemrefTempInout, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -1167,6 +1167,13 @@ static TEEC_Result CreateOpensession(TEEC_Operation *operation, TEEC_Session *se
     TEEC_UUID uuid = CLIENTAPI_UUID_1;
     operation->started = 1;
     operation->paramTypes = TEEC_PARAM_TYPES(TEEC_NONE, TEEC_NONE, TEEC_NONE, TEEC_NONE);
+
+    char str[64] = { 0 };
+    sprintf(str,"/data/local/tmp/%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x.sec", uuid.timeLow, uuid.timeMid,
+        uuid.timeHiAndVersion, uuid.clockSeqAndNode[0], uuid.clockSeqAndNode[1], uuid.clockSeqAndNode[2],
+        uuid.clockSeqAndNode[3], uuid.clockSeqAndNode[4], uuid.clockSeqAndNode[5], uuid.clockSeqAndNode[6],
+        uuid.clockSeqAndNode[7]);
+    context->ta_path = (uint8_t *)str;
     TEEC_Result result = TEEC_OpenSession(context, session, &uuid, TEEC_LOGIN_IDENTIFY, NULL, operation, &origin);
     if (result != TEEC_SUCCESS)
         TEST_PRINT_ERROR("thread %d: TEEC_OpenSession failed, result=0x%x, origin=%d\n", id, result, origin);
@@ -1247,7 +1254,7 @@ clean:
  * Allocatesharemem use seperate session and sharemem
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(OnlyInit, InvokeCommand_5Thread_SameContext_DiffSessionAndAllocSharemem, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFramWithInitContext, InvokeCommand_5Thread_SameContext_DiffSessionAndAllocSharemem, Function | MediumTest | Level0)
 {
     DatePacket iInvokeParams[5];
     uint32_t i;

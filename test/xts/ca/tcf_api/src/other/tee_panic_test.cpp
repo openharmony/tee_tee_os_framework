@@ -27,7 +27,7 @@ using namespace testing::ext;
  * @testcase.desc      : test TA call TEE_Panic to make ta panic
  * @testcase.expect    : return TEEC_ERROR_TARGET_DEAD
  */
-TEE_TEST(TCF1Test, TEE_Panic_With_Normal, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_Panic_With_Normal, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -48,7 +48,7 @@ TEE_TEST(TCF1Test, TEE_Panic_With_Normal, Function | MediumTest | Level0)
  * @testcase.desc      : test TA call TEE_Panic to make a multisession ta panic
  * @testcase.expect    : return TEEC_ERROR_TARGET_DEAD,invoke other tasession will return TEEC_ERROR_ITEM_NOT_FOUND
  */
-TEE_TEST(TCF2TA2TATest, TEE_Panic_With_MultiSession, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2TA2TATest, TEE_Panic_With_MultiSession, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t ta2taSession[8] = { 0 };

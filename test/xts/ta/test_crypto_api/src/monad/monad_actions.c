@@ -12,6 +12,7 @@
 
 #include "securec.h"
 #include "tee_crypto_api.h"
+#include "tee_crypto_hal.h"
 #include "test_crypto_data.h"
 #include "string.h"
 #include "test_crypto_api_types.h"
@@ -284,6 +285,13 @@ int GlbAlloc(IntermediateReprestation *ir)
         tloge("[%s]:allocate fwdOperaHandle or bckOperaHandle\n", __func__);
         goto error;
     }
+
+    ret1 = TEE_SetCryptoFlag(ir->fwdOperaHandle, SOFT_CRYPTO);
+    ret2 = TEE_SetCryptoFlag(ir->bckOperaHandle, SOFT_CRYPTO);
+    if (ret1 != TEE_SUCCESS || ret2 != TEE_SUCCESS) {
+        tloge("[%s]:allocate fwdOperaHandle or bckOperaHandle\n", __func__);
+        goto error;
+    }
     tlogi("[%s]:TEE_AllocateOperation fwd and bck operation handle success.\n", __func__);
 
     int ret = DisbalanceGroupElement(ir->mrpl, ir->mrplSize, GlbAlloc);
@@ -300,24 +308,42 @@ error:
 
 int GlbGetInfo(IntermediateReprestation *ir)
 {
-    (void)ir;
-    tlogi("in function [%s]\n", __func__);
+    TEE_OperationInfo operationInfo = {0};
+    TEE_GetOperationInfo(ir->fwdOperaHandle, &operationInfo);
+    tlogi("[%s]:GlbGetInfo success\n", __func__);
     return 0;
 }
 
 int GlbGetInfoMulti(IntermediateReprestation *ir)
 {
-    (void)ir;
-    tlogi("in function [%s]\n", __func__);
+    TEE_Result ret = TEE_SUCCESS;
+    int test_ret = -1;
+    size_t operationSize = sizeof(TEE_OperationInfoMultiple) + 2 * sizeof(TEE_OperationInfoKey);
+    TEE_OperationInfoMultiple *operationInfoMultiple = (TEE_OperationInfoMultiple *)TEE_Malloc(operationSize, 0);
+    if (operationInfoMultiple == NULL)
+    {
+        tloge("operation info multiple malloc failed\n");
+        return test_ret;
+    }
+
+    ret = TEE_GetOperationInfoMultiple(ir->fwdOperaHandle, operationInfoMultiple, &operationSize);
+    if (ret != TEE_SUCCESS)
+    {
+        tloge("TEE_GetOperationInfoMultipe failed(%x).\n", ret);
+        return test_ret;
+    }
+    
+    tlogi("[%s]:GlbGetInfoMulti success\n", __func__);
     return 0;
 }
 
 int GlbReset(IntermediateReprestation *ir)
 {
-    (void)ir;
-    tlogi("in function [%s]\n", __func__);
+    TEE_ResetOperation(ir->fwdOperaHandle);
+    tlogi("[%s]:GlbReset success\n", __func__);
     return 0;
 }
+
 static void FreeFourKeyObj(TEE_ObjectHandle fwdKey0, TEE_ObjectHandle fwdKey1,
     TEE_ObjectHandle bckKey0, TEE_ObjectHandle bckKey1)
 {
@@ -418,10 +444,18 @@ int GlbS1S2Null(IntermediateReprestation *ir)
     return 0;
 }
 
+#define AES_KEY_SIZE_MAX 128
 int GlbCopy(IntermediateReprestation *ir)
 {
-    (void)ir;
-    tlogi("in function [%s]\n", __func__);
+    TEE_OperationHandle tmp = NULL;
+    TEE_Result ret = TEE_AllocateOperation(&tmp, TEE_ALG_AES_CBC_PKCS5, TEE_MODE_ENCRYPT, AES_KEY_SIZE_MAX);
+    if (ret != TEE_SUCCESS) {
+        tloge("[%s] TEE_AllocateOperation aes cbc encrypted operation fail, ret 0x%x\n", __func__, ret);
+        return ret;
+    }
+    TEE_CopyOperation(tmp, ir->fwdOperaHandle);
+    TEE_FreeOperation(tmp);
+    tlogi("[%s]GlbCopy success\n", __func__);
     return 0;
 }
 
@@ -435,7 +469,13 @@ int GlbCopyRpl(IntermediateReprestation *ir)
 int GlbIsAlgSprt(IntermediateReprestation *ir)
 {
     (void)ir;
-    tlogi("in function [%s]\n", __func__);
+    TEE_Result ret = TEE_IsAlgorithmSupported(TEE_ALG_AES_ECB_NOPAD, TEE_OPTIONAL_ELEMENT_NONE);
+    if (ret != TEE_SUCCESS) {
+        tloge("[%s] TEE_IsAlogrithmSupported test failed. ret = 0x%x\n", __func__, ret);
+        return TEE_ERROR_GENERIC;
+    }
+    
+    tlogi("[%s]: test TEE_IsAlogrithmSupported success\n", __func__);
     return 0;
 }
 

@@ -25,7 +25,7 @@ using namespace testing::ext;
  * @testcase.desc      : test TA call TEE_MemMove to move buffer from src to dest
  * @testcase.expect    : return TEEC_SUCCESS, dest buffer is same as src buffer
  */
-TEE_TEST(TCF2Test, TEE_MemMove_With_Success, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_MemMove_With_Success, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TestMemData value = { 0 };
@@ -43,7 +43,7 @@ TEE_TEST(TCF2Test, TEE_MemMove_With_Success, Function | MediumTest | Level0)
  * @testcase.desc      : test TA call TEE_MemMove to move buffer while srcbuffer is null
  * @testcase.expect    : return TEEC_SUCCESS, dest buffer is not same as src buffer
  */
-TEE_TEST(TCF2Test, TEE_MemMove_With_SrcBufferIsNull, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_MemMove_With_SrcBufferIsNull, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TestMemData value = { 0 };
@@ -62,7 +62,7 @@ TEE_TEST(TCF2Test, TEE_MemMove_With_SrcBufferIsNull, Function | MediumTest | Lev
  * @testcase.desc      : test TA call TEE_MemMove to move buffer while destbuffer is null
  * @testcase.expect    : return TEEC_SUCCESS, dest buffer is not same as src buffer
  */
-TEE_TEST(TCF2Test, TEE_MemMove_With_DestBufferIsNull, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_MemMove_With_DestBufferIsNull, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TestMemData value = { 0 };
@@ -81,7 +81,7 @@ TEE_TEST(TCF2Test, TEE_MemMove_With_DestBufferIsNull, Function | MediumTest | Le
  * @testcase.desc      : test TA call TEE_MemMove to move buffer while size is zero
  * @testcase.expect    : return TEEC_SUCCESS, dest buffer is not same as src buffer
  */
-TEE_TEST(TCF2Test, TEE_MemMove_With_SizeIsZero, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_MemMove_With_SizeIsZero, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TestMemData value = { 0 };
@@ -100,7 +100,7 @@ TEE_TEST(TCF2Test, TEE_MemMove_With_SizeIsZero, Function | MediumTest | Level0)
  * @testcase.desc      : test TA call TEE_MemMove to move buffer while destbuffer addr is same as srcbuffer addr
  * @testcase.expect    : return TEEC_SUCCESS, dest buffer is not same as src buffer
  */
-TEE_TEST(TCF2Test, TEE_MemMove_With_DestIsSameAsSrc, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_MemMove_With_DestIsSameAsSrc, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TestMemData value = { 0 };
@@ -119,7 +119,7 @@ TEE_TEST(TCF2Test, TEE_MemMove_With_DestIsSameAsSrc, Function | MediumTest | Lev
  * @testcase.desc      : test TA call TEE_MemMove to move buffer while src buffer and dest buffer is overlap
  * @testcase.expect    : return TEEC_SUCCESS, dest buffer is same as src buffer
  */
-TEE_TEST(TCF2Test, TEE_MemMove_With_Overlap, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_MemMove_With_Overlap, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TestMemData value = { 0 };

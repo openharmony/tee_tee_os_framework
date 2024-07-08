@@ -27,7 +27,7 @@
         }                                                  \
     }
 
-class PublicTest : public EmptyTest {
+class PublicTest : public TeeBasicTestFram {
 private:
     static TEEC_Context context;
     static TEEC_Session session;
@@ -46,7 +46,7 @@ public:
     void TearDown() {}
 };
 
-class OnlyInit : public ::testing::Test {
+class TeeBasicTestFramWithInitContext : public ::testing::Test {
 private:
     static TEEC_Context context;
     static TEEC_Session session;
@@ -58,15 +58,15 @@ public:
 
     TEEC_Context *GetContext()
     {
-        return &OnlyInit::context;
+        return &TeeBasicTestFramWithInitContext::context;
     }
     TEEC_Session *GetSession()
     {
-        return &OnlyInit::session;
+        return &TeeBasicTestFramWithInitContext::session;
     }
     TEEC_SharedMemory *GetSharedMem()
     {
-        return &OnlyInit::sharedMem;
+        return &TeeBasicTestFramWithInitContext::sharedMem;
     }
     void SetUp();
 

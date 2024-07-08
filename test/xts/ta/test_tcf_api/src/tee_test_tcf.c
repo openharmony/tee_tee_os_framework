@@ -23,6 +23,7 @@
 
 #define CA_PKGN_VENDOR "/vendor/bin/tee_test_tcf_api"
 #define CA_PKGN_SYSTEM "/system/bin/tee_test_tcf_api"
+#define CA_PKGN_DATA "./tee_test_tcf_api"
 #define CA_UID 0
 
 #define BOOLEAN_TRUE "true"
@@ -95,6 +96,8 @@ static TEE_Result CmdTEEGetPropertyAsString(uint32_t nParamTypes, TEE_Param pPar
     else if (caseId == OUTPUTBUFFERSIZE_TOOSHORT)
         pParams[2].memref.size = 1;
 
+    tlogi("before TEE_GetPropertyAsString, pPropName=%s, pParams[1].memref.size=0x%x\n", pPropName,
+        pParams[1].memref.size);
     switch (caseId) {
         case INPUT_ISNULL:
             cmdResult = TEE_GetPropertyAsString(nPropSet, NULL, pOutputName, &pParams[2].memref.size);
@@ -113,10 +116,8 @@ static TEE_Result CmdTEEGetPropertyAsString(uint32_t nParamTypes, TEE_Param pPar
             break;
     }
 
-    tlogi("after TEE_GetPropertyAsString, pPropName=%s, pParams[1].memref.size=0x%x", pPropName,
-        pParams[1].memref.size);
-    tlogi("after TEE_GetPropertyAsString, pOutputName=%s, pParams[2].memref.size=0x%x", pOutputName,
-        pParams[2].memref.size);
+    tlogi("after TEE_GetPropertyAsString, cmdResult=0x%x, pOutputName=%s, pParams[2].memref.size=0x%x\n", cmdResult,
+        pOutputName, pParams[2].memref.size);
     return cmdResult;
 }
 
@@ -139,6 +140,8 @@ static TEE_Result CmdTEEGetPropertyAsBool(uint32_t nParamTypes, TEE_Param pParam
     caseId = pParams[0].value.b;
     pPropName = pParams[1].memref.buffer;
 
+    tlogi("before TEE_GetPropertyAsBool, pPropName=%s, pParams[1].memref.size=0x%x\n", pPropName,
+        pParams[1].memref.size);
     switch (caseId) {
         case INPUT_ISNULL:
             cmdResult = TEE_GetPropertyAsBool(nPropSet, NULL, &nOutputBool);
@@ -153,6 +156,8 @@ static TEE_Result CmdTEEGetPropertyAsBool(uint32_t nParamTypes, TEE_Param pParam
                 cmdResult = TEE_GetPropertyAsBool(nPropSet, pPropName, &nOutputBool);
             break;
     }
+
+    tlogi("after TEE_GetPropertyAsBool, cmdResult=0x%x, nOutputBool=%d\n", cmdResult, nOutputBool);
 
     if ((nOutputBool == true) && (cmdResult == TEE_SUCCESS)) {
         TEE_MemMove(pParams[2].memref.buffer, BOOLEAN_TRUE, sizeof(BOOLEAN_TRUE));
@@ -184,7 +189,8 @@ static TEE_Result CmdTEEGetPropertyAsU32(uint32_t nParamTypes, TEE_Param pParams
     nPropSet = (TEE_PropSetHandle)pParams[0].value.a;
     caseId = pParams[0].value.b;
     pPropName = pParams[1].memref.buffer;
-
+    tlogi("before TEE_GetPropertyAsU32, pPropName=%s, pParams[1].memref.size=0x%x\n", pPropName, 
+        pParams[1].memref.size);
     switch (caseId) {
         case INPUT_ISNULL:
             cmdResult = TEE_GetPropertyAsU32(nPropSet, NULL, &nIntResult);
@@ -199,7 +205,7 @@ static TEE_Result CmdTEEGetPropertyAsU32(uint32_t nParamTypes, TEE_Param pParams
                 cmdResult = TEE_GetPropertyAsU32(nPropSet, pPropName, &nIntResult);
             break;
     }
-
+    tlogi("after TEE_GetPropertyAsU32, cmdResult=0x%x, nIntResult=%d\n", cmdResult, nIntResult);
     (void)snprintf_s(outStr, MAXLEN_U32, MAXLEN_U32 - 1, "%lu", nIntResult);
     TEE_MemMove(pParams[2].memref.buffer, outStr, strlen(outStr) + 1);
     pParams[2].memref.size = strlen(outStr) + 1;
@@ -227,6 +233,8 @@ static TEE_Result CmdTEEGetPropertyAsU64(uint32_t nParamTypes, TEE_Param pParams
     caseId = pParams[0].value.b;
     pPropName = pParams[1].memref.buffer;
 
+    tlogi("before TEE_GetPropertyAsU64, pPropName=%s, pParams[1].memref.size=0x%x\n", pPropName, 
+        pParams[1].memref.size);
     switch (caseId) {
         case INPUT_ISNULL:
             cmdResult = TEE_GetPropertyAsU64(nPropSet, NULL, &nIntResult);
@@ -241,7 +249,7 @@ static TEE_Result CmdTEEGetPropertyAsU64(uint32_t nParamTypes, TEE_Param pParams
                 cmdResult = TEE_GetPropertyAsU64(nPropSet, pPropName, &nIntResult);
             break;
     }
-
+    tlogi("after TEE_GetPropertyAsU64, cmdResult=0x%x, nIntResult=%d\n", cmdResult, nIntResult);
     (void)snprintf_s(outStr, MAXLEN_U64, MAXLEN_U64 - 1, "%lu", nIntResult);
     TEE_MemMove(pParams[2].memref.buffer, outStr, strlen(outStr) + 1);
     pParams[2].memref.size = strlen(outStr) + 1;
@@ -273,6 +281,8 @@ static TEE_Result CmdTEEGetPropertyAsBinaryBlock(uint32_t nParamTypes, TEE_Param
     else if (caseId == OUTPUTBUFFERSIZE_TOOSHORT)
         pParams[2].memref.size = 1;
 
+    tlogi("before TEE_GetPropertyAsBinaryBlock, pPropName=%s, pParams[1].memref.size=0x%x\n", pPropName, 
+        pParams[1].memref.size);
     switch (caseId) {
         case INPUT_ISNULL:
             cmdResult = TEE_GetPropertyAsBinaryBlock(nPropSet, NULL, pOutputBinaryBlock, &pParams[2].memref.size);
@@ -292,6 +302,8 @@ static TEE_Result CmdTEEGetPropertyAsBinaryBlock(uint32_t nParamTypes, TEE_Param
             break;
     }
 
+    tlogi("after TEE_GetPropertyAsBinaryBlock, cmdResult=0x%x, pOutputBinaryBlock=%s, pParams[2].memref.size=%d\n",
+        cmdResult, pOutputBinaryBlock, pParams[2].memref.size);
     return cmdResult;
 }
 
@@ -315,6 +327,8 @@ static TEE_Result CmdTEEGetPropertyAsUUID(uint32_t nParamTypes, TEE_Param pParam
     caseId = pParams[0].value.b;
     pPropName = pParams[1].memref.buffer;
 
+    tlogi("before TEE_GetPropertyAsUUID, pPropName=%s, pParams[1].memref.size=0x%x\n", pPropName, 
+        pParams[1].memref.size);
     switch (caseId) {
         case INPUT_ISNULL:
             cmdResult = TEE_GetPropertyAsUUID(nPropSet, NULL, &nResultUUID);
@@ -581,7 +595,7 @@ static TEE_Result TestShareMem(uint32_t paramTypes, TEE_Param params[4])
 
     for (uint32_t i = 0; i < size / sizeof(uint32_t); i++)
     {
-        if (buffer[i] != 0x41) {
+        if (buffer[i] != 0x41414141) {
             tloge("buffer[%d]=0x%x, not equal 0x41.\n", i, buffer[i]);
             goto clean;
         }
@@ -621,7 +635,8 @@ static TEE_Result CmdTEEMalloc(uint32_t nParamTypes, TEE_Param pParams[4])
     tlogi("before TEE_Malloc nSize=%d, nHint=%d\n", nSize, nHint);
     pBuffer = (char *)TEE_Malloc(nSize, nHint);
     if (pBuffer == NULL) {
-        return TEE_ERROR_OUT_OF_MEMORY;
+        tloge("TEE_Malloc is failed!\n");
+        return TEE_ERROR_GENERIC;
     } else {
         tlogi("test TEE_Malloc is success!\n");
         TEE_MemMove(pParams[1].memref.buffer, pBuffer, nSize);
@@ -703,14 +718,12 @@ static TEE_Result TestPrintAPI(uint32_t nParamTypes, TEE_Param pParams[4])
     (void)nParamTypes;
     tee_print(LOG_LEVEL_INFO, "This sentence was printed by tee_print, input value = 0x%x, input string = %s\n", 
         pParams[0].value.a, pParams[1].memref.buffer);
-#if 0
-    tee_print_driver(LOG_LEVEL_INFO, "DRV", "This printed by tee_print_driver, inputvalue = 0x%x, inputstring = %s\n", 
+    tee_print_driver(LOG_LEVEL_INFO, "  ", "This printed by tee_print_driver, inputvalue = 0x%x, input string = %s\n", 
         pParams[0].value.a, pParams[1].memref.buffer);
     uart_cprintf("This sentence was printed by uart_cprint, input value = 0x%x, input string = %s\n", 
         pParams[0].value.a, pParams[1].memref.buffer);
     uart_printf_func("This sentence was printed by uart_print_func, input value = 0x%x, input string = %s\n", 
         pParams[0].value.a, pParams[1].memref.buffer);
-#endif
     return TEE_SUCCESS;
 }
 
@@ -767,6 +780,12 @@ TEE_Result TA_CreateEntryPoint(void)
     }
 
     ret = AddCaller_CA_exec(CA_PKGN_SYSTEM, CA_UID);
+    if (ret != TEE_SUCCESS) {
+        tloge("add caller failed, ret: 0x%x", ret);
+        return ret;
+    }
+
+    ret = AddCaller_CA_exec(CA_PKGN_DATA, CA_UID);
     if (ret != TEE_SUCCESS) {
         tloge("add caller failed, ret: 0x%x", ret);
         return ret;

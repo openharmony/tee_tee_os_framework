@@ -1,0 +1,36 @@
+{
+    "description": "Config for TEETestSuite device_api test cases",
+    "driver": {
+        "module-name": "tee_test_device_api",
+        "native-test-timeout": "120000",
+        "native-test-device-path": "/data/local/tmp",
+        "runtime-hint": "100s",
+        "type": "CppTest"
+    },
+    "kits": [
+        {
+            "pre-push" : [
+            ],
+            "post-push" : [
+                "mount -o rw, remount /",
+                "mount -o rw, remount /vendor",
+                "setenforce 0"
+            ],
+            "push": [
+                "tee_test_device_api->/data/local/tmp/tee_test_device_api",
+                "resource/tee/test_device_api/634d4152-542d-4353-4c54-d3016a171f11.sec -> /data/local/tmp/634d4152-542d-4353-4c54-d3016a171f11.sec"
+            ],
+            "type": "PushKit"
+        },
+        {
+            "type": "ShellKit",
+            "run-command": [
+                "mount -o rw, remount /",
+                "mount -o rw, remount /vendor",
+                "setenforce 0"
+            ],
+            "teardown-localcommand":[
+            ]
+        }
+    ]
+}

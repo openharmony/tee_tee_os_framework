@@ -29,6 +29,7 @@
 
 #define CA_PKGN_VENDOR "/vendor/bin/tee_test_device_api"
 #define CA_PKGN_SYSTEM "/system/bin/tee_test_device_api"
+#define CA_PKGN_DATA "./tee_test_device_api"
 #define CA_UID 0
 #define SCP03_KEY_SIZE 16
 
@@ -934,6 +935,12 @@ TEE_Result TA_CreateEntryPoint(void)
     }
 
     ret = AddCaller_CA_exec(CA_PKGN_SYSTEM, CA_UID);
+    if (ret != TEE_SUCCESS) {
+        tloge("device_api ta add caller failed, ret: 0x%x", ret);
+        return ret;
+    }
+
+    ret = AddCaller_CA_exec(CA_PKGN_DATA, CA_UID);
     if (ret != TEE_SUCCESS) {
         tloge("device_api ta add caller failed, ret: 0x%x", ret);
         return ret;

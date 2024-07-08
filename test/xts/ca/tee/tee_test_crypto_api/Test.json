@@ -1,0 +1,36 @@
+{
+    "description": "Config for TEETestSuite crypto_api test cases",
+    "driver": {
+        "module-name": "tee_test_crypto_api",
+        "native-test-timeout": "120000",
+        "native-test-device-path": "/data/local/tmp",
+        "runtime-hint": "100s",
+        "type": "CppTest"
+    },
+    "kits": [
+        {
+            "pre-push" : [
+            ],
+            "post-push" : [
+                "mount -o rw, remount /",
+                "mount -o rw, remount /vendor",
+                "setenforce 0"
+            ],
+            "push": [
+                "tee_test_crypto_api->/data/local/tmp/tee_test_crypto_api",
+                "resource/tee/test_crypto_api/05050505-0303-0303-0303-030303030301.sec -> /data/local/tmp/05050505-0303-0303-0303-030303030301.sec"
+            ],
+            "type": "PushKit"
+        },
+        {
+            "type": "ShellKit",
+            "run-command": [
+                "mount -o rw, remount /",
+                "mount -o rw, remount /vendor",
+                "setenforce 0"
+            ],
+            "teardown-localcommand":[
+            ]
+        }
+    ]
+}

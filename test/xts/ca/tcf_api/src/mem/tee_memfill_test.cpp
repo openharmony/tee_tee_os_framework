@@ -25,7 +25,7 @@ using namespace testing::ext;
  * @testcase.desc      : test TA call TEE_MemFill to fill buffer with char assigned in TA
  * @testcase.expect    : return TEEC_SUCCESS, buffer is filled match expect
  */
-TEE_TEST(TCF2Test, TEE_MemFill_With_Success, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_MemFill_With_Success, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TestMemData value = { 0 };
@@ -43,7 +43,7 @@ TEE_TEST(TCF2Test, TEE_MemFill_With_Success, Function | MediumTest | Level0)
  * @testcase.desc      : test TA call TEE_MemFill  while buffer is null
  * @testcase.expect    : return TEEC_SUCCESS, buffer is not filled and is 0
  */
-TEE_TEST(TCF2Test, TEE_MemFill_With_BufferIsNull, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_MemFill_With_BufferIsNull, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TestMemData value = { 0 };
@@ -65,7 +65,7 @@ TEE_TEST(TCF2Test, TEE_MemFill_With_BufferIsNull, Function | MediumTest | Level0
  * @testcase.desc      : test TA call TEE_MemFill while size is zero
  * @testcase.expect    : return TEEC_SUCCESS, buffer is not filled and is 0
  */
-TEE_TEST(TCF2Test, TEE_MemFill_With_SizeIsZero, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_MemFill_With_SizeIsZero, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TestMemData value = { 0 };

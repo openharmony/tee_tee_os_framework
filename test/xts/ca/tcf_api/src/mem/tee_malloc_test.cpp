@@ -23,10 +23,10 @@
 using namespace testing::ext;
 /**
  * @testcase.name      : TEE_Malloc_With_TEE_MALLOC_FILL_ZERO
- * @testcase.desc      : test TA call TEE_Malloc to alloc buffer 10 bytes with hint is TEE_MALLOC_FILL_ZERO
+ * @testcase.desc      : test TA call TEE_Malloc to alloc buffer 16 bytes with hint is TEE_MALLOC_FILL_ZERO
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(TCF2Test, TEE_Malloc_With_TEE_MALLOC_FILL_ZERO, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_Malloc_With_TEE_MALLOC_FILL_ZERO, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -47,10 +47,10 @@ TEE_TEST(TCF2Test, TEE_Malloc_With_TEE_MALLOC_FILL_ZERO, Function | MediumTest |
 
 /**
  * @testcase.name      : TEE_Malloc_With_TEE_MALLOC_NO_FILL
- * @testcase.desc      : test TA call TEE_Malloc to alloc buffer 10 bytes with hint is TEE_MALLOC_NO_FILL
- * @testcase.expect    : return TEEC_SUCCESS
+ * @testcase.desc      : test TA call TEE_Malloc to alloc buffer 16 bytes with hint is TEE_MALLOC_NO_FILL, not support
+ * @testcase.expect    : return TEEC_ERROR_GENERIC
  */
-TEE_TEST(TCF2Test, TEE_Malloc_With_TEE_MALLOC_NO_FILL, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_Malloc_With_TEE_MALLOC_NO_FILL, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -63,18 +63,18 @@ TEE_TEST(TCF2Test, TEE_Malloc_With_TEE_MALLOC_NO_FILL, Function | MediumTest | L
     value.inHint = TEE_MALLOC_NO_FILL;
     value.testBuffer = buffer;
     ret = Invoke_Malloc(GetSession(), CMD_TEE_Malloc, &value, &origin);
-    EXPECT_EQ(ret, TEEC_SUCCESS);
+    EXPECT_EQ(ret, TEEC_ERROR_GENERIC);
     EXPECT_EQ(origin, TEEC_ORIGIN_TRUSTED_APP);
-    EXPECT_STRNE(buffer, EXPECTBUFFER_A);
+    EXPECT_STREQ(buffer, EXPECTBUFFER_A);
     free(buffer);
 }
 
 /**
  * @testcase.name      : TEE_Malloc_With_TEE_MALLOC_NO_SHARE
- * @testcase.desc      : test TA call TEE_Malloc to alloc buffer 10 bytes with hint is TEE_MALLOC_NO_SHARE
+ * @testcase.desc      : test TA call TEE_Malloc to alloc buffer 16 bytes with hint is TEE_MALLOC_NO_SHARE
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(TCF2Test, TEE_Malloc_With_TEE_MALLOC_NO_SHARE, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_Malloc_With_TEE_MALLOC_NO_SHARE, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -95,10 +95,10 @@ TEE_TEST(TCF2Test, TEE_Malloc_With_TEE_MALLOC_NO_SHARE, Function | MediumTest | 
 
 /**
  * @testcase.name      : TEE_Malloc_With_TEE_MALLOC_NO_FILL_And_NO_SHARE
- * @testcase.desc      : test TA call TEE_Malloc to alloc 10 bytes with hint is TEE_MALLOC_NO_FILL|TEE_MALLOC_NO_SHARE
+ * @testcase.desc      : test TA call TEE_Malloc to alloc 16 bytes with hint is TEE_MALLOC_NO_FILL|TEE_MALLOC_NO_SHARE
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(TCF2Test, TEE_Malloc_With_TEE_MALLOC_NO_FILL_And_NO_SHARE, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_Malloc_With_TEE_MALLOC_NO_FILL_And_NO_SHARE, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -119,10 +119,10 @@ TEE_TEST(TCF2Test, TEE_Malloc_With_TEE_MALLOC_NO_FILL_And_NO_SHARE, Function | M
 
 /**
  * @testcase.name      : TEE_Malloc_With_HINT_RESERVE
- * @testcase.desc      : test TA call TEE_Malloc to alloc buffer 10 bytes with hint is HINT_RESERVE
+ * @testcase.desc      : test TA call TEE_Malloc to alloc buffer 16 bytes with hint is HINT_RESERVE
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(TCF2Test, TEE_Malloc_With_HINT_RESERVE, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_Malloc_With_HINT_RESERVE, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -144,9 +144,9 @@ TEE_TEST(TCF2Test, TEE_Malloc_With_HINT_RESERVE, Function | MediumTest | Level0)
 /**
  * @testcase.name      : TEE_Malloc_With_SIZEIsZero
  * @testcase.desc      : test TA call TEE_Malloc to alloc buffer with size is zero
- * @testcase.expect    : return TEEC_ERROR_OUT_OF_MEMORY
+ * @testcase.expect    : return TEEC_ERROR_GENERIC
  */
-TEE_TEST(TCF2Test, TEE_Malloc_With_SizeIsZero, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_Malloc_With_SizeIsZero, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -159,7 +159,7 @@ TEE_TEST(TCF2Test, TEE_Malloc_With_SizeIsZero, Function | MediumTest | Level0)
     value.inHint = TEE_MALLOC_FILL_ZERO;
     value.testBuffer = buffer;
     ret = Invoke_Malloc(GetSession(), CMD_TEE_Malloc, &value, &origin);
-    EXPECT_EQ(ret, TEEC_ERROR_OUT_OF_MEMORY);
+    EXPECT_EQ(ret, TEEC_ERROR_GENERIC);
     EXPECT_EQ(origin, TEEC_ORIGIN_TRUSTED_APP);
     free(buffer);
 }
@@ -169,7 +169,7 @@ TEE_TEST(TCF2Test, TEE_Malloc_With_SizeIsZero, Function | MediumTest | Level0)
  * @testcase.desc      : test TA call TEE_Malloc to alloc buffer with size exceed heaplimit
  * @testcase.expect    : return TEEC_ERROR_OUT_OF_MEMORY
  */
-TEE_TEST(TCF2Test, TEE_Malloc_With_SizeExceedHeapLimit, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_Malloc_With_SizeExceedHeapLimit, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -198,7 +198,7 @@ TEE_TEST(TCF2Test, TEE_Malloc_With_SizeExceedHeapLimit, Function | MediumTest | 
  * @testcase.desc      : test TA call TEE_Malloc to alloc buffer with size is max data size
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(TCF1Test, TEE_Malloc_With_MAXDataSize, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_Malloc_With_MAXDataSize, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;

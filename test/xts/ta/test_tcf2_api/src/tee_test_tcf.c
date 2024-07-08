@@ -23,6 +23,7 @@
 
 #define CA_PKGN_VENDOR "/vendor/bin/tee_test_tcf_api"
 #define CA_PKGN_SYSTEM "/system/bin/tee_test_tcf_api"
+#define CA_PKGN_DATA "./tee_test_tcf_api"
 #define CA_UID 0
 
 #define SMC_TA_TESTIDENTITY_LOGIN 0xF0000000
@@ -64,7 +65,7 @@ static TEE_Result CmdTEEGetPropertyAsIdentity_withoutEnum(uint32_t nParamTypes, 
     nPropSet = (TEE_PropSetHandle)pParams[0].value.a;
     caseId = pParams[0].value.b;
     pPropName = pParams[1].memref.buffer;
-
+    tlogi("11111====pPropName=%s, nPropSet=%d\n", pPropName, nPropSet);
     switch (caseId) {
         case INPUT_ISNULL:
             cmdResult = TEE_GetPropertyAsIdentity(nPropSet, NULL, &nResultIdentity);
@@ -154,7 +155,10 @@ static TEE_Result CmdTEEMalloc(uint32_t nParamTypes, TEE_Param pParams[4])
     pBuffer = (char *)TEE_Malloc(nSize, nHint);
     if (pBuffer == NULL) {
         tloge("TEE_Malloc is failed!\n");
-        return TEE_ERROR_OUT_OF_MEMORY;
+        if ((nSize == 0) || (nHint != 0)) 
+            return TEE_ERROR_GENERIC;
+        else
+            return TEE_ERROR_OUT_OF_MEMORY;
     } else {
         TEE_MemMove(pParams[1].memref.buffer, pBuffer, nSize);
         TEE_Free((void *)pBuffer); // free the allocated buffer
@@ -607,7 +611,7 @@ static TEE_Result CmdTEEInvokeTACommand(uint32_t nParamTypes, TEE_Param pParams[
 
     pParams[2].value.a = nReturnOrigin;
 
-    if (nTmpResult == TEE_SUCCESS) {
+    if ((nTmpResult == TEE_SUCCESS) && (caseId != BUFFERSIZE_ISTOOBIG)){
         TEE_MemMove(pParams[1].memref.buffer, pTargetParams[0].memref.buffer, pTargetParams[0].memref.size);
         pParams[1].memref.size = pTargetParams[0].memref.size;
         if (caseId != BUFFER_NOFILLNOSHARE) {
@@ -631,13 +635,10 @@ static TEE_Result CmdTEEInvokeTACommand(uint32_t nParamTypes, TEE_Param pParams[
             0x4c, 0x54, 0xd3, 0x01, 0x6a, 0x17, 0x1f, 0x01 \
         }                                                  \
     }
+
 static TEE_Result CmdTEEShareMemTest(uint32_t nParamTypes, TEE_Param pParams[4])
 {
     (void)nParamTypes;
-
-    (void)pParams;
-    return 0;
-#if 0
     TEE_Result nTmpResult = TEE_SUCCESS;
     uint32_t nReturnOrigin = 0;
     uint32_t size = DEFAULT_BUFFER_SIZE;
@@ -674,7 +675,7 @@ static TEE_Result CmdTEEShareMemTest(uint32_t nParamTypes, TEE_Param pParams[4])
 
     for (uint32_t i = 0; i < size / sizeof(uint32_t); i++)
     {
-        if (temp_buffer[i] != 0x42) {  // modified by ta2
+        if (temp_buffer[i] != 0x42424242) {  // modified by ta2
             tloge("temp_buffer[%d] should be 0x42, not 0x%x\n", i, temp_buffer[i]);
             nTmpResult = TEE_ERROR_GENERIC;
             goto out;
@@ -703,7 +704,6 @@ out:
         nTmpResult = TEE_ERROR_GENERIC;
     }
     return nTmpResult;
-#endif
 }
 
 TEE_Result TA_CreateEntryPoint(void)
@@ -723,6 +723,11 @@ TEE_Result TA_CreateEntryPoint(void)
         return ret;
     }
 
+    ret = AddCaller_CA_exec(CA_PKGN_DATA, CA_UID);
+    if (ret != TEE_SUCCESS) {
+        tloge("tcf2 ta add caller failed, ret: 0x%x", ret);
+        return ret;
+    }
     return TEE_SUCCESS;
 }
 

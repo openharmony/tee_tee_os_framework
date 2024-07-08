@@ -33,7 +33,7 @@ using namespace testing::ext;
  * @testcase.desc      : call TEEC_ReleaseSharedMemory WithAllocatedMem,
  * @testcase.expect    : sharedMem.buffer has released
  */
-TEE_TEST(OnlyInit, ReleaseSharedMemory_WithAllocatedMem, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFramWithInitContext, ReleaseSharedMemory_WithAllocatedMem, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TEEC_SharedMemory sharedMem;
@@ -52,7 +52,7 @@ TEE_TEST(OnlyInit, ReleaseSharedMemory_WithAllocatedMem, Function | MediumTest |
  * @testcase.desc      : call TEEC_ReleaseSharedMemory WithRegisterMem,
  * @testcase.expect    : sharedMem.buffer has released
  */
-TEE_TEST(OnlyInit, ReleaseSharedMemory_WithRegisterMem, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFramWithInitContext, ReleaseSharedMemory_WithRegisterMem, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TEEC_SharedMemory sharedMem;
@@ -77,7 +77,7 @@ TEE_TEST(OnlyInit, ReleaseSharedMemory_WithRegisterMem, Function | MediumTest | 
  * @testcase.desc      : call TEEC_ReleaseSharedMemory WithoutSharedMem,
  * @testcase.expect    : sharedMem.buffer has not released
  */
-TEE_TEST(OnlyInit, ReleaseSharedMemory_WithoutSharedMem, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFramWithInitContext, ReleaseSharedMemory_WithoutSharedMem, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TEEC_SharedMemory sharedMem;
@@ -96,7 +96,7 @@ TEE_TEST(OnlyInit, ReleaseSharedMemory_WithoutSharedMem, Function | MediumTest |
  * @testcase.desc      : call TEEC_ReleaseSharedMemory With SharedMem Not Allocated,
  * @testcase.expect    : sharedMem.buffer is null, no error occur
  */
-TEE_TEST(OnlyInit, ReleaseSharedMemory_WithNotAllocatedSharedMem, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFramWithInitContext, ReleaseSharedMemory_WithNotAllocatedSharedMem, Function | MediumTest | Level0)
 {
     TEEC_SharedMemory sharedMem = { 0 };
     sharedMem.size = TEST_STR_LEN;

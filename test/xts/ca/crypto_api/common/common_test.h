@@ -29,7 +29,7 @@ enum TEST_CRYPTO_API_CMD_ID {
     CMD_RUN_BY_FUN_SEQ = 0,
 };
 
-class CryptoTest : public EmptyTest
+class CryptoTest : public TeeBasicTestFram
 {
 protected:
     ClientSessionMgr session;

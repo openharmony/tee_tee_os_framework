@@ -1,0 +1,73 @@
+# Copyright (c) 2022 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//test/xts/tools/build/suite.gni")
+
+ohos_moduletest_suite("tee_test_tcf_api") {
+  tee_dev_kit_dir   = "//base/tee/tee_dev_kit"
+  tee_test_root_dir = "//base/tee/tee_os_framework/test/xts"
+
+  sources = [
+    tee_test_root_dir + "/utils/main.cpp",
+    tee_test_root_dir + "/utils/public_test/public_test.cpp",
+    tee_test_root_dir + "/utils/session_mgr/client_session_mgr.cpp",
+
+    tee_test_root_dir + "/ca/tcf_api/src/property/get_prop_as_identity_test.cpp",
+    tee_test_root_dir + "/ca/tcf_api/src/property/get_prop_as_string_test.cpp",
+    tee_test_root_dir + "/ca/tcf_api/src/property/get_prop_as_bool_test.cpp",
+    tee_test_root_dir + "/ca/tcf_api/src/property/get_prop_as_u32_test.cpp",
+    tee_test_root_dir + "/ca/tcf_api/src/property/get_prop_as_u64_test.cpp",
+    tee_test_root_dir + "/ca/tcf_api/src/property/get_prop_as_binaryblock_test.cpp",
+    tee_test_root_dir + "/ca/tcf_api/src/property/get_prop_as_uuid_test.cpp",
+    tee_test_root_dir + "/ca/tcf_api/src/property/get_prop_with_enumerator_test.cpp",
+    tee_test_root_dir + "/ca/tcf_api/src/mem/tee_malloc_test.cpp",
+    tee_test_root_dir + "/ca/tcf_api/src/mem/tee_realloc_test.cpp",
+    tee_test_root_dir + "/ca/tcf_api/src/mem/tee_memmove_test.cpp",
+    tee_test_root_dir + "/ca/tcf_api/src/mem/tee_memfill_test.cpp",
+    tee_test_root_dir + "/ca/tcf_api/src/mem/tee_free_test.cpp",
+    tee_test_root_dir + "/ca/tcf_api/src/mem/tee_memcompare_test.cpp",
+    tee_test_root_dir + "/ca/tcf_api/src/mem/tee_checkmemaccessrights_test.cpp",
+    tee_test_root_dir + "/ca/tcf_api/src/mem/tee_instance_test.cpp",
+    tee_test_root_dir + "/ca/tcf_api/src/other/internal_client_api_test.cpp",
+    tee_test_root_dir + "/ca/tcf_api/src/other/tee_panic_test.cpp",
+    tee_test_root_dir + "/ca/tcf_api/src/other/tee_otherapi_test.cpp",
+    tee_test_root_dir + "/ca/tcf_api/src/common_test.cpp",
+  ]
+
+  include_dirs = [
+    tee_dev_kit_dir + "/sdk/thirdparty/open_source/bounds_checking_function/include/libhwsecurec",
+    "//base/tee/tee_client/interfaces/kits/c/include",
+
+    tee_test_root_dir + "/utils",
+    tee_test_root_dir + "/utils/include",
+    tee_test_root_dir + "/utils/public_test",
+    tee_test_root_dir + "/utils/cmd_id",
+    tee_test_root_dir + "/ca/tcf_api/common",
+
+    "//third_party/googletest/googletest/include",
+  ]
+
+  deps = [
+      "//base/tee/tee_client/frameworks/build/standard:libteec_vendor",
+      "//third_party/bounds_checking_function:libsec_shared",
+  ]
+
+  cflags = [ 
+    "-Wno-error",
+    "-DTEST_STUB",
+  ]
+  ldflags = [
+    "-lm",
+    "-lpthread",
+  ]
+}
