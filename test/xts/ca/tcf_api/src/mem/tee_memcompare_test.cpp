@@ -25,7 +25,7 @@ using namespace testing::ext;
  * @testcase.desc      : test TA call TEE_MemCompare to compare buffer1 and buffer2
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(TCF2Test, TEE_MemCompare_With_Same, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_MemCompare_With_Same, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t i;
@@ -48,7 +48,7 @@ TEE_TEST(TCF2Test, TEE_MemCompare_With_Same, Function | MediumTest | Level0)
  * @testcase.desc      : test TA call TEE_MemCompare to compare buffer1 and buffer2, buffer1 < buffer2
  * @testcase.expect    : return -1
  */
-TEE_TEST(TCF2Test, TEE_MemCompare_With_Buffer1LessBuffer2, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_MemCompare_With_Buffer1LessBuffer2, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t i;
@@ -74,7 +74,7 @@ TEE_TEST(TCF2Test, TEE_MemCompare_With_Buffer1LessBuffer2, Function | MediumTest
  * @testcase.desc      : test TA call TEE_MemCompare to compare buffer1 and buffer2, buffer1 > buffer2
  * @testcase.expect    : return -1
  */
-TEE_TEST(TCF2Test, TEE_MemCompare_With_Buffer1GreaterBuffer2, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_MemCompare_With_Buffer1GreaterBuffer2, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t i;
@@ -100,7 +100,7 @@ TEE_TEST(TCF2Test, TEE_MemCompare_With_Buffer1GreaterBuffer2, Function | MediumT
  * @testcase.desc      : test TA call TEE_MemCompare compare while buffer1 is null
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(TCF2Test, TEE_MemCompare_With_Buffer1IsNull, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_MemCompare_With_Buffer1IsNull, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t i;
@@ -124,7 +124,7 @@ TEE_TEST(TCF2Test, TEE_MemCompare_With_Buffer1IsNull, Function | MediumTest | Le
  * @testcase.desc      : test TA call TEE_MemCompare compare while buffer2 is null
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(TCF2Test, TEE_MemCompare_With_Buffer2IsNull, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_MemCompare_With_Buffer2IsNull, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t i;
@@ -148,7 +148,7 @@ TEE_TEST(TCF2Test, TEE_MemCompare_With_Buffer2IsNull, Function | MediumTest | Le
  * @testcase.desc      : test TA call TEE_MemCompare compare while size is zero
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(TCF2Test, TEE_MemCompare_With_SizeIsZero, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2Test, TEE_MemCompare_With_SizeIsZero, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t i;

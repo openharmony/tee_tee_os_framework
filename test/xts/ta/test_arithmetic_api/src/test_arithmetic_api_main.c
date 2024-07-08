@@ -23,6 +23,7 @@
 
 #define CA_VENDOR "/vendor/bin/tee_test_arithmetic_api"
 #define CA_SYSTEM "/system/bin/tee_test_arithmetic_api"
+#define CA_DATA "./tee_test_arithmetic_api"
 #define CA_UID 0
 
 typedef TEE_Result (* TestArithmeticApiFunc)(void);
@@ -61,6 +62,7 @@ static TestFunctionWithCmd g_CmdList[] = {
     {CMD_ID_TEST_BIG_INT_INIT, TestBigIntInit},
 };
 
+__attribute__((no_sanitize("cfi-icall")))
 static TEE_Result TestArithmeticApi(uint32_t cmdId)
 {
     uint32_t count = sizeof(g_CmdList) / sizeof(g_CmdList[0]);
@@ -75,7 +77,6 @@ static TEE_Result TestArithmeticApi(uint32_t cmdId)
     return TEE_ERROR_INVALID_CMD;
 }
 
-
 TEE_Result TA_CreateEntryPoint(void)
 {
     tlogi("---- TA_CreateEntryPoint ---------");
@@ -86,6 +87,12 @@ TEE_Result TA_CreateEntryPoint(void)
     }
 
     ret = AddCaller_CA_exec(CA_SYSTEM, CA_UID);
+    if (ret != TEE_SUCCESS) {
+        tloge("Arithmetic TA Add caller failed, ret = 0x%x", ret);
+        return ret;
+    }
+
+    ret = AddCaller_CA_exec(CA_DATA, CA_UID);
     if (ret != TEE_SUCCESS) {
         tloge("Arithmetic TA Add caller failed, ret = 0x%x", ret);
         return ret;
@@ -103,6 +110,7 @@ TEE_Result TA_OpenSessionEntryPoint(uint32_t parmType, TEE_Param params[4], void
     return TEE_SUCCESS;
 }
 
+__attribute__((no_sanitize("cfi-icall")))
 TEE_Result TA_InvokeCommandEntryPoint(void *sessionContext, uint32_t cmdId, uint32_t parmType, TEE_Param params[4])
 {
     TEE_Result ret = TEE_SUCCESS;

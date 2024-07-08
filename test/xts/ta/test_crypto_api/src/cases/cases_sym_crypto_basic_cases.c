@@ -571,13 +571,14 @@ int CaseSymEncryptAesCbcPkcs5KeySize256OnceOnce(void)
         .dataSize = DATA1M_LE1B,
         .sliceSize = SLICELEN_1M,
         .actions = {
-            IRSetUp,
-            GlbAlloc, GlbS1S2,
-            SCInitFwd, SCDofinalFwd,
-            SCInitBck, SCDofinalBck,
-            GlbFree,
-            IRTearDown, },
-        .actionsSize = 9,
+            IRSetUp, GlbAlloc, 
+            GlbCopy, GlbGetInfo, 
+            GlbGetInfoMulti, GlbIsAlgSprt, 
+            GlbS1S2, SCInitFwd, 
+            SCDofinalFwd, SCInitBck, 
+            SCDofinalBck, GlbReset, 
+            GlbFree, IRTearDown, },
+        .actionsSize = 14,
         .expRet = ER_OK,
     };
     int ret = MonadRun2(&tv);

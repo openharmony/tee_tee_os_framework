@@ -1,0 +1,34 @@
+{
+    "description": "Config for TEETestSuite storage_api test cases",
+    "driver": {
+        "module-name": "tee_test_trusted_storage_api",
+        "native-test-timeout": "120000",
+        "native-test-device-path": "/data/local/tmp",
+        "runtime-hint": "100s",
+        "type": "CppTest"
+    },
+    "kits": [
+        {
+            "pre-push" : [
+            ],
+            "post-push" : [
+                "mount -o rw, remount /",
+                "mount -o rw, remount /vendor",
+                "setenforce 0"
+            ],
+            "push": [
+                "tee_test_trusted_storage_api->/data/local/tmp/tee_test_trusted_storage_api",
+                "resource/tee/test_trusted_storage_api/09090909-0808-0707-0303-030305070901.sec -> /data/local/tmp/09090909-0808-0707-0303-030305070901.sec"
+            ],
+            "type": "PushKit"
+        },
+        {
+            "type": "ShellKit",
+            "run-command": [
+                "mount -o rw, remount /",
+                "mount -o rw, remount /vendor",
+                "setenforce 0"
+            ]
+        }
+    ]
+}

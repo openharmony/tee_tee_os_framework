@@ -45,7 +45,7 @@ TEE 测试套件REE侧是基于Open Harmony的hcpptest编写。测试框架可�
    进入被测试系统命令行窗口，输入："/vendor/bin/tee_test_client_api_vendor"
 
 2. 执行部分用例
-   参考hcpptest框架提供的命令。支持使用通配符*，例如 /vendor/bin/tee_test_client_api_vendor --gtest_filter=*EmptyTest.InvokeCommand*
+   参考hcpptest框架提供的命令。支持使用通配符*，例如 /vendor/bin/tee_test_client_api_vendor --gtest_filter=*TeeBasicTestFram.InvokeCommand*
 
 3. 当前已有的tee xts 测试CA 列表:
 /vendor/bin/tee_test_client_api_vendor

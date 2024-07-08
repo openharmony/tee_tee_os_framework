@@ -26,7 +26,7 @@ using namespace testing::ext;
  * @testcase.desc      : test TA call TEE_GetPropertyAsBinaryBlock to get value of  SMC_TA_TESTBINARYBLOCK
  * @testcase.expect    : return TEEC_SUCCESS
 */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsBinaryBlock_WithoutEnum_TestBinaryBlock, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsBinaryBlock_WithoutEnum_TestBinaryBlock, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -49,7 +49,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsBinaryBlock_WithoutEnum_TestBinaryBlock, Fun
  * @testcase.desc      : test TA call TEE_GetPropertyAsBinaryBlock for name is null
  * @testcase.expect    : return TEEC_ERROR_ITEM_NOT_FOUND
 */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsBinaryBlock_WithoutEnum_NameIsNull, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsBinaryBlock_WithoutEnum_NameIsNull, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
 
@@ -68,7 +68,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsBinaryBlock_WithoutEnum_NameIsNull, Function
  * @testcase.desc      : test TA call TEE_GetPropertyAsBinaryBlock for name value is zero
  * @testcase.expect    : return TEEC_ERROR_ITEM_NOT_FOUND
 */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsBinaryBlock_WithoutEnum_NameIsZero, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsBinaryBlock_WithoutEnum_NameIsZero, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
 
@@ -86,7 +86,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsBinaryBlock_WithoutEnum_NameIsZero, Function
  * @testcase.desc      : test TA call TEE_GetPropertyAsBinaryBlock for value buffer is null
  * @testcase.expect    : return TEEC_ERROR_SHORT_BUFFER
 */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsBinaryBlock_WithoutEnum_ValueBufferIsNULL, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsBinaryBlock_WithoutEnum_ValueBufferIsNULL, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
 
@@ -109,7 +109,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsBinaryBlock_WithoutEnum_ValueBufferIsNULL, F
  * @testcase.desc      : test TA call TEE_GetPropertyAsBinaryBlock for value buffer size is null
  * @testcase.expect    : return TEEC_ERROR_SHORT_BUFFER
 */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsBinaryBlock_WithoutEnum_ValueBufferSizeIsNULL, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsBinaryBlock_WithoutEnum_ValueBufferSizeIsNULL, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
 
@@ -132,7 +132,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsBinaryBlock_WithoutEnum_ValueBufferSizeIsNUL
  * @testcase.desc      : test TA call TEE_GetPropertyAsBinaryBlock for value buffer size is zero
  * @testcase.expect    : return TEEC_ERROR_SHORT_BUFFER
 */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsBinaryBlock_WithoutEnum_ValueBufferSizeIsZero, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsBinaryBlock_WithoutEnum_ValueBufferSizeIsZero, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
 
@@ -155,7 +155,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsBinaryBlock_WithoutEnum_ValueBufferSizeIsZer
  * @testcase.desc      : test TA call TEE_GetPropertyAsBinaryBlock while out buffer is too short
  * @testcase.expect    : return TEEC_ERROR_SHORT_BUFFER
 */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsBinaryBlock_WithoutEnum_BufferTooShort, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsBinaryBlock_WithoutEnum_BufferTooShort, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
 
@@ -180,7 +180,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsBinaryBlock_WithoutEnum_BufferTooShort, Func
  * @testcase.desc      : test TA call TEE_GetPropertyAsBinaryBlock while Name Not Found
  * @testcase.expect    : return TEEC_ERROR_ITEM_NOT_FOUND
 */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsBinaryBlock_WithoutEnum_NameNotFound, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsBinaryBlock_WithoutEnum_NameNotFound, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
 
@@ -202,7 +202,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsBinaryBlock_WithoutEnum_NameNotFound, Functi
  * @testcase.desc      : test TA call TEE_GetPropertyAsBinaryBlock while Name type is not BinaryBlock
  * @testcase.expect    : return TEEC_ERROR_BAD_FORMAT
 */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsBinaryBlock_WithoutEnum_NameNotBinaryBlock, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsBinaryBlock_WithoutEnum_NameNotBinaryBlock, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
 

@@ -104,6 +104,8 @@ struct intMapping g_intMap[] = {
       TEE_PROPSET_CURRENT_TA, VALUE_PREDEFINED_STACKSIZE },
     { (char*)GPD_TA_ENDIAN, CMD_TEE_GetPropertyAsU32,
       TEE_PROPSET_CURRENT_TA, 0 },
+    { (char*)GPD_TA_API_LEVEL, CMD_TEE_GetPropertyAsU32,
+      TEE_PROPSET_CURRENT_TA, API_LEVEL1_2 },
     { (char*)GPD_CLIENT_ENDIAN, CMD_TEE_GetPropertyAsU32,
       TEE_PROPSET_CURRENT_CLIENT, VALUE_PREDEFINED_CLIENT_ENDIAN },
     { (char*)GPD_TEE_INTERNALCORE_VERSION, CMD_TEE_GetPropertyAsU32,
@@ -196,7 +198,7 @@ TEEC_Result GetPropertyFromIntMap(TEEC_Context *context, TEEC_Session *session, 
  * TEE_PROPSET_CURRENT_TA
  * @testcase.expect    : process success
  */
-TEE_TEST(TCF1ENUM_Test, TEE_GetProperty_WithEnum_TEE_PROPSET_CURRENT_TA, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1EnumTest, TEE_GetProperty_WithEnum_TEE_PROPSET_CURRENT_TA, Function | MediumTest | Level0)
 {
     TEEC_Result result, ret;
     int rc, count = 0, findFlag = 0;
@@ -225,10 +227,10 @@ TEE_TEST(TCF1ENUM_Test, TEE_GetProperty_WithEnum_TEE_PROPSET_CURRENT_TA, Functio
         if (findFlag != 1) {
             ret = GetPropertyFromIntMap(GetContext(), GetSession(), &value, &findFlag);
             ASSERT_EQ(ret, TEEC_SUCCESS);
-        }
+        } 
 
         if (findFlag == 0) {
-            TEST_PRINT_ERROR("get PropertyName from Enumerator is undefined!\n");
+            TEST_PRINT_ERROR("get PropertyName from Enumerator is undefined! count=%d\n", count);
             ASSERT_FALSE(1);
         }
 
@@ -245,7 +247,7 @@ TEE_TEST(TCF1ENUM_Test, TEE_GetProperty_WithEnum_TEE_PROPSET_CURRENT_TA, Functio
  * TEE_PROPSET_CURRENT_CLIENT
  * @testcase.expect    : process success
  */
-TEE_TEST(TCF1ENUM_Test, TEE_GetProperty_WithEnum_TEE_PROPSET_CURRENT_CLIENT, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1EnumTest, TEE_GetProperty_WithEnum_TEE_PROPSET_CURRENT_CLIENT, Function | MediumTest | Level0)
 {
     TEEC_Result result, ret;
     int rc, count = 0, findFlag = 0;
@@ -294,7 +296,7 @@ TEE_TEST(TCF1ENUM_Test, TEE_GetProperty_WithEnum_TEE_PROPSET_CURRENT_CLIENT, Fun
  * TEE_PROPSET_IMPLEMENTATION
  * @testcase.expect    : process success
  */
-TEE_TEST(TCF1ENUM_Test, TEE_GetProperty_WithEnum_TEE_PROPSET_IMPLEMENTATION, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1EnumTest, TEE_GetProperty_WithEnum_TEE_PROPSET_IMPLEMENTATION, Function | MediumTest | Level0)
 {
     TEEC_Result result, ret;
     int rc, count = 0, findFlag = 0;
@@ -343,7 +345,7 @@ TEE_TEST(TCF1ENUM_Test, TEE_GetProperty_WithEnum_TEE_PROPSET_IMPLEMENTATION, Fun
  * API to get all kinds of property from Enumerator for TEE_PROPSET_CURRENT_CLIENT
  * @testcase.expect    : process success
  */
-TEE_TEST(TCF1ENUM_Test, TEE_GetProperty_WithEnum_WithResetEnum, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1EnumTest, TEE_GetProperty_WithEnum_WithResetEnum, Function | MediumTest | Level0)
 {
     TEEC_Result result, ret;
     int rc, count = 0, findFlag = 0;
@@ -402,7 +404,7 @@ TEE_TEST(TCF1ENUM_Test, TEE_GetProperty_WithEnum_WithResetEnum, Function | Mediu
  * property from TEE_PROPSET_CURRENT_TA
  * @testcase.expect    : return TEEC_ERROR_BAD_PARAMETERS
  */
-TEE_TEST(TCF1Test, TEE_AllocatePropertyEnumerator_EnumIsNull, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_AllocatePropertyEnumerator_EnumIsNull, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TestData value = { 0 };
@@ -419,7 +421,7 @@ TEE_TEST(TCF1Test, TEE_AllocatePropertyEnumerator_EnumIsNull, Function | MediumT
  * property from TEE_PROPSET_CURRENT_TA
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(TCF1Test, TEE_AllocatePropertyEnumerator_MaxEnum, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_AllocatePropertyEnumerator_MaxEnum, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TestData value = { 0 };
@@ -454,7 +456,7 @@ TEE_TEST(TCF1Test, TEE_AllocatePropertyEnumerator_MaxEnum, Function | MediumTest
  * @testcase.desc      : test TA call TEE_GetPropertyName while output buffer is null
  * @testcase.expect    : return TEEC_ERROR_BAD_PARAMETERS
  */
-TEE_TEST(TCF1ENUM_Test, TEE_GetPropertyName_BufferIsNull, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1EnumTest, TEE_GetPropertyName_BufferIsNull, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
 
@@ -472,7 +474,7 @@ TEE_TEST(TCF1ENUM_Test, TEE_GetPropertyName_BufferIsNull, Function | MediumTest 
  * @testcase.desc      : test TA call TEE_GetPropertyName while output buffer size is null
  * @testcase.expect    : return TEEC_ERROR_BAD_PARAMETERS
  */
-TEE_TEST(TCF1ENUM_Test, TEE_GetPropertyName_BufferSizeIsNull, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1EnumTest, TEE_GetPropertyName_BufferSizeIsNull, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
 
@@ -490,7 +492,7 @@ TEE_TEST(TCF1ENUM_Test, TEE_GetPropertyName_BufferSizeIsNull, Function | MediumT
  * @testcase.desc      : test TA call TEE_GetPropertyName while output buffer size too short
  * @testcase.expect    : return TEEC_ERROR_SHORT_BUFFER
  */
-TEE_TEST(TCF1ENUM_Test, TEE_GetPropertyName_BufferSizeTooShort, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1EnumTest, TEE_GetPropertyName_BufferSizeTooShort, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
 
@@ -513,7 +515,7 @@ TEE_TEST(TCF1ENUM_Test, TEE_GetPropertyName_BufferSizeTooShort, Function | Mediu
  * @testcase.desc      : test TA call TEE_GetPropertyName while Enumerator is not alloc
  * @testcase.expect    : return TEEC_ERROR_ITEM_NOT_FOUND
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyName_EnumeratorNotAlloc, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyName_EnumeratorNotAlloc, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TestData value = { 0 };
@@ -532,7 +534,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyName_EnumeratorNotAlloc, Function | MediumTest
  * @testcase.desc      : test TA call TEE_GetPropertyName while Enumerator is not start
  * @testcase.expect    : return TEEC_ERROR_ITEM_NOT_FOUND
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyName_EnumeratorNotStart, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyName_EnumeratorNotStart, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TestData value = { 0 };
@@ -560,7 +562,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyName_EnumeratorNotStart, Function | MediumTest
  * @testcase.desc      : test TA call TEE_GetPropertyName while Enumerator is not alloc
  * @testcase.expect    : return TEEC_ERROR_ITEM_NOT_FOUND
  */
-TEE_TEST(TCF1Test, TEE_GetNextProperty_EnumeratorNotAlloc, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetNextProperty_EnumeratorNotAlloc, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TestData value = { 0 };
@@ -579,7 +581,7 @@ TEE_TEST(TCF1Test, TEE_GetNextProperty_EnumeratorNotAlloc, Function | MediumTest
  * @testcase.desc      : test TA call TEE_GetPropertyName while Enumerator is not start
  * @testcase.expect    : return TEEC_ERROR_ITEM_NOT_FOUND
  */
-TEE_TEST(TCF1Test, TEE_GetNextProperty_EnumeratorNotStart, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetNextProperty_EnumeratorNotStart, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TestData value = { 0 };

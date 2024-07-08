@@ -25,7 +25,7 @@ using namespace testing::ext;
  * @testcase.desc      : test TEE_BigIntComputeFMM api
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, BigInt_ComputeFMM, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, BigInt_ComputeFMM, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;
@@ -43,7 +43,7 @@ TEE_TEST(EmptyTest, BigInt_ComputeFMM, Function | MediumTest | Level0)
  * @testcase.desc      : test initialize context for FMM
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, BigInt_InitFMMContext, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, BigInt_InitFMMContext, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;
@@ -61,7 +61,7 @@ TEE_TEST(EmptyTest, BigInt_InitFMMContext, Function | MediumTest | Level0)
  * @testcase.desc      : test converter between big int and FMM
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, BigInt_ConverterBetweenBigIntAndFMM, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, BigInt_ConverterBetweenBigIntAndFMM, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;
@@ -79,7 +79,7 @@ TEE_TEST(EmptyTest, BigInt_ConverterBetweenBigIntAndFMM, Function | MediumTest |
  * @testcase.desc      : test TEE_BigIntExpMod api
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, BigInt_ComputeExpMod, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, BigInt_ComputeExpMod, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;
@@ -97,7 +97,7 @@ TEE_TEST(EmptyTest, BigInt_ComputeExpMod, Function | MediumTest | Level0)
  * @testcase.desc      : test converter between big int and octet string
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, BigInt_ConverterBetweenBigIntAndOctetString, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, BigInt_ConverterBetweenBigIntAndOctetString, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;
@@ -115,7 +115,7 @@ TEE_TEST(EmptyTest, BigInt_ConverterBetweenBigIntAndOctetString, Function | Medi
  * @testcase.desc      : test converter between big int and shortVal
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, BigInt_ConverterBetweenBigIntAndShortVal, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, BigInt_ConverterBetweenBigIntAndShortVal, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;
@@ -133,7 +133,7 @@ TEE_TEST(EmptyTest, BigInt_ConverterBetweenBigIntAndShortVal, Function | MediumT
  * @testcase.desc      : test compute add and sub mod
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, BigInt_AddAndSubMod, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, BigInt_AddAndSubMod, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;
@@ -151,7 +151,7 @@ TEE_TEST(EmptyTest, BigInt_AddAndSubMod, Function | MediumTest | Level0)
  * @testcase.desc      : test compute mul, square and inv mod
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, BigInt_MulAndInvMod, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, BigInt_MulAndInvMod, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;
@@ -169,7 +169,7 @@ TEE_TEST(EmptyTest, BigInt_MulAndInvMod, Function | MediumTest | Level0)
  * @testcase.desc      : test TEE_BigIntMod api
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, BigInt_InitMod, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, BigInt_InitMod, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;
@@ -187,7 +187,7 @@ TEE_TEST(EmptyTest, BigInt_InitMod, Function | MediumTest | Level0)
  * @testcase.desc      : test add and sub
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, BigInt_AddAndSub, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, BigInt_AddAndSub, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;
@@ -205,7 +205,7 @@ TEE_TEST(EmptyTest, BigInt_AddAndSub, Function | MediumTest | Level0)
  * @testcase.desc      : test negate
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, BigInt_Neg, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, BigInt_Neg, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;
@@ -223,7 +223,7 @@ TEE_TEST(EmptyTest, BigInt_Neg, Function | MediumTest | Level0)
  * @testcase.desc      : test mul and square
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, BigInt_MulAndSquare, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, BigInt_MulAndSquare, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;
@@ -241,7 +241,7 @@ TEE_TEST(EmptyTest, BigInt_MulAndSquare, Function | MediumTest | Level0)
  * @testcase.desc      : test div
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, BigInt_div, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, BigInt_div, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;
@@ -259,7 +259,7 @@ TEE_TEST(EmptyTest, BigInt_div, Function | MediumTest | Level0)
  * @testcase.desc      : test shift right
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, BigInt_ShiftRight, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, BigInt_ShiftRight, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;
@@ -277,7 +277,7 @@ TEE_TEST(EmptyTest, BigInt_ShiftRight, Function | MediumTest | Level0)
  * @testcase.desc      : test get bit
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, BigInt_GetBit, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, BigInt_GetBit, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;
@@ -295,7 +295,7 @@ TEE_TEST(EmptyTest, BigInt_GetBit, Function | MediumTest | Level0)
  * @testcase.desc      : test get bit counts
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, BigInt_GetBitCount, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, BigInt_GetBitCount, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;
@@ -313,7 +313,7 @@ TEE_TEST(EmptyTest, BigInt_GetBitCount, Function | MediumTest | Level0)
  * @testcase.desc      : test set bit
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, BigInt_SetBit, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, BigInt_SetBit, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;
@@ -331,7 +331,7 @@ TEE_TEST(EmptyTest, BigInt_SetBit, Function | MediumTest | Level0)
  * @testcase.desc      : test TEE_BigIntAssign api
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, BigInt_AssignSrcToDest, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, BigInt_AssignSrcToDest, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;
@@ -349,7 +349,7 @@ TEE_TEST(EmptyTest, BigInt_AssignSrcToDest, Function | MediumTest | Level0)
  * @testcase.desc      : test abs
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, BigInt_Abs, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, BigInt_Abs, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;
@@ -367,7 +367,7 @@ TEE_TEST(EmptyTest, BigInt_Abs, Function | MediumTest | Level0)
  * @testcase.desc      : test Relative Prime
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, BigInt_RelativePrime, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, BigInt_RelativePrime, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;
@@ -385,7 +385,7 @@ TEE_TEST(EmptyTest, BigInt_RelativePrime, Function | MediumTest | Level0)
  * @testcase.desc      : test compute extended gcd
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, BigInt_ComputeExtendedGcd, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, BigInt_ComputeExtendedGcd, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;
@@ -403,7 +403,7 @@ TEE_TEST(EmptyTest, BigInt_ComputeExtendedGcd, Function | MediumTest | Level0)
  * @testcase.desc      : test probabilistic primality
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, BigInt_ProbabilisticPrimality, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, BigInt_ProbabilisticPrimality, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;
@@ -421,7 +421,7 @@ TEE_TEST(EmptyTest, BigInt_ProbabilisticPrimality, Function | MediumTest | Level
  * @testcase.desc      : test comparison
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, BigInt_Compare, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, BigInt_Compare, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;
@@ -439,7 +439,7 @@ TEE_TEST(EmptyTest, BigInt_Compare, Function | MediumTest | Level0)
  * @testcase.desc      : test comparison with shortVal
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, BigInt_CompareWithShortVal, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, BigInt_CompareWithShortVal, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;
@@ -457,7 +457,7 @@ TEE_TEST(EmptyTest, BigInt_CompareWithShortVal, Function | MediumTest | Level0)
  * @testcase.desc      : test initialize bigIntFMM
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, BigInt_InitializeFMM, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, BigInt_InitializeFMM, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;
@@ -475,7 +475,7 @@ TEE_TEST(EmptyTest, BigInt_InitializeFMM, Function | MediumTest | Level0)
  * @testcase.desc      : test initialize bigInt
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, BigInt_InitializeBigInt, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, BigInt_InitializeBigInt, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;

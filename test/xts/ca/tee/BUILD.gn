@@ -17,14 +17,14 @@ group("tee") {
   testonly = true
   if (is_standard_system) {
     deps = [
-      "tee_test_api:tee_test_client_api_vendor",
-      "tee_test_api:tee_test_client_api_system",
-      "tee_test_api:tee_test_crypto_api",
-      "tee_test_api:tee_test_tcf_api",
-      "tee_test_api:tee_test_time_api",
-      "tee_test_api:tee_test_arithmetic_api",
-      "tee_test_api:tee_test_trusted_storage_api",
-      "tee_test_api:tee_test_device_api",
+      "tee_test_client_api_vendor:tee_test_client_api_vendor",
+      "tee_test_client_api_system:tee_test_client_api_system",
+      "tee_test_crypto_api:tee_test_crypto_api",
+      "tee_test_tcf_api:tee_test_tcf_api",
+      "tee_test_time_api:tee_test_time_api",
+      "tee_test_arithmetic_api:tee_test_arithmetic_api",
+      "tee_test_trusted_storage_api:tee_test_trusted_storage_api",
+      "tee_test_device_api:tee_test_device_api",
     ]
   }
 }

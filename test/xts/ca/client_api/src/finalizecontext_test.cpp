@@ -32,7 +32,7 @@ using namespace testing::ext;
  * @testcase.desc      : call TEEC_FinalizeContext With created context
  * @testcase.expect    : fd has released
  */
-TEE_TEST(EmptyTest, Finalizecontext_WithCreatedContext, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, Finalizecontext_WithCreatedContext, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     ClientSessionMgr sess;
@@ -48,7 +48,7 @@ TEE_TEST(EmptyTest, Finalizecontext_WithCreatedContext, Function | MediumTest | 
  * @testcase.desc      : call TEEC_FinalizeContext With not created context
  * @testcase.expect    : fd is -1
  */
-TEE_TEST(EmptyTest, Finalizecontext_WithNotCreatedContext, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, Finalizecontext_WithNotCreatedContext, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     sess.context = { 0 };
@@ -61,7 +61,7 @@ TEE_TEST(EmptyTest, Finalizecontext_WithNotCreatedContext, Function | MediumTest
  * @testcase.desc      : call TEEC_FinalizeContext Without context
  * @testcase.expect    : fd is -1
  */
-TEE_TEST(EmptyTest, Finalizecontext_WithoutContext, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, Finalizecontext_WithoutContext, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     ClientSessionMgr sess;

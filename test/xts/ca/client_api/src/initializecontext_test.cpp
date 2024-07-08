@@ -30,7 +30,7 @@ using namespace testing::ext;
  * @testcase.desc      : call TEEC_InitializeContext normal test
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, InitContext_NameIsNotNULL, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, InitContext_NameIsNotNULL, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TEEC_Context context = { 0 };
@@ -45,7 +45,7 @@ TEE_TEST(EmptyTest, InitContext_NameIsNotNULL, Function | MediumTest | Level0)
  * @testcase.desc      : call TEEC_InitializeContext with context is null
  * @testcase.expect    : return TEEC_ERROR_BAD_PARAMETERS
  */
-TEE_TEST(EmptyTest, InitContext_ContextIsNULL, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, InitContext_ContextIsNULL, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     ret = TEEC_InitializeContext(NULL, NULL);
@@ -57,7 +57,7 @@ TEE_TEST(EmptyTest, InitContext_ContextIsNULL, Function | MediumTest | Level0)
  * @testcase.desc      : call TEEC_InitializeContext after Finalize Context
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(OnlyInit, InitContext_AfterFinalizeContext, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFramWithInitContext, InitContext_AfterFinalizeContext, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TEEC_FinalizeContext(GetContext());
@@ -72,7 +72,7 @@ TEE_TEST(OnlyInit, InitContext_AfterFinalizeContext, Function | MediumTest | Lev
  *                       this testcase shoud fail at init 17th context,only support 16 contexts in one CA
  * @testcase.expect    : return TEEC_FAIL
  */
-TEE_TEST(EmptyTest, InitContext_Use17Context, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, InitContext_Use17Context, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TEEC_Context context[17] = { { 0 } };

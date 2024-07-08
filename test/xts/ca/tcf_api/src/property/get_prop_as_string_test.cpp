@@ -25,7 +25,7 @@ using namespace testing::ext;
  * @testcase.desc      : test TA call TEE_GetPropertyAsString to get value of GPD_TA_APPID
  * @testcase.expect    : return TEEC_SUCCESS, get value is correct
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_TA_APPID, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_TA_APPID, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -48,7 +48,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_TA_APPID, Function | 
  * @testcase.desc      : test TA call TEE_GetPropertyAsString to get value of GPD_TA_SERVICENAME
  * @testcase.expect    : return TEEC_ERROR_ITEM_NOT_FOUND, can not get value
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_TA_SERVICENAME, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_TA_SERVICENAME, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -69,7 +69,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_TA_SERVICENAME, Funct
  * @testcase.desc      : test TA call TEE_GetPropertyAsString to get value of GPD_CLIENT_IDENTITY
  * @testcase.expect    : return TEEC_SUCCESS, get value is correct
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_CLIENT_IDENTITY, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_CLIENT_IDENTITY, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -91,7 +91,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_CLIENT_IDENTITY, Func
  * @testcase.desc      : test TA call TEE_GetPropertyAsString to get value of GPD_CLIENT_IDENTITY, Propset is wrong
  * @testcase.expect    : return TEEC_ERROR_ITEM_NOT_FOUND, can not get value
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_CLIENT_IDENTITY_PropsetIsWrong,
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_CLIENT_IDENTITY_PropsetIsWrong,
     Function | MediumTest | Level0)
 {
     TEEC_Result ret;
@@ -113,7 +113,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_CLIENT_IDENTITY_Props
  * @testcase.desc      : test TA call TEE_GetPropertyAsString to get value of GPD_TA_VERSION
  * @testcase.expect    : return TEEC_SUCCESS, get value is correct
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_TA_VERSION, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_TA_VERSION, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -135,7 +135,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_TA_VERSION, Function 
  * @testcase.desc      : test TA call TEE_GetPropertyAsString to get value of GPD_TA_DESCRIPTION
  * @testcase.expect    : return TEEC_SUCCESS, get value is correct
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_TA_DESCRIPTION, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_TA_DESCRIPTION, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -158,7 +158,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_TA_DESCRIPTION, Funct
  * @testcase.desc      : test TA call TEE_GetPropertyAsString to get value of GPD_TEE_APIVERSION
  * @testcase.expect    : return TEEC_SUCCESS, get value is correct
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_TEE_APIVERSION, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_TEE_APIVERSION, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -181,7 +181,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_TEE_APIVERSION, Funct
  * @testcase.desc      : test TA call TEE_GetPropertyAsString to get value of GPD_TEE_DESCRIPTION
  * @testcase.expect    : return TEEC_SUCCESS, get value is correct
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_TEE_DESCRIPTION, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_TEE_DESCRIPTION, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -204,7 +204,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_TEE_DESCRIPTION, Func
  * @testcase.desc      : test TA call TEE_GetPropertyAsString to get value of GPD_TEE_TRUSTEDOS_IMP_VERSION
  * @testcase.expect    : return TEEC_SUCCESS, get value is correct
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_TEE_TRUSTEDOS_IMP_VERSION, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_TEE_TRUSTEDOS_IMP_VERSION, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -227,7 +227,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_TEE_TRUSTEDOS_IMP_VER
  * @testcase.desc      : test TA call TEE_GetPropertyAsString to get value of GPD_TEE_TRUSTEDOS_IMP_BINARYVERSION
  * @testcase.expect    : return TEEC_SUCCESS, get value is correct
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_TEE_TRUSTEDOS_IMP_BINARYVERSION,
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_TEE_TRUSTEDOS_IMP_BINARYVERSION,
     Function | MediumTest | Level0)
 {
     TEEC_Result ret;
@@ -252,7 +252,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_TEE_TRUSTEDOS_IMP_BIN
  * @testcase.desc      : test TA call TEE_GetPropertyAsString to get value of GPD_TEE_FIRMWARE_IMP_VERSION
  * @testcase.expect    : return TEEC_SUCCESS, get value is correct
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_TEE_FIRMWARE_IMP_VERSION, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_TEE_FIRMWARE_IMP_VERSION, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -275,7 +275,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_TEE_FIRMWARE_IMP_VERS
  * @testcase.desc      : test TA call TEE_GetPropertyAsString to get value of GPD_TEE_FIRMWARE_IMP_BINARYVERSION
  * @testcase.expect    : return TEEC_SUCCESS, get value is correct
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_TEE_FIRMWARE_IMP_BINARYVERSION,
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_TEE_FIRMWARE_IMP_BINARYVERSION,
     Function | MediumTest | Level0)
 {
     TEEC_Result ret;
@@ -300,7 +300,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_TEE_FIRMWARE_IMP_BINA
  * @testcase.desc      : test TA call TEE_GetPropertyAsString to get value of GPD_TEE_TRUSTEDOS_MANUFACTURER
  * @testcase.expect    : return TEEC_SUCCESS, get value is correct
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_TEE_TRUSTEDOS_MANUFACTURER, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_TEE_TRUSTEDOS_MANUFACTURER, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -323,7 +323,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_TEE_TRUSTEDOS_MANUFAC
  * @testcase.desc      : test TA call TEE_GetPropertyAsString to get value of GPD_TEE_FIRMWARE_MANUFACTURER
  * @testcase.expect    : return TEEC_SUCCESS, get value is correct
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_TEE_FIRMWARE_MANUFACTURER, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_TEE_FIRMWARE_MANUFACTURER, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -346,7 +346,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_GPD_TEE_FIRMWARE_MANUFACT
  * @testcase.desc      : test TA call TEE_GetPropertyAsString while Propset Is Zero
  * @testcase.expect    : return TEEC_ERROR_ITEM_NOT_FOUND
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_PropsetIsZero, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsString_WithoutEnum_PropsetIsZero, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -367,7 +367,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_PropsetIsZero, Function |
  * @testcase.desc      : test TA call TEE_GetPropertyAsString while name is null
  * @testcase.expect    : return TEEC_ERROR_ITEM_NOT_FOUND
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_NameIsNULL, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsString_WithoutEnum_NameIsNULL, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
 
@@ -385,7 +385,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_NameIsNULL, Function | Me
  * @testcase.desc      : test TA call TEE_GetPropertyAsString while name value is zero
  * @testcase.expect    : return TEEC_ERROR_ITEM_NOT_FOUND
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_NameIsZero, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsString_WithoutEnum_NameIsZero, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
 
@@ -402,7 +402,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_NameIsZero, Function | Me
  * @testcase.desc      : test TA call TEE_GetPropertyAsString while value buffer is null
  * @testcase.expect    : return TEEC_ERROR_SHORT_BUFFER
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_ValueBufferIsNULL, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsString_WithoutEnum_ValueBufferIsNULL, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -424,7 +424,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_ValueBufferIsNULL, Functi
  * @testcase.desc      : test TA call TEE_GetPropertyAsString while value buffer size is null
  * @testcase.expect    : return TEEC_ERROR_SHORT_BUFFER
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_ValueBufferSizeIsNULL, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsString_WithoutEnum_ValueBufferSizeIsNULL, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -446,7 +446,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_ValueBufferSizeIsNULL, Fu
  * @testcase.desc      : test TA call TEE_GetPropertyAsString while value buffer size is zero
  * @testcase.expect    : return TEEC_ERROR_SHORT_BUFFER
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_ValueBufferSizeIsZero, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsString_WithoutEnum_ValueBufferSizeIsZero, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -469,7 +469,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_ValueBufferSizeIsZero, Fu
  * @testcase.desc      : test TA call TEE_GetPropertyAsString while Name Not Found
  * @testcase.expect    : return TEEC_ERROR_ITEM_NOT_FOUND
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_NameNotFound, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsString_WithoutEnum_NameNotFound, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -491,7 +491,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_NameNotFound, Function | 
  * @testcase.desc      : test TA call TEE_GetPropertyAsString while out buffer is too short
  * @testcase.expect    : return TEEC_ERROR_SHORT_BUFFER
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsString_WithoutEnum_BufferTooShort, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsString_WithoutEnum_BufferTooShort, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;

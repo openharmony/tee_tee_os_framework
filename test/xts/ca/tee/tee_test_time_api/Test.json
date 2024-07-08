@@ -1,0 +1,36 @@
+{
+    "description": "Config for TEETestSuite time_api test cases",
+    "driver": {
+        "module-name": "tee_test_time_api",
+        "native-test-timeout": "120000",
+        "native-test-device-path": "/data/local/tmp",
+        "runtime-hint": "100s",
+        "type": "CppTest"
+    },
+    "kits": [
+        {
+            "pre-push" : [
+            ],
+            "post-push" : [
+                "mount -o rw, remount /",
+                "mount -o rw, remount /vendor",
+                "setenforce 0"
+            ],
+            "push": [
+                "tee_test_time_api->/data/local/tmp/tee_test_time_api",
+                "resource/tee/test_time_api/e7d4c078-b19f-4f97-a22d-f4afd6ae7a0e.sec -> /data/local/tmp/e7d4c078-b19f-4f97-a22d-f4afd6ae7a0e.sec"
+            ],
+            "type": "PushKit"
+        },
+        {
+            "type": "ShellKit",
+            "run-command": [
+                "mount -o rw, remount /",
+                "mount -o rw, remount /vendor",
+                "setenforce 0"
+            ],
+            "teardown-localcommand":[
+            ]
+        }
+    ]
+}

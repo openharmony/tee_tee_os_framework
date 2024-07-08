@@ -32,7 +32,7 @@ using namespace testing::ext;
  * @testcase.desc      : call TEEC_CloseSession With created session
  * @testcase.expect    : session_id is 0
  */
-TEE_TEST(EmptyTest, Closesession_WithCreatedSession, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, Closesession_WithCreatedSession, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     ClientSessionMgr sess;
@@ -50,7 +50,7 @@ TEE_TEST(EmptyTest, Closesession_WithCreatedSession, Function | MediumTest | Lev
  * @testcase.desc      : call TEEC_CloseSession WithoutSession
  * @testcase.expect    : no error occur
  */
-TEE_TEST(EmptyTest, Closesession_WithoutSession, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, Closesession_WithoutSession, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     ClientSessionMgr sess;
@@ -69,7 +69,7 @@ TEE_TEST(EmptyTest, Closesession_WithoutSession, Function | MediumTest | Level0)
  * @testcase.desc      : call TEEC_CloseSession with Not Opened Session
  * @testcase.expect    : no error occur
  */
-TEE_TEST(EmptyTest, Closesession_WithNotOpenedSession, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, Closesession_WithNotOpenedSession, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TEEC_UUID testId = CLIENTAPI_UUID_1;

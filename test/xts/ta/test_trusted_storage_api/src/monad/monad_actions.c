@@ -101,7 +101,7 @@ int CloseObject(IntermediateReprestation *ir)
 {
     TEE_CloseObject(ir->object);
     ir->object = TEE_HANDLE_NULL;
-    tlogi("[%s]:TEE_CloseObject success\n", __func__);
+    tlogi("[%s]:TEE_CloseObject finish\n", __func__);
     return 0;
 }
 
@@ -279,6 +279,7 @@ int CreateMultiObject(IntermediateReprestation *ir)
         tloge("[%s]:DisbalanceGroupElement failed\n", __func__);
         return -1;
     }
+
     tlogi("[%s]:TEE_CreatePersistentObject success\n", __func__);
     return 0;
 }
@@ -313,16 +314,14 @@ int DeleteMultiObject(IntermediateReprestation *ir)
         tloge("[%s]:TEE_OpenPersistentObject or TEE_CloseAndDeletePersistentObject1 failed\n", __func__);
         return -1;
     } 
-
-    tlogi("[%s]:TEE_OpenPersistentObject or TEE_CloseAndDeletePersistentObject1 success\n", __func__);   
-    
+ 
     int ret = BalanceGroupElement(ir->mrpl, ir->mrplSize, DeleteMultiObject);
     if (ret != 0) {
         tloge("[%s]:BalanceGroupElement failed\n", __func__);
         return -1;
     }
 
-    tlogi("[%s]:TEE_CloseAndDeletePersistentObject1 all object success\n", __func__);
+    tlogi("[%s]:TEE_OpenPersistentObject or TEE_CloseAndDeletePersistentObject1 all object success\n", __func__);
     return 0;
 }
 
@@ -381,6 +380,7 @@ int EnumerateAllObject(IntermediateReprestation *ir)
     int object_num = 0;
     while (1) {
         ir->enumObjectIDLen = MAX_DATA_LEN;
+        tlogi("########[%s] before TEE_GetNextPersistentObject\n", __func__);
         res = TEE_GetNextPersistentObject(ir->objectEnumerator, &(ir->objectInfo),
             ir->enumObjectID, &(ir->enumObjectIDLen));
         if (res == TEE_ERROR_ITEM_NOT_FOUND) {
@@ -390,6 +390,7 @@ int EnumerateAllObject(IntermediateReprestation *ir)
             tloge("[%s]:TEE_GetNextPersistentObject failed, 0x%x\n", __func__, res);
             return res;
         }
+        tlogi("########[%s] before TEE_OpenPersistentObject\n", __func__);
         res = TEE_OpenPersistentObject(tv->storageID, ir->enumObjectID, ir->enumObjectIDLen,
             tv->openFlags, &(ir->object));
         if (res != TEE_SUCCESS) {
@@ -397,10 +398,13 @@ int EnumerateAllObject(IntermediateReprestation *ir)
             return res;
         }
         object_num++;
+
+        tlogi("########[%s] before TEE_CloseAndDeletePersistentObject1\n", __func__);
         res = TEE_CloseAndDeletePersistentObject1(ir->object);
         if (res != TEE_SUCCESS) {
             tloge("[%s]:TEE_CloseAndDeletePersistentObject1 object failed, 0x%x\n", __func__, res);
         }
+
     }
 
     tlogi("[%s]:EnumerateAllObject success, object num %d\n", __func__, object_num);
@@ -473,10 +477,9 @@ int CheckObjectUsage(IntermediateReprestation *ir)
             __func__, ir->objectInfo.objectUsage, tv->objectUsage[ir->checkUsageCount]);
         return -1;
     }
-    tloge("[%s]:CheckObjectUsage check failed, objectUsage 0x%x, RestrictUsage 0x%x\n",
+    tloge("[%s]:CheckObjectUsage check success, objectUsage 0x%x, RestrictUsage 0x%x\n",
         __func__, ir->objectInfo.objectUsage, tv->objectUsage[ir->checkUsageCount]);
     ir->checkUsageCount++;
-    tlogi("[%s]:RestrictObjectUsage success\n", __func__);
     return 0;
 }
 
@@ -491,7 +494,7 @@ int InitRefAttr(IntermediateReprestation *ir)
 
     ir->initRefAddrCount++;
     ir->initAttrNum++;
-    tlogi("[%s]:TEE_InitRefAttribute success\n", __func__);
+    tlogi("[%s]:TEE_InitRefAttribute finish\n", __func__);
     return 0;
 }
 
@@ -503,7 +506,7 @@ int InitValueAttr(IntermediateReprestation *ir)
 
     ir->initValueAddrCount++;
     ir->initAttrNum++;
-    tlogi("[%s]:TEE_InitValueAttribute success\n", __func__);
+    tlogi("[%s]:TEE_InitValueAttribute finish\n", __func__);
     return 0;
 }
 

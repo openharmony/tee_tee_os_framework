@@ -45,7 +45,7 @@ using namespace testing::ext;
  * @testcase.desc      : call TEEC_RegisterSharedMemory With RegisterMem
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(OnlyInit, RegisterSharedMemory_WithRegisterMem, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFramWithInitContext, RegisterSharedMemory_WithRegisterMem, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     char *testData0 = reinterpret_cast<char *>(malloc(TEST_STR_LEN));
@@ -64,7 +64,7 @@ TEE_TEST(OnlyInit, RegisterSharedMemory_WithRegisterMem, Function | MediumTest |
  * @testcase.desc      : call TEEC_RegisterSharedMemory Without Context
  * @testcase.expect    : return TEEC_ERROR_BAD_PARAMETERS
  */
-TEE_TEST(OnlyInit, RegisterSharedMemory_WithoutContext, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFramWithInitContext, RegisterSharedMemory_WithoutContext, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     char *testData0 = reinterpret_cast<char *>(malloc(TEST_STR_LEN));
@@ -83,7 +83,7 @@ TEE_TEST(OnlyInit, RegisterSharedMemory_WithoutContext, Function | MediumTest | 
  * @testcase.desc      : call TEEC_RegisterSharedMemory With Context is not init
  * @testcase.expect    : return TEEC_ERROR_BAD_PARAMETERS
  */
-TEE_TEST(EmptyTest, RegisterSharedMemory_WithNotInitContext, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, RegisterSharedMemory_WithNotInitContext, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TEEC_Context context = { 0 };
@@ -109,7 +109,7 @@ TEE_TEST(EmptyTest, RegisterSharedMemory_WithNotInitContext, Function | MediumTe
  * @testcase.desc      : call TEEC_RegisterSharedMemory Without SharedMem
  * @testcase.expect    : return TEEC_ERROR_BAD_PARAMETERS
  */
-TEE_TEST(OnlyInit, RegisterSharedMemory_WithoutSharedMem, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFramWithInitContext, RegisterSharedMemory_WithoutSharedMem, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     ret = TEEC_RegisterSharedMemory(GetContext(), NULL);
@@ -121,7 +121,7 @@ TEE_TEST(OnlyInit, RegisterSharedMemory_WithoutSharedMem, Function | MediumTest 
  * @testcase.desc      : call TEEC_RegisterSharedMemory With SharedMem size is 0
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(OnlyInit, RegisterSharedMemory_WithSharedMemSizeIsZero, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFramWithInitContext, RegisterSharedMemory_WithSharedMemSizeIsZero, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     char *testData0 = reinterpret_cast<char *>(malloc(TEST_STR_LEN));
@@ -140,7 +140,7 @@ TEE_TEST(OnlyInit, RegisterSharedMemory_WithSharedMemSizeIsZero, Function | Medi
  * @testcase.desc      : call TEEC_RegisterSharedMemory With SharedMem flag is 0
  * @testcase.expect    : return TEEC_ERROR_BAD_PARAMETERS
  */
-TEE_TEST(OnlyInit, RegisterSharedMemory_WithSharedMemFlagIsZero, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFramWithInitContext, RegisterSharedMemory_WithSharedMemFlagIsZero, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     char *testData0 = reinterpret_cast<char *>(malloc(TEST_STR_LEN));
@@ -159,7 +159,7 @@ TEE_TEST(OnlyInit, RegisterSharedMemory_WithSharedMemFlagIsZero, Function | Medi
  * @testcase.desc      : call TEEC_RegisterSharedMemory With SharedMem flag is invalid
  * @testcase.expect    : return TEEC_ERROR_BAD_PARAMETERS
  */
-TEE_TEST(OnlyInit, RegisterSharedMemory_WithSharedMemFlagIsInvalid, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFramWithInitContext, RegisterSharedMemory_WithSharedMemFlagIsInvalid, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     char *testData0 = reinterpret_cast<char *>(malloc(TEST_STR_LEN));
@@ -178,7 +178,7 @@ TEE_TEST(OnlyInit, RegisterSharedMemory_WithSharedMemFlagIsInvalid, Function | M
  * @testcase.desc      : call TEEC_RegisterSharedMemory With SharedMem buffer is null
  * @testcase.expect    : return TEEC_ERROR_BAD_PARAMETERS
  */
-TEE_TEST(OnlyInit, RegisterSharedMemory_WithSharedMemBufferIsNull, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFramWithInitContext, RegisterSharedMemory_WithSharedMemBufferIsNull, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     char *testData0 = reinterpret_cast<char *>(malloc(TEST_STR_LEN));
@@ -196,7 +196,7 @@ TEE_TEST(OnlyInit, RegisterSharedMemory_WithSharedMemBufferIsNull, Function | Me
  * @testcase.desc      : call TEEC_RegisterSharedMemory With SharedMem flag is input while ParamTypes is Output
  * @testcase.expect    : return TEEC_ERROR_BAD_PARAMETERS
  */
-TEE_TEST(EmptyTest, RegisterSharedMemory_WithFlagInput_UseParamTypesOutput, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, RegisterSharedMemory_WithFlagInput_UseParamTypesOutput, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -233,7 +233,7 @@ TEE_TEST(EmptyTest, RegisterSharedMemory_WithFlagInput_UseParamTypesOutput, Func
  * @testcase.desc      : call TEEC_RegisterSharedMemory With SharedMem flag is input while ParamTypes is inout
  * @testcase.expect    : return TEEC_ERROR_BAD_PARAMETERS
  */
-TEE_TEST(EmptyTest, RegisterSharedMemory_WithFlagInput_UseParamTypesInout, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, RegisterSharedMemory_WithFlagInput_UseParamTypesInout, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -270,7 +270,7 @@ TEE_TEST(EmptyTest, RegisterSharedMemory_WithFlagInput_UseParamTypesInout, Funct
  * @testcase.desc      : call TEEC_RegisterSharedMemory With SharedMem flag is input while ParamTypes is whole
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, RegisterSharedMemory_WithFlagInput_UseParamTypesWhole, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, RegisterSharedMemory_WithFlagInput_UseParamTypesWhole, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -310,7 +310,7 @@ TEE_TEST(EmptyTest, RegisterSharedMemory_WithFlagInput_UseParamTypesWhole, Funct
  * @testcase.desc      : call TEEC_RegisterSharedMemory With SharedMem flag is output while ParamTypes is input
  * @testcase.expect    : return TEEC_ERROR_BAD_PARAMETERS
  */
-TEE_TEST(EmptyTest, RegisterSharedMemory_WithFlagOutput_UseParamTypesInput, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, RegisterSharedMemory_WithFlagOutput_UseParamTypesInput, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -347,7 +347,7 @@ TEE_TEST(EmptyTest, RegisterSharedMemory_WithFlagOutput_UseParamTypesInput, Func
  * @testcase.desc      : call TEEC_RegisterSharedMemory With SharedMem flag is output while ParamTypes is inout
  * @testcase.expect    : return TEEC_ERROR_BAD_PARAMETERS
  */
-TEE_TEST(EmptyTest, RegisterSharedMemory_WithFlagOutput_UseParamTypesInout, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, RegisterSharedMemory_WithFlagOutput_UseParamTypesInout, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -384,7 +384,7 @@ TEE_TEST(EmptyTest, RegisterSharedMemory_WithFlagOutput_UseParamTypesInout, Func
  * @testcase.desc      : call TEEC_RegisterSharedMemory With SharedMem flag is output while ParamTypes is whole
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, RegisterSharedMemory_WithFlagOutput_UseParamTypesWhole, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, RegisterSharedMemory_WithFlagOutput_UseParamTypesWhole, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -447,7 +447,7 @@ static void SetOperationParams(TEEC_Operation *operation, ClientShareMemMgr *tes
  * @testcase.desc      : test for allocatedshared with some params ree size less tee write size, use output types
  * @testcase.expect    : return TEEC_ERROR_SHORT_BUFFER
  */
-TEE_TEST(EmptyTest, RegisterSharedMemory_ReturnLenUseTypesOutput, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, RegisterSharedMemory_ReturnLenUseTypesOutput, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -509,7 +509,7 @@ TEE_TEST(EmptyTest, RegisterSharedMemory_ReturnLenUseTypesOutput, Function | Med
  * @testcase.desc      : test for memref.offset + memref.size > sharedMem.size
  * @testcase.expect    : return TEEC_ERROR_BAD_PARAMETERS
  */
-TEE_TEST(EmptyTest, RegisterSharedMemory_OffsetExceedTest1, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, RegisterSharedMemory_OffsetExceedTest1, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -559,7 +559,7 @@ TEE_TEST(EmptyTest, RegisterSharedMemory_OffsetExceedTest1, Function | MediumTes
  * @testcase.desc      : test for memref.offset > sharedMem.size
  * @testcase.expect    : return TEEC_ERROR_BAD_PARAMETERS
  */
-TEE_TEST(EmptyTest, RegisterSharedMemory_OffsetExceedTest2, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, RegisterSharedMemory_OffsetExceedTest2, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;

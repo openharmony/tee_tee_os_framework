@@ -25,7 +25,7 @@ using namespace testing::ext;
  * @testcase.desc      : test TA call TEE_GetPropertyAsU32 to get value of  GPD_TA_DATASIZE
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsU32_WithoutEnum_GPD_TA_DATASIZE, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsU32_WithoutEnum_GPD_TA_DATASIZE, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -48,7 +48,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsU32_WithoutEnum_GPD_TA_DATASIZE, Function | 
  * @testcase.desc      : test TA call TEE_GetPropertyAsU32 to get value of GPD_TA_STACKSIZE
  * @testcase.expect    : return TEEC_SUCCESS, get value is correct
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsU32_WithoutEnum_GPD_TA_STACKSIZE, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsU32_WithoutEnum_GPD_TA_STACKSIZE, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
 
@@ -72,7 +72,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsU32_WithoutEnum_GPD_TA_STACKSIZE, Function |
  * @testcase.desc      : test TA call TEE_GetPropertyAsU32 to get value of GPD_CLIENT_ENDIAN
  * @testcase.expect    : return TEEC_SUCCESS, get value is correct
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsU32_WithoutEnum_GPD_CLIENT_ENDIAN, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsU32_WithoutEnum_GPD_CLIENT_ENDIAN, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -96,7 +96,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsU32_WithoutEnum_GPD_CLIENT_ENDIAN, Function 
  * @testcase.desc      : test TA call TEE_GetPropertyAsU32 to get value of GPD_TEE_INTERNALCORE_VERSION
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsU32_WithoutEnum_GPD_TEE_INTERNALCORE_VERSION, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsU32_WithoutEnum_GPD_TEE_INTERNALCORE_VERSION, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -119,7 +119,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsU32_WithoutEnum_GPD_TEE_INTERNALCORE_VERSION
  * @testcase.desc      : test TA call TEE_GetPropertyAsU32 to get value of GPD_TEE_SYSTEM_TIME_PROTECTIONLEVEL
  * @testcase.expect    : return TEEC_SUCCESS, get value is correct
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsU32_WithoutEnum_GPD_TEE_SYSTEM_TIME_PROTECTIONLEVEL, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsU32_WithoutEnum_GPD_TEE_SYSTEM_TIME_PROTECTIONLEVEL, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -144,7 +144,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsU32_WithoutEnum_GPD_TEE_SYSTEM_TIME_PROTECTI
  * @testcase.desc      : test TA call TEE_GetPropertyAsU32 to get value of GPD_TEE_TA_PERSISTENT_TIME_PROTECTIONLEVEL
  * @testcase.expect    : return TEEC_SUCCESS, get value is correct
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsU32_WithoutEnum_GPD_TEE_TA_PERSISTENT_TIME_PROTECTIONLEVEL,
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsU32_WithoutEnum_GPD_TEE_TA_PERSISTENT_TIME_PROTECTIONLEVEL,
     Function | MediumTest | Level0)
 {
     TEEC_Result ret;
@@ -170,7 +170,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsU32_WithoutEnum_GPD_TEE_TA_PERSISTENT_TIME_P
  * @testcase.desc      : test TA call TEE_GetPropertyAsU32 to get value of GPD_TEE_ARITH_MAXBIGINTSIZE
  * @testcase.expect    : return TEEC_SUCCESS, get value is correct
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsU32_WithoutEnum_GPD_TEE_ARITH_MAXBIGINTSIZE, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsU32_WithoutEnum_GPD_TEE_ARITH_MAXBIGINTSIZE, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -194,7 +194,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsU32_WithoutEnum_GPD_TEE_ARITH_MAXBIGINTSIZE,
  * @testcase.desc      : test TA call TEE_GetPropertyAsU32 to get value of GPD_TEE_ANTIROLLBACK_PROTECTIONLEVEL
  * @testcase.expect    : return TEEC_SUCCESS, get value is correct
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsU32_WithoutEnum_GPD_TEE_ANTIROLLBACK_PROTECTIONLEVEL,
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsU32_WithoutEnum_GPD_TEE_ANTIROLLBACK_PROTECTIONLEVEL,
     Function | MediumTest | Level0)
 {
     TEEC_Result ret;
@@ -220,7 +220,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsU32_WithoutEnum_GPD_TEE_ANTIROLLBACK_PROTECT
  * @testcase.desc      : test TA call TEE_GetPropertyAsU32 to get value of GPD_TEE_ROLLBACKDETECT_PROTECTIONLEVEL
  * @testcase.expect    : return TEEC_SUCCESS, get value is correct
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsU32_WithoutEnum_GPD_TEE_ROLLBACKDETECT_PROTECTIONLEVEL,
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsU32_WithoutEnum_GPD_TEE_ROLLBACKDETECT_PROTECTIONLEVEL,
     Function | MediumTest | Level0)
 {
     TEEC_Result ret;
@@ -246,7 +246,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsU32_WithoutEnum_GPD_TEE_ROLLBACKDETECT_PROTE
  * @testcase.desc      : test TA call TEE_GetPropertyAsU32 to get value of GPD_TEE_EVENT_MAXSOURCES
  * @testcase.expect    : return TEEC_SUCCESS, get value is correct
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsU32_WithoutEnum_GPD_TEE_EVENT_MAXSOURCES, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsU32_WithoutEnum_GPD_TEE_EVENT_MAXSOURCES, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -270,7 +270,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsU32_WithoutEnum_GPD_TEE_EVENT_MAXSOURCES, Fu
  * @testcase.desc      : test TA call TEE_GetPropertyAsU32 to get value of GPD_TEE_API_LEVEL
  * @testcase.expect    : return TEEC_SUCCESS, get value is correct
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsU32_WithoutEnum_GPD_TEE_API_LEVEL, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsU32_WithoutEnum_GPD_TEE_API_LEVEL, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -290,11 +290,35 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsU32_WithoutEnum_GPD_TEE_API_LEVEL, Function 
 }
 
 /**
+ * @testcase.name      : TEE_GetPropertyAsU32_WithoutEnum_GPD_TA_API_LEVEL
+ * @testcase.desc      : test TA call TEE_GetPropertyAsU32 to get value of GPD_TA_API_LEVEL
+ * @testcase.expect    : return TEEC_SUCCESS, get value is correct
+ */
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsU32_WithoutEnum_GPD_TA_API_LEVEL, Function | MediumTest | Level0)
+{
+    TEEC_Result ret;
+    int rc;
+
+    TestData value = { 0 };
+    value.cmd = CMD_TEE_GetPropertyAsU32;
+    value.propSet = TEE_PROPSET_CURRENT_TA;
+    rc = memcpy_s(value.inBuffer, BIG_SIZE, GPD_TA_API_LEVEL, sizeof(GPD_TA_API_LEVEL));
+    ASSERT_EQ(rc, 0);
+    value.inBufferLen = sizeof(GPD_TA_API_LEVEL);
+
+    ret = Invoke_GetPropertyAsX(GetContext(), GetSession(), &value);
+    ASSERT_EQ(ret, TEEC_SUCCESS);
+    ASSERT_EQ(value.origin, TEEC_ORIGIN_TRUSTED_APP);
+    ASSERT_EQ(atoi(value.outBuffer), API_LEVEL1_2);
+    ASSERT_EQ(value.outBufferLen, strlen(value.outBuffer) + 1);
+}
+
+/**
  * @testcase.name      : TEE_GetPropertyAsU32_WithoutEnum_NameIsNull
  * @testcase.desc      : test TA call TEE_GetPropertyAsU32 for name is null
  * @testcase.expect    : return TEEC_ERROR_ITEM_NOT_FOUND
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsU32_WithoutEnum_NameIsNull, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsU32_WithoutEnum_NameIsNull, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
 
@@ -313,7 +337,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsU32_WithoutEnum_NameIsNull, Function | Mediu
  * @testcase.desc      : test TA call TEE_GetPropertyAsU32 for name value is zero
  * @testcase.expect    : return TEEC_ERROR_ITEM_NOT_FOUND
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsU32_WithoutEnum_NameIsZero, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsU32_WithoutEnum_NameIsZero, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
 
@@ -331,7 +355,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsU32_WithoutEnum_NameIsZero, Function | Mediu
  * @testcase.desc      : test TA call TEE_GetPropertyAsU32 for value is null
  * @testcase.expect    : return TEEC_ERROR_BAD_PARAMETERS
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsU32_WithoutEnum_ValueIsNull, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsU32_WithoutEnum_ValueIsNull, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
 
@@ -354,7 +378,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsU32_WithoutEnum_ValueIsNull, Function | Medi
  * @testcase.desc      : test TA call TEE_GetPropertyAsU32 while Name Not Found
  * @testcase.expect    : return TEEC_ERROR_ITEM_NOT_FOUND
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsU32_WithoutEnum_NameNotFound, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsU32_WithoutEnum_NameNotFound, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
 
@@ -376,7 +400,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsU32_WithoutEnum_NameNotFound, Function | Med
  * @testcase.desc      : test TA call TEE_GetPropertyAsU32 while Name type is not U32
  * @testcase.expect    : return TEEC_ERROR_BAD_FORMAT
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsU32_WithoutEnum_NameNotU32, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsU32_WithoutEnum_NameNotU32, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
 

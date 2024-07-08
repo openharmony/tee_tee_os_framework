@@ -66,6 +66,7 @@
 #define GPD_TEE_FIRMWARE_MANUFACTURER "gpd.tee.firmware.manufacturer"
 #define GPD_TEE_EVENT_MAXSOURCES "gpd.tee.event.maxSources"
 #define GPD_TEE_API_LEVEL "gpd.tee.api_level"
+#define GPD_TA_API_LEVEL "gpd.ta.api_level"
 #define PROPERTY_NAME_UNKNOWN "unknown"
 #define SMC_TA_TESTBINARYBLOCK "smc.ta.testbinaryblock"
 #define SMC_TA_TESTIDENTITY "smc.ta.identity"
@@ -184,7 +185,7 @@ typedef enum {
 #define TEE_MEMORY_ACCESS_WRITE 0x00000002
 #define TEE_MEMORY_ACCESS_ANY_OWNER 0x00000004
 
-class TCF1Test : public ::testing::Test {
+class TeeTCF1Test : public ::testing::Test {
 private:
     static TEEC_Context context;
     static TEEC_Session session;
@@ -195,17 +196,17 @@ public:
 
     TEEC_Context *GetContext()
     {
-        return &TCF1Test::context;
+        return &TeeTCF1Test::context;
     }
     TEEC_Session *GetSession()
     {
-        return &TCF1Test::session;
+        return &TeeTCF1Test::session;
     }
     void SetUp();
     void TearDown();
 };
 
-class TCF2Test : public ::testing::Test {
+class TeeTCF2Test : public ::testing::Test {
 private:
     static TEEC_Context context;
     static TEEC_Session session;
@@ -216,17 +217,17 @@ public:
 
     TEEC_Context *GetContext()
     {
-        return &TCF2Test::context;
+        return &TeeTCF2Test::context;
     }
     TEEC_Session *GetSession()
     {
-        return &TCF2Test::session;
+        return &TeeTCF2Test::session;
     }
     void SetUp();
     void TearDown();
 };
 
-class TCF2TA2TATest : public ::testing::Test {
+class TeeTCF2TA2TATest : public ::testing::Test {
 private:
     static TEEC_Context context;
     static TEEC_Session session;
@@ -238,21 +239,21 @@ public:
 
     TEEC_Context *GetContext()
     {
-        return &TCF2TA2TATest::context;
+        return &TeeTCF2TA2TATest::context;
     }
     TEEC_Session *GetSession()
     {
-        return &TCF2TA2TATest::session;
+        return &TeeTCF2TA2TATest::session;
     }
     TEEC_Session *GetSession2()
     {
-        return &TCF2TA2TATest::session2;
+        return &TeeTCF2TA2TATest::session2;
     }
     void SetUp();
     void TearDown();
 };
 
-class TCF1ENUM_Test : public ::testing::Test {
+class TeeTCF1EnumTest : public ::testing::Test {
 private:
     static TEEC_Context context;
     static TEEC_Session session;
@@ -264,11 +265,11 @@ public:
 
     TEEC_Context *GetContext()
     {
-        return &TCF1ENUM_Test::context;
+        return &TeeTCF1EnumTest::context;
     }
     TEEC_Session *GetSession()
     {
-        return &TCF1ENUM_Test::session;
+        return &TeeTCF1EnumTest::session;
     }
 
     void SetUp();

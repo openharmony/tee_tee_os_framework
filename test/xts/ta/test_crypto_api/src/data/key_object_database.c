@@ -11,6 +11,7 @@
  */
 
 #include "test_crypto_api_types.h"
+#include "tee_crypto_hal.h"
 #include "tee_log.h"
 
 TestKeyItem g_testKeyItemList[MAX_TEST_KEY_ITEM_LIST_SIZE];
@@ -538,6 +539,10 @@ static int GenerateKeyItem(IntermediateReprestation *ir)
         TEE_FreeTransientObject(g_testKeyItemList[g_testKeyItemListSize].keyObjList[0]);
         return -1;
     }
+
+    TEE_SetObjectFlag(g_testKeyItemList[g_testKeyItemListSize].keyObjList[0], SOFT_CRYPTO);
+    TEE_SetObjectFlag(g_testKeyItemList[g_testKeyItemListSize].keyObjList[1], SOFT_CRYPTO);
+
     TEE_Attribute *params     = NULL;
     uint32_t       paramCount = 0;
     int ret0 = SetGenKeyParams(ir, &params, &paramCount);

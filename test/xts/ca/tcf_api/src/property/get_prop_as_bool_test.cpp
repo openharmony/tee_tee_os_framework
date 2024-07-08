@@ -26,7 +26,7 @@ using namespace testing::ext;
  * @testcase.desc      : test TA call TEE_GetPropertyAsBool to get value of GPD_TA_SINGLEINSTANCE
  * @testcase.expect    : return TEEC_SUCCESS, get value is correct
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsBool_WithoutEnum_GPD_TA_SINGLEINSTANCE, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsBool_WithoutEnum_GPD_TA_SINGLEINSTANCE, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
 
@@ -49,7 +49,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsBool_WithoutEnum_GPD_TA_SINGLEINSTANCE, Func
  * @testcase.desc      : test TA call TEE_GetPropertyAsBool to get value of  GPD_TA_MULTISESSION
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsBool_WithoutEnum_GPD_TA_MULTISESSION, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsBool_WithoutEnum_GPD_TA_MULTISESSION, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
 
@@ -73,7 +73,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsBool_WithoutEnum_GPD_TA_MULTISESSION, Functi
  * @testcase.desc      : test TA call TEE_GetPropertyAsBool to get value of GPD_TA_INSTANCEKEEPALIVE
  * @testcase.expect    : return TEEC_SUCCESS, get value is correct
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsBool_WithoutEnum_GPD_TA_INSTANCEKEEPALIVE, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsBool_WithoutEnum_GPD_TA_INSTANCEKEEPALIVE, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
 
@@ -97,7 +97,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsBool_WithoutEnum_GPD_TA_INSTANCEKEEPALIVE, F
  * @testcase.desc      : test TA call TEE_GetPropertyAsBool to get value of GPD_TEE_CRYPTOGRAPHY_ECC
  * @testcase.expect    : return TEEC_SUCCESS, get value is correct
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsBool_WithoutEnum_GPD_TEE_CRYPTOGRAPHY_ECC, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsBool_WithoutEnum_GPD_TEE_CRYPTOGRAPHY_ECC, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -121,7 +121,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsBool_WithoutEnum_GPD_TEE_CRYPTOGRAPHY_ECC, F
  * @testcase.desc      : test TA call TEE_GetPropertyAsBool to get value of GPD_TEE_CRYPTOGRAPHY_NIST
  * @testcase.expect    : return TEEC_SUCCESS, get value is correct
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsBool_WithoutEnum_GPD_TEE_CRYPTOGRAPHY_NIST, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsBool_WithoutEnum_GPD_TEE_CRYPTOGRAPHY_NIST, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -145,7 +145,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsBool_WithoutEnum_GPD_TEE_CRYPTOGRAPHY_NIST, 
  * @testcase.desc      : test TA call TEE_GetPropertyAsBool to get value of GPD_TEE_CRYPTOGRAPHY_BSI_R
  * @testcase.expect    : return TEEC_SUCCESS, get value is correct
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsBool_WithoutEnum_GPD_TEE_CRYPTOGRAPHY_BSI_R, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsBool_WithoutEnum_GPD_TEE_CRYPTOGRAPHY_BSI_R, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -169,7 +169,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsBool_WithoutEnum_GPD_TEE_CRYPTOGRAPHY_BSI_R,
  * @testcase.desc      : test TA call TEE_GetPropertyAsBool to get value of GPD_TEE_CRYPTOGRAPHY_BSI_T
  * @testcase.expect    : return TEEC_SUCCESS, get value is correct
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsBool_WithoutEnum_GPD_TEE_CRYPTOGRAPHY_BSI_T, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsBool_WithoutEnum_GPD_TEE_CRYPTOGRAPHY_BSI_T, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -193,7 +193,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsBool_WithoutEnum_GPD_TEE_CRYPTOGRAPHY_BSI_T,
  * @testcase.desc      : test TA call TEE_GetPropertyAsBool to get value of GPD_TEE_CRYPTOGRAPHY_IETF
  * @testcase.expect    : return TEEC_SUCCESS, get value is correct
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsBool_WithoutEnum_GPD_TEE_CRYPTOGRAPHY_IETF, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsBool_WithoutEnum_GPD_TEE_CRYPTOGRAPHY_IETF, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -217,7 +217,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsBool_WithoutEnum_GPD_TEE_CRYPTOGRAPHY_IETF, 
  * @testcase.desc      : test TA call TEE_GetPropertyAsBool to get value of GPD_TEE_CRYPTOGRAPHY_OCTA
  * @testcase.expect    : return TEEC_SUCCESS, get value is correct
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsBool_WithoutEnum_GPD_TEE_CRYPTOGRAPHY_OCTA, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsBool_WithoutEnum_GPD_TEE_CRYPTOGRAPHY_OCTA, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
@@ -241,7 +241,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsBool_WithoutEnum_GPD_TEE_CRYPTOGRAPHY_OCTA, 
  * @testcase.desc      : test TA call TEE_GetPropertyAsBool for name is null
  * @testcase.expect    : return TEEC_ERROR_ITEM_NOT_FOUND
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsBool_WithoutEnum_NameIsNull, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsBool_WithoutEnum_NameIsNull, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
 
@@ -260,7 +260,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsBool_WithoutEnum_NameIsNull, Function | Medi
  * @testcase.desc      : test TA call TEE_GetPropertyAsBool for name value is zero
  * @testcase.expect    : return TEEC_ERROR_ITEM_NOT_FOUND
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsBool_WithoutEnum_NameIsZero, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsBool_WithoutEnum_NameIsZero, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
 
@@ -278,7 +278,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsBool_WithoutEnum_NameIsZero, Function | Medi
  * @testcase.desc      : test TA call TEE_GetPropertyAsBool for value is null
  * @testcase.expect    : return TEEC_ERROR_BAD_PARAMETERS
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsBool_WithoutEnum_ValueIsNull, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsBool_WithoutEnum_ValueIsNull, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
 
@@ -301,7 +301,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsBool_WithoutEnum_ValueIsNull, Function | Med
  * @testcase.desc      : test TA call TEE_GetPropertyAsBool while Name Not Found
  * @testcase.expect    : return TEEC_ERROR_ITEM_NOT_FOUND
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsBool_WithoutEnum_NameNotFound, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsBool_WithoutEnum_NameNotFound, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
 
@@ -323,7 +323,7 @@ TEE_TEST(TCF1Test, TEE_GetPropertyAsBool_WithoutEnum_NameNotFound, Function | Me
  * @testcase.desc      : test TA call TEE_GetPropertyAsBool while Name type is not bool
  * @testcase.expect    : return TEEC_ERROR_BAD_FORMAT
  */
-TEE_TEST(TCF1Test, TEE_GetPropertyAsBool_WithoutEnum_NameNotBool, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF1Test, TEE_GetPropertyAsBool_WithoutEnum_NameNotBool, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
 

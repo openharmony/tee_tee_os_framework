@@ -44,18 +44,18 @@ void PublicTest::SetUuid(const TEEC_UUID &uuid)
     PublicTest::uuid = uuid;
 }
 
-TEEC_Context OnlyInit::context = { 0 };
-TEEC_Session OnlyInit::session = { 0 };
-TEEC_SharedMemory OnlyInit::sharedMem = { 0 };
+TEEC_Context TeeBasicTestFramWithInitContext::context = { 0 };
+TEEC_Session TeeBasicTestFramWithInitContext::session = { 0 };
+TEEC_SharedMemory TeeBasicTestFramWithInitContext::sharedMem = { 0 };
 
-void OnlyInit::SetUp()
+void TeeBasicTestFramWithInitContext::SetUp()
 {
     TEEC_Result ret;
     ret = TEEC_InitializeContext(NULL, &context);
     ABORT_UNLESS(ret != TEEC_SUCCESS);
 }
 
-void OnlyInit::TearDown()
+void TeeBasicTestFramWithInitContext::TearDown()
 {
     TEEC_CloseSession(&session);
     TEEC_ReleaseSharedMemory(&sharedMem);

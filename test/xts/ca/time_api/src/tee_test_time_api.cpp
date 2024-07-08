@@ -26,7 +26,7 @@ using namespace testing::ext;
  * @testcase.desc      : test TEE_GetSystemTime api
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, TEE_GetSystemTime, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, TEE_GetSystemTime, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;
@@ -57,7 +57,7 @@ TEE_TEST(EmptyTest, TEE_GetSystemTime, Function | MediumTest | Level0)
  * @testcase.desc      : test TEE_Wait api
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, TeeWait, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, TeeWait, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;
@@ -79,7 +79,7 @@ TEE_TEST(EmptyTest, TeeWait, Function | MediumTest | Level0)
  * @testcase.desc      : test get persistent time
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, GetPersistentTime, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, GetPersistentTime, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;
@@ -101,7 +101,7 @@ TEE_TEST(EmptyTest, GetPersistentTime, Function | MediumTest | Level0)
  * @testcase.desc      : test set persistent time
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, SetPersistentTime, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, SetPersistentTime, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;
@@ -123,7 +123,7 @@ TEE_TEST(EmptyTest, SetPersistentTime, Function | MediumTest | Level0)
  * @testcase.desc      : test set and get persistent time with exception
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, TestPersistentTimeWithException, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, TestPersistentTimeWithException, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;
@@ -145,7 +145,7 @@ TEE_TEST(EmptyTest, TestPersistentTimeWithException, Function | MediumTest | Lev
  * @testcase.desc      : test only get persistent time
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, OnlyGetPersistentTime, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, OnlyGetPersistentTime, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;
@@ -163,7 +163,7 @@ TEE_TEST(EmptyTest, OnlyGetPersistentTime, Function | MediumTest | Level0)
  * @testcase.desc      : test TEE_GetREETime api
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, GetReeTime, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, GetReeTime, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;
@@ -195,7 +195,7 @@ TEE_TEST(EmptyTest, GetReeTime, Function | MediumTest | Level0)
  * @testcase.desc      : test TEE_GetREETimeStr
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, GetReeTimeStr, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, GetReeTimeStr, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;
@@ -224,7 +224,7 @@ TEE_TEST(EmptyTest, GetReeTimeStr, Function | MediumTest | Level0)
  * @testcase.desc      : test tee_get_secure_rtc_time api
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, GetSecureRtcTime, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, GetSecureRtcTime, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;
@@ -253,7 +253,7 @@ TEE_TEST(EmptyTest, GetSecureRtcTime, Function | MediumTest | Level0)
  *                       tee_ext_get_timer_remain api
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(EmptyTest, CreateDestoryExpireRemainTimer, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, CreateDestoryExpireRemainTimer, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;

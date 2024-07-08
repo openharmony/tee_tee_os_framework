@@ -19,6 +19,8 @@
 
 #define CA_PKGN_VENDOR "/vendor/bin/tee_test_client_api_vendor"
 #define CA_PKGN_SYSTEM "/system/bin/tee_test_client_api_system"
+#define CA_PKGN2_SYSTEM "./tee_test_client_api_system"
+#define CA_PKGN2_VENDOR "./tee_test_client_api_vendor"
 #define CA_UID 0
 
 // The test case uses the same string to pass the input and output test of buffer during REE and tee communication
@@ -184,6 +186,18 @@ TEE_Result TA_CreateEntryPoint(void)
         return ret;
     }
 
+    ret = AddCaller_CA_exec(CA_PKGN2_VENDOR, CA_UID);
+    if (ret != TEE_SUCCESS) {
+        tloge("add caller failed, ret: 0x%x", ret);
+        return ret;
+    }
+
+    ret = AddCaller_CA_exec(CA_PKGN2_SYSTEM, CA_UID);
+    if (ret != TEE_SUCCESS) {
+        tloge("add caller failed, ret: 0x%x", ret);
+        return ret;
+    }
+
     return TEE_SUCCESS;
 }
 
@@ -236,10 +250,10 @@ TEE_Result TA_InvokeCommandEntryPoint(void *sessionContext, uint32_t cmd, uint32
 void TA_CloseSessionEntryPoint(void *sessionContext)
 {
     (void)sessionContext;
-    tlogd("---- TA_CloseSessionEntryPoint ----- \n");
+    tlogi("---- TA_CloseSessionEntryPoint ----- \n");
 }
 
 void TA_DestroyEntryPoint(void)
 {
-    tlogd("---- TA_DestroyEntryPoint ---- \n");
+    tlogi("---- TA_DestroyEntryPoint ---- \n");
 }

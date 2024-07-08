@@ -19,8 +19,8 @@ char rename_object_id[] = "sec_storage_data/testfile_re";  //save in temporary p
 char object_init_data[] = "Randomly assign a string of ints";
 char object_write_data[] = "Write a new paragraph for testing";
 
-char attr_buffer1[] = "Attribute content processing instructions";
-char attr_buffer2[] = "Attribute content processing instructions";
+char attr_buffer1[] = "Attribute content processing ins";
+char attr_buffer2[] = "Attribute content processing ins";
 
 int CaseCreatePersistentObjectAndDelete(void)
 {
@@ -107,7 +107,7 @@ int CaseEnumerateDeleteAllObject(void)
         .openObjectID = object_id,
         .attributes = TEE_HANDLE_NULL,
         .initialData = object_init_data,
-        .createNum = 3,
+        .createNum = 10,
         .openFlags = TEE_DATA_FLAG_ACCESS_WRITE_META | TEE_DATA_FLAG_ACCESS_READ,
         .actions = {
             IRSetUp,

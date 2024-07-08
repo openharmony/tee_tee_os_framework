@@ -33,7 +33,7 @@ char g_testData3[TEST_STR_LEN] = "this is test string";
  * @testcase.expect    : return TEEC_SUCCESS
  */
 
-TEE_TEST(EmptyTest, TEE_PrintAPI, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, TEE_PrintAPI, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;
@@ -58,7 +58,7 @@ TEE_TEST(EmptyTest, TEE_PrintAPI, Function | MediumTest | Level0)
  *                       tee_get_session_type api to get all kinds info
  * @testcase.expect    : return TEEC_SUCCESS, get info is correct
  */
-TEE_TEST(EmptyTest, TEE_GetAllKindsInfo, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, TEE_GetAllKindsInfo, Function | MediumTest | Level0)
 {
     ClientSessionMgr sess;
     uint32_t origin;
@@ -94,7 +94,7 @@ TEE_TEST(EmptyTest, TEE_GetAllKindsInfo, Function | MediumTest | Level0)
  *                       copy_from_sharemem, copy_to_sharemem api
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(TCF2TA2TATest, TEE_InvokeTACommand_With_ShareMem, Function | MediumTest | Level0)
+TEE_TEST(TeeTCF2TA2TATest, TEE_InvokeTACommand_With_ShareMem, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t ta2taSession;
@@ -110,11 +110,13 @@ TEE_TEST(TCF2TA2TATest, TEE_InvokeTACommand_With_ShareMem, Function | MediumTest
     ASSERT_EQ(value.origin, TEEC_ORIGIN_TEE);
     ASSERT_NE(ta2taSession, 0);
 
-    //value.caseId = BUFFERSIZE_ISTOOBIG;
     ret = Invoke_InvokeTACommand(GetSession(), CMD_TEE_ShareMemAPI, ta2taSession, &value, &origin);
+#ifndef TEST_STUB
+    ASSERT_EQ(ret, TEEC_SUCCESS);
+#else
     ASSERT_EQ(ret, TEEC_ERROR_GENERIC);
+#endif
     ASSERT_EQ(origin, TEEC_ORIGIN_TRUSTED_APP);
-    //ASSERT_EQ(value.origin, TEEC_ORIGIN_TEE);
 
     ret = Invoke_CloseTASession(GetSession(), CMD_TEE_CloseTASession, ta2taSession, &origin);
     ASSERT_EQ(ret, TEEC_SUCCESS);

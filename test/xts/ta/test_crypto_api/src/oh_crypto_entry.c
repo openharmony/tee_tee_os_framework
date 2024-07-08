@@ -15,6 +15,7 @@
 
 #define SYSTEM_OH_CRYPTO "/system/bin/tee_test_crypto_api"
 #define VENDOR_OH_CRYPTO "/vendor/bin/tee_test_crypto_api"
+#define DATA_OH_CRYPTO "./tee_test_crypto_api"
 #define CRYPTO_UID 0
 
 // TA_INVOKE_CMD
@@ -30,6 +31,9 @@ TEE_Result TA_CreateEntryPoint(void)
     if (ret != TEE_SUCCESS)
         return ret;
     ret = AddCaller_CA_exec(SYSTEM_OH_CRYPTO, CRYPTO_UID);
+    if (ret != TEE_SUCCESS)
+        return ret;
+    ret = AddCaller_CA_exec(DATA_OH_CRYPTO, CRYPTO_UID);
     if (ret != TEE_SUCCESS)
         return ret;
     tlogi("%s:end add caller info success\n", __func__);

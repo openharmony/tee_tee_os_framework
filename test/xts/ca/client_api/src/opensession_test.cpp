@@ -32,16 +32,16 @@ using namespace testing::ext;
  * @testcase.desc      : call TEEC_OpenSession Without Context,
  * @testcase.expect    : return TEEC_ERROR_BAD_PARAMETERS
  */
-TEE_TEST(OnlyInit, Opensession_WithoutContext, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFramWithInitContext, Opensession_WithoutContext, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
-    TEEC_UUID testId = CLIENTAPI_UUID_1;
+    TEEC_UUID uuid = CLIENTAPI_UUID_1;
     TEEC_Operation operation = { 0 };
     operation.started = 1;
     operation.paramTypes = TEEC_PARAM_TYPES(TEEC_NONE, TEEC_NONE, TEEC_NONE, TEEC_NONE);
 
-    ret = TEEC_OpenSession(NULL, GetSession(), &testId, TEEC_LOGIN_IDENTIFY, NULL, &operation, &origin);
+    ret = TEEC_OpenSession(NULL, GetSession(), &uuid, TEEC_LOGIN_IDENTIFY, NULL, &operation, &origin);
     ASSERT_EQ(ret, TEEC_ERROR_BAD_PARAMETERS);
     ASSERT_EQ(origin, TEEC_ORIGIN_API);
 }
@@ -51,16 +51,23 @@ TEE_TEST(OnlyInit, Opensession_WithoutContext, Function | MediumTest | Level0)
  * @testcase.desc      : call TEEC_OpenSession Without session,
  * @testcase.expect    : return TEEC_ERROR_BAD_PARAMETERS
  */
-TEE_TEST(OnlyInit, Opensession_WithoutSession, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFramWithInitContext, Opensession_WithoutSession, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
-    TEEC_UUID testId = CLIENTAPI_UUID_1;
+    TEEC_UUID uuid = CLIENTAPI_UUID_1;
     TEEC_Operation operation = { 0 };
     operation.started = 1;
     operation.paramTypes = TEEC_PARAM_TYPES(TEEC_NONE, TEEC_NONE, TEEC_NONE, TEEC_NONE);
 
-    ret = TEEC_OpenSession(GetContext(), NULL, &testId, TEEC_LOGIN_IDENTIFY, NULL, &operation, &origin);
+    char str[64] = { 0 };
+    sprintf(str,"/data/local/tmp/%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x.sec", uuid.timeLow, uuid.timeMid,
+        uuid.timeHiAndVersion, uuid.clockSeqAndNode[0], uuid.clockSeqAndNode[1], uuid.clockSeqAndNode[2],
+        uuid.clockSeqAndNode[3], uuid.clockSeqAndNode[4], uuid.clockSeqAndNode[5], uuid.clockSeqAndNode[6],
+        uuid.clockSeqAndNode[7]);
+    GetContext()->ta_path = (uint8_t *)str;
+
+    ret = TEEC_OpenSession(GetContext(), NULL, &uuid, TEEC_LOGIN_IDENTIFY, NULL, &operation, &origin);
     ASSERT_EQ(ret, TEEC_ERROR_BAD_PARAMETERS);
     ASSERT_EQ(origin, TEEC_ORIGIN_API);
 }
@@ -70,7 +77,7 @@ TEE_TEST(OnlyInit, Opensession_WithoutSession, Function | MediumTest | Level0)
  * @testcase.desc      : call TEEC_OpenSession Without Destination,
  * @testcase.expect    : return TEEC_ERROR_BAD_PARAMETERS
  */
-TEE_TEST(OnlyInit, Opensession_WithoutDestination, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFramWithInitContext, Opensession_WithoutDestination, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -88,7 +95,7 @@ TEE_TEST(OnlyInit, Opensession_WithoutDestination, Function | MediumTest | Level
  * @testcase.desc      : call TEEC_OpenSession Without ConnectionMethod,
  * @testcase.expect    : return TEEC_ERROR_BAD_PARAMETERS
  */
-TEE_TEST(OnlyInit, Opensession_WithoutConnectionMethod, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFramWithInitContext, Opensession_WithoutConnectionMethod, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -107,7 +114,7 @@ TEE_TEST(OnlyInit, Opensession_WithoutConnectionMethod, Function | MediumTest | 
  * @testcase.desc      : call TEEC_OpenSession With Not Support ConnectionMethod,
  * @testcase.expect    : return TEEC_ERROR_BAD_PARAMETERS
  */
-TEE_TEST(OnlyInit, Opensession_WithNotSupportConnectionMethod, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFramWithInitContext, Opensession_WithNotSupportConnectionMethod, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -158,13 +165,20 @@ TEE_TEST(OnlyInit, Opensession_WithNotSupportConnectionMethod, Function | Medium
  * @testcase.desc      : call TEEC_OpenSession Without Operation,
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(OnlyInit, Opensession_WithoutOperation, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFramWithInitContext, Opensession_WithoutOperation, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
-    TEEC_UUID testId = CLIENTAPI_UUID_1;
+    TEEC_UUID uuid = CLIENTAPI_UUID_1;
 
-    ret = TEEC_OpenSession(GetContext(), GetSession(), &testId, TEEC_LOGIN_IDENTIFY, NULL, NULL, &origin);
+    char str[64] = { 0 };
+    sprintf(str,"/data/local/tmp/%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x.sec", uuid.timeLow, uuid.timeMid,
+        uuid.timeHiAndVersion, uuid.clockSeqAndNode[0], uuid.clockSeqAndNode[1], uuid.clockSeqAndNode[2],
+        uuid.clockSeqAndNode[3], uuid.clockSeqAndNode[4], uuid.clockSeqAndNode[5], uuid.clockSeqAndNode[6],
+        uuid.clockSeqAndNode[7]);
+    GetContext()->ta_path = (uint8_t *)str;
+
+    ret = TEEC_OpenSession(GetContext(), GetSession(), &uuid, TEEC_LOGIN_IDENTIFY, NULL, NULL, &origin);
     ASSERT_EQ(ret, TEEC_SUCCESS);
     ASSERT_EQ(origin, TEEC_ORIGIN_TRUSTED_APP);
 }
@@ -174,15 +188,22 @@ TEE_TEST(OnlyInit, Opensession_WithoutOperation, Function | MediumTest | Level0)
  * @testcase.desc      : call TEEC_OpenSession Without Origin,
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(OnlyInit, Opensession_WithoutOrigin, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFramWithInitContext, Opensession_WithoutOrigin, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
-    TEEC_UUID testId = CLIENTAPI_UUID_1;
+    TEEC_UUID uuid = CLIENTAPI_UUID_1;
     TEEC_Operation operation = { 0 };
     operation.started = 1;
     operation.paramTypes = TEEC_PARAM_TYPES(TEEC_NONE, TEEC_NONE, TEEC_NONE, TEEC_NONE);
 
-    ret = TEEC_OpenSession(GetContext(), GetSession(), &testId, TEEC_LOGIN_IDENTIFY, NULL, &operation, NULL);
+    char str[64] = { 0 };
+    sprintf(str,"/data/local/tmp/%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x.sec", uuid.timeLow, uuid.timeMid,
+        uuid.timeHiAndVersion, uuid.clockSeqAndNode[0], uuid.clockSeqAndNode[1], uuid.clockSeqAndNode[2],
+        uuid.clockSeqAndNode[3], uuid.clockSeqAndNode[4], uuid.clockSeqAndNode[5], uuid.clockSeqAndNode[6],
+        uuid.clockSeqAndNode[7]);
+    GetContext()->ta_path = (uint8_t *)str;
+
+    ret = TEEC_OpenSession(GetContext(), GetSession(), &uuid, TEEC_LOGIN_IDENTIFY, NULL, &operation, NULL);
     ASSERT_EQ(ret, TEEC_SUCCESS);
 }
 
@@ -191,7 +212,7 @@ TEE_TEST(OnlyInit, Opensession_WithoutOrigin, Function | MediumTest | Level0)
  * @testcase.desc      : call TEEC_OpenSession With Context is Not Init,
  * @testcase.expect    : return TEEC_ERROR_BAD_PARAMETERS
  */
-TEE_TEST(EmptyTest, Opensession_ContextIsNotInit, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, Opensession_ContextIsNotInit, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -216,7 +237,7 @@ TEE_TEST(EmptyTest, Opensession_ContextIsNotInit, Function | MediumTest | Level0
  * @testcase.desc      : call TEEC_OpenSession With ParamTypes is invalid
  * @testcase.expect    : return TEEC_ERROR_BAD_PARAMETERS
  */
-TEE_TEST(OnlyInit, Opensession_ParamTypesIsInvalid, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFramWithInitContext, Opensession_ParamTypesIsInvalid, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -239,16 +260,23 @@ TEE_TEST(OnlyInit, Opensession_ParamTypesIsInvalid, Function | MediumTest | Leve
  * @testcase.desc      : call TEEC_OpenSession With Operation is none
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(OnlyInit, Opensession_WithOperationIsNone, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFramWithInitContext, Opensession_WithOperationIsNone, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
-    TEEC_UUID testId = CLIENTAPI_UUID_1;
+    TEEC_UUID uuid = CLIENTAPI_UUID_1;
     TEEC_Operation operation = { 0 };
     operation.started = 1;
     operation.paramTypes = TEEC_PARAM_TYPES(TEEC_NONE, TEEC_NONE, TEEC_NONE, TEEC_NONE);
 
-    ret = TEEC_OpenSession(GetContext(), GetSession(), &testId, TEEC_LOGIN_IDENTIFY, NULL, &operation, &origin);
+    char str[64] = { 0 };
+    sprintf(str,"/data/local/tmp/%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x.sec", uuid.timeLow, uuid.timeMid,
+        uuid.timeHiAndVersion, uuid.clockSeqAndNode[0], uuid.clockSeqAndNode[1], uuid.clockSeqAndNode[2],
+        uuid.clockSeqAndNode[3], uuid.clockSeqAndNode[4], uuid.clockSeqAndNode[5], uuid.clockSeqAndNode[6],
+        uuid.clockSeqAndNode[7]);
+    GetContext()->ta_path = (uint8_t *)str;
+
+    ret = TEEC_OpenSession(GetContext(), GetSession(), &uuid, TEEC_LOGIN_IDENTIFY, NULL, &operation, &origin);
     ASSERT_EQ(ret, TEEC_SUCCESS);
     ASSERT_EQ(origin, TEEC_ORIGIN_TRUSTED_APP);
 }
@@ -258,11 +286,11 @@ TEE_TEST(OnlyInit, Opensession_WithOperationIsNone, Function | MediumTest | Leve
  * @testcase.desc      : call TEEC_OpenSession With Operation paramtype is value
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(OnlyInit, Opensession_WithOperationIsValue, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFramWithInitContext, Opensession_WithOperationIsValue, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
-    TEEC_UUID testId = CLIENTAPI_UUID_1;
+    TEEC_UUID uuid = CLIENTAPI_UUID_1;
     TEEC_Operation operation = { 0 };
     operation.started = 1;
     operation.paramTypes = TEEC_PARAM_TYPES(TEEC_VALUE_INPUT, TEEC_VALUE_OUTPUT, TEEC_VALUE_INOUT, TEEC_VALUE_INOUT);
@@ -275,7 +303,14 @@ TEE_TEST(OnlyInit, Opensession_WithOperationIsValue, Function | MediumTest | Lev
     operation.params[3].value.a = 0x777;
     operation.params[3].value.b = 0x888;
 
-    ret = TEEC_OpenSession(GetContext(), GetSession(), &testId, TEEC_LOGIN_IDENTIFY, NULL, &operation, &origin);
+    char str[64] = { 0 };
+    sprintf(str,"/data/local/tmp/%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x.sec", uuid.timeLow, uuid.timeMid,
+        uuid.timeHiAndVersion, uuid.clockSeqAndNode[0], uuid.clockSeqAndNode[1], uuid.clockSeqAndNode[2],
+        uuid.clockSeqAndNode[3], uuid.clockSeqAndNode[4], uuid.clockSeqAndNode[5], uuid.clockSeqAndNode[6],
+        uuid.clockSeqAndNode[7]);
+    GetContext()->ta_path = (uint8_t *)str;
+
+    ret = TEEC_OpenSession(GetContext(), GetSession(), &uuid, TEEC_LOGIN_IDENTIFY, NULL, &operation, &origin);
     ASSERT_EQ(ret, TEEC_SUCCESS);
     ASSERT_EQ(origin, TEEC_ORIGIN_TRUSTED_APP);
     ASSERT_EQ(operation.params[0].value.a, 0x111);
@@ -293,11 +328,11 @@ TEE_TEST(OnlyInit, Opensession_WithOperationIsValue, Function | MediumTest | Lev
  * @testcase.desc      : call TEEC_OpenSession With Operation paramtype is tempmem
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(OnlyInit, Opensession_WithOperationIsTempMem, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFramWithInitContext, Opensession_WithOperationIsTempMem, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
-    TEEC_UUID testId = CLIENTAPI_UUID_1;
+    TEEC_UUID uuid = CLIENTAPI_UUID_1;
     TEEC_Operation operation = { 0 };
     char testData0[TEST_STR_LEN] = "Hello";
     char testData1[TEST_STR_LEN] = "abcdefgh";
@@ -320,7 +355,14 @@ TEE_TEST(OnlyInit, Opensession_WithOperationIsTempMem, Function | MediumTest | L
     operation.params[3].tmpref.buffer = testData3;
     operation.params[3].tmpref.size = len3;
 
-    ret = TEEC_OpenSession(GetContext(), GetSession(), &testId, TEEC_LOGIN_IDENTIFY, NULL, &operation, &origin);
+    char str[64] = { 0 };
+    sprintf(str,"/data/local/tmp/%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x.sec", uuid.timeLow, uuid.timeMid,
+        uuid.timeHiAndVersion, uuid.clockSeqAndNode[0], uuid.clockSeqAndNode[1], uuid.clockSeqAndNode[2],
+        uuid.clockSeqAndNode[3], uuid.clockSeqAndNode[4], uuid.clockSeqAndNode[5], uuid.clockSeqAndNode[6],
+        uuid.clockSeqAndNode[7]);
+    GetContext()->ta_path = (uint8_t *)str;
+
+    ret = TEEC_OpenSession(GetContext(), GetSession(), &uuid, TEEC_LOGIN_IDENTIFY, NULL, &operation, &origin);
     ASSERT_EQ(ret, TEEC_SUCCESS);
     ASSERT_EQ(origin, TEEC_ORIGIN_TRUSTED_APP);
     ASSERT_STREQ(reinterpret_cast<char *>(operation.params[0].tmpref.buffer), testData0);
@@ -338,12 +380,12 @@ TEE_TEST(OnlyInit, Opensession_WithOperationIsTempMem, Function | MediumTest | L
  * @testcase.desc      : call TEEC_OpenSession With Operation paramtype is PartialMem
  * @testcase.expect    : return TEEC_SUCCESS
  */
-TEE_TEST(OnlyInit, Opensession_WithOperationIsPartialMem, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFramWithInitContext, Opensession_WithOperationIsPartialMem, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     int rc;
     uint32_t origin;
-    TEEC_UUID testId = CLIENTAPI_UUID_1;
+    TEEC_UUID uuid = CLIENTAPI_UUID_1;
     TEEC_Operation operation = { 0 };
     char testData0[TEST_STR_LEN] = "Hello";
 
@@ -373,7 +415,14 @@ TEE_TEST(OnlyInit, Opensession_WithOperationIsPartialMem, Function | MediumTest 
     operation.params[3].memref.offset = 0;
     operation.params[3].memref.size = sharedMem.size;
 
-    ret = TEEC_OpenSession(GetContext(), GetSession(), &testId, TEEC_LOGIN_IDENTIFY, NULL, &operation, &origin);
+    char str[64] = { 0 };
+    sprintf(str,"/data/local/tmp/%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x.sec", uuid.timeLow, uuid.timeMid,
+        uuid.timeHiAndVersion, uuid.clockSeqAndNode[0], uuid.clockSeqAndNode[1], uuid.clockSeqAndNode[2],
+        uuid.clockSeqAndNode[3], uuid.clockSeqAndNode[4], uuid.clockSeqAndNode[5], uuid.clockSeqAndNode[6],
+        uuid.clockSeqAndNode[7]);
+    GetContext()->ta_path = (uint8_t *)str;
+
+    ret = TEEC_OpenSession(GetContext(), GetSession(), &uuid, TEEC_LOGIN_IDENTIFY, NULL, &operation, &origin);
     ASSERT_EQ(ret, TEEC_SUCCESS);
     ASSERT_EQ(origin, TEEC_ORIGIN_TRUSTED_APP);
     ASSERT_STREQ(reinterpret_cast<char *>(sharedMem.buffer), testData0);
@@ -388,16 +437,16 @@ TEE_TEST(OnlyInit, Opensession_WithOperationIsPartialMem, Function | MediumTest 
  * @testcase.desc      : call TEEC_OpenSession With uuid is not exist
  * @testcase.expect    : return TEEC_ERROR_GENERIC
  */
-TEE_TEST(OnlyInit, Opensession_WithNotExistUUID, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFramWithInitContext, Opensession_WithNotExistUUID, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
-    TEEC_UUID testId = UUID_TA_NOT_EXIST;
+    TEEC_UUID uuid = UUID_TA_NOT_EXIST;
     TEEC_Operation operation = { 0 };
     operation.started = 1;
     operation.paramTypes = TEEC_PARAM_TYPES(TEEC_NONE, TEEC_NONE, TEEC_NONE, TEEC_NONE);
 
-    ret = TEEC_OpenSession(GetContext(), GetSession(), &testId, TEEC_LOGIN_IDENTIFY, NULL, &operation, &origin);
+    ret = TEEC_OpenSession(GetContext(), GetSession(), &uuid, TEEC_LOGIN_IDENTIFY, NULL, &operation, &origin);
     ASSERT_EQ(ret, TEEC_ERROR_GENERIC);
     ASSERT_EQ(origin, TEEC_ORIGIN_COMMS);
 }
@@ -407,17 +456,24 @@ TEE_TEST(OnlyInit, Opensession_WithNotExistUUID, Function | MediumTest | Level0)
  * @testcase.desc      : call TEEC_OpenSession With TA return error
  * @testcase.expect    : return TEEC_ERROR_GENERIC
  */
-TEE_TEST(OnlyInit, Opensession_ReturnErrorFromTA, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFramWithInitContext, Opensession_ReturnErrorFromTA, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
-    TEEC_UUID testId = CLIENTAPI_UUID_1;
+    TEEC_UUID uuid = CLIENTAPI_UUID_1;
     TEEC_Operation operation = { 0 };
     operation.started = 1;
     operation.paramTypes = TEEC_PARAM_TYPES(TEEC_VALUE_INPUT, TEEC_NONE, TEEC_NONE, TEEC_NONE);
     operation.params[0].value.b = 0xFFFFFFFE; // this number intend for trigger ta return error when opensession
 
-    ret = TEEC_OpenSession(GetContext(), GetSession(), &testId, TEEC_LOGIN_IDENTIFY, NULL, &operation, &origin);
+    char str[64] = { 0 };
+    sprintf(str,"/data/local/tmp/%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x.sec", uuid.timeLow, uuid.timeMid,
+        uuid.timeHiAndVersion, uuid.clockSeqAndNode[0], uuid.clockSeqAndNode[1], uuid.clockSeqAndNode[2],
+        uuid.clockSeqAndNode[3], uuid.clockSeqAndNode[4], uuid.clockSeqAndNode[5], uuid.clockSeqAndNode[6],
+        uuid.clockSeqAndNode[7]);
+    GetContext()->ta_path = (uint8_t *)str;
+
+    ret = TEEC_OpenSession(GetContext(), GetSession(), &uuid, TEEC_LOGIN_IDENTIFY, NULL, &operation, &origin);
     ASSERT_EQ(ret, TEEC_ERROR_GENERIC);
     ASSERT_EQ(origin, TEEC_ORIGIN_TRUSTED_APP);
 }
@@ -427,7 +483,7 @@ TEE_TEST(OnlyInit, Opensession_ReturnErrorFromTA, Function | MediumTest | Level0
  * @testcase.desc      : call TEEC_OpenSession With paramtype is invalid
  * @testcase.expect    : return TEEC_ERROR_BAD_PARAMETERS
  */
-TEE_TEST(OnlyInit, Opensession_WithParamTypesIsInvalid, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFramWithInitContext, Opensession_WithParamTypesIsInvalid, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     uint32_t origin;
@@ -446,7 +502,7 @@ TEE_TEST(OnlyInit, Opensession_WithParamTypesIsInvalid, Function | MediumTest | 
  * @testcase.desc      : call TEEC_RequestCancellation after TEEC_InvokeCommand
  * @testcase.expect    : no error occur,in log can see not support this api
  */
-TEE_TEST(EmptyTest, RequestCancellationTest, Function | MediumTest | Level0)
+TEE_TEST(TeeBasicTestFram, RequestCancellationTest, Function | MediumTest | Level0)
 {
     TEEC_Result ret;
     TEEC_UUID testId = CLIENTAPI_UUID_1;

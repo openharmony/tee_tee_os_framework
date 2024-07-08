@@ -19,6 +19,7 @@
 
 #define CA_VENDOR "/vendor/bin/tee_test_time_api"
 #define CA_SYSTEM "/system/bin/tee_test_time_api"
+#define CA_DATA "./tee_test_time_api"
 #define CA_UID 0
 
 TEE_Result TA_CreateEntryPoint(void)
@@ -35,6 +36,13 @@ TEE_Result TA_CreateEntryPoint(void)
         tloge("Add caller failed, ret = 0x%x", ret);
         return ret;
     }
+
+    ret = AddCaller_CA_exec(CA_DATA, CA_UID);
+    if (ret != TEE_SUCCESS) {
+        tloge("Add caller failed, ret = 0x%x", ret);
+        return ret;
+    }
+
     return TEE_SUCCESS;
 }
 

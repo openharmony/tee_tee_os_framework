@@ -32,6 +32,12 @@ TEEC_Result ClientSessionMgr::Start(TEEC_UUID *uuid)
     operation.started = 1;
     operation.paramTypes = TEEC_PARAM_TYPES(TEEC_NONE, TEEC_NONE, TEEC_NONE, TEEC_NONE);
 
+    char str[64] = { 0 };
+    sprintf(str,"/data/local/tmp/%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x.sec", uuid->timeLow, uuid->timeMid,
+        uuid->timeHiAndVersion, uuid->clockSeqAndNode[0], uuid->clockSeqAndNode[1], uuid->clockSeqAndNode[2],
+        uuid->clockSeqAndNode[3], uuid->clockSeqAndNode[4], uuid->clockSeqAndNode[5], uuid->clockSeqAndNode[6],
+        uuid->clockSeqAndNode[7]);
+    context.ta_path = (uint8_t *)str;
     result = TEEC_OpenSession(&context, &session, uuid, TEEC_LOGIN_IDENTIFY, NULL, &operation, NULL);
     if (result != TEEC_SUCCESS) {
         TEEC_FinalizeContext(&context);
