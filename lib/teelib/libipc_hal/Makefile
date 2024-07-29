@@ -10,6 +10,7 @@
 MODULE := libipc_hal${TARG}.a
 
 CPPFLAGS += -I$(TEELIB)/libipc_hal/include
+CPPFLAGS += -I$(TEELIB)/libdrv/include
 CPPFLAGS += -I$(TEELIB)/libteeos/include/tee
 CPPFLAGS += -I$(PREBUILD_HEADER)/sys
 # Source files required to build the target

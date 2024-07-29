@@ -11,14 +11,19 @@
  */
 #ifndef PLATDRV_DRV_THREAD_H
 #define PLATDRV_DRV_THREAD_H
-#include <alltypes.h>
+#include <bits/alltypes.h>
 #include <drv.h>
+#include <spawn_ext.h>
 
 #define DRV_CALL_OK      0
 #define DRV_CALL_ERROR  (-1)
-intptr_t driver_dispatch(void *msg, cref_t *p_msg_hdl, struct hmcap_message_info *info);
+intptr_t driver_dispatch(void *msg, cref_t *p_msg_hdl, struct src_msginfo *info);
 
+#ifdef CONFIG_DISABLE_MULTI_DRV
+#define DRV_THREAD_MAX 0
+#else /* CONFIG_DISABLE_MULTI_DRV */
 #define DRV_THREAD_MAX 8
+#endif /* CONFIG_DISABLE_MULTI_DRV */
 #define INVALID_CALLER_PID (-1)
 #define TASK_MAX 20
 #define REPLY_BUF_LEN 2048U

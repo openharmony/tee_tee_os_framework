@@ -1457,8 +1457,11 @@ void dump_drv_conf(void)
 {
     uint64_t args[] = {};
     uint32_t lens[] = {};
-
+#ifndef CONFIG_DISABLE_MULTI_DRV
     (void)drv_call_new("drvmgr_multi", DUMP_DRV_CONF, args, lens, ARRAY_SIZE(args));
+#else
+    (void)drv_call_new("drvmgr", DUMP_DRV_CONF, args, lens, ARRAY_SIZE(args));
+#endif
 }
 
 static int32_t send_drv_service_name(const char *service_name, uint32_t name_size)
@@ -1472,8 +1475,11 @@ static int32_t send_drv_service_name(const char *service_name, uint32_t name_siz
         name_size,
         0,
     };
-
+#ifndef CONFIG_DISABLE_MULTI_DRV
     return drv_call_new("drvmgr_multi", UNREGISTER_DRV_CONF, args, lens, ARRAY_SIZE(args));
+#else
+    return drv_call_new("drvmgr", UNREGISTER_DRV_CONF, args, lens, ARRAY_SIZE(args));
+#endif
 }
 
 void uninstall_drv_permission(const void *obj, uint32_t obj_size)

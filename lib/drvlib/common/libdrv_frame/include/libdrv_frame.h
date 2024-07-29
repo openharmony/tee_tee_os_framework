@@ -13,6 +13,7 @@
 #define LIBDRV_FRAME_DRV_FRAME_H
 
 #include <stdbool.h>
+#include "ipclib.h"
 
 typedef int32_t (*drv_frame_init_t)(void);
 

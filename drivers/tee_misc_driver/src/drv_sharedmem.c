@@ -9,6 +9,7 @@
  * PURPOSE.
  * See the Mulan PSL v2 for more details.
  */
+#define _GNU_SOURCE
 #include "drv_sharedmem.h"
 #include <securec.h>
 #include "tee_log.h"

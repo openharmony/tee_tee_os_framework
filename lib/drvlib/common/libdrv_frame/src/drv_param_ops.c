@@ -10,11 +10,12 @@
  * See the Mulan PSL v2 for more details.
  */
 
+#define _GNU_SOURCE
 #include "drv_param_ops.h"
 #include <stdio.h>
+#include <unistd.h>
 #include <drv_thread.h>
 #include <tee_log.h>
-#include <unistd.h>
 #include <tee_sharemem_ops.h>
 
 static int32_t get_drv_caller_taskid(uint32_t *taskid)

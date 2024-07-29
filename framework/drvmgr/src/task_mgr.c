@@ -13,7 +13,6 @@
 #include "task_mgr.h"
 #include <tee_log.h>
 #include <ipclib.h>
-#include <ac_const.h>
 #include <libdrv_frame.h>
 #include <dyn_conf_dispatch_inf.h>
 #include <target_type.h>
@@ -24,6 +23,7 @@
 #include "drv_dyn_policy_mgr.h"
 #include "drv_index_mgr.h"
 #include "drv_dyn_conf_mgr.h"
+#include <securec.h>
 
 static struct dlist_node g_task_list = dlist_head_init(g_task_list);
 static pthread_mutex_t g_task_mtx = PTHREAD_MUTEX_INITIALIZER;

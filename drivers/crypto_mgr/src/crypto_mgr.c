@@ -18,6 +18,7 @@
 #include <tee_log.h>
 #include "drv_random.h"
 #include "crypto_driver_adaptor.h"
+#include <securec.h>
 
 const char *g_debug_prefix = "crypto_mgr";
 uint8_t *g_src_ctx_buf = NULL;
@@ -50,7 +51,7 @@ static int32_t crypto_ioctl_alloc_ctx_buf(struct drv_data *drv, uint32_t cmd, un
         tloge("Malloc ctx buffer failed, ctx size=%d\n", ctx_size);
         return CRYPTO_OVERFLOW;
     }
-    if (memset_s(ctx_buffer, (size_t)ctx_size, 0, (size_t)ctx_size) != EOK) {
+    if (memset_s(ctx_buffer, (size_t)ctx_size, 0, (size_t)ctx_size) != 0) {
         tloge("memset ctx buffer failed\n");
         free(ctx_buffer);
         return CRYPTO_ERROR_SECURITY;

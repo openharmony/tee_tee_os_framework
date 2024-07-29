@@ -19,6 +19,7 @@
 #include "drv_thread.h"
 #include "drv_process_mgr.h"
 #include "tee_log.h"
+#include "cs.h"
 
 const char *g_debug_prefix = "drvmgr";
 
@@ -33,7 +34,6 @@ int32_t main(int32_t argc __attribute__((unused)), char *argv[] __attribute__((u
 {
     static dispatch_fn_t dispatch_fns[] = {
         [0] = driver_dispatch,
-        [HM_MSG_HEADER_CLASS_ACMGR_PUSH] = ac_dispatch,
     };
 
     tlogi("drvmgr main begin\n");
@@ -74,6 +74,7 @@ int32_t main(int32_t argc __attribute__((unused)), char *argv[] __attribute__((u
         tloge("drv thread init fail\n");
         exit(ret);
     }
+
     tlogi("%s: start server loop\n", drv_frame.name);
     cs_server_loop(ch, dispatch_fns, ARRAY_SIZE(dispatch_fns), NULL, NULL);
 

@@ -87,6 +87,10 @@ export OUTPUTDIR := $(TOPDIR)/output
 
 export SDK_VER := tee-kernel-local-release
 
+ifneq ($(PLATFORM),)
+export PLATFORM_DRIVERS_PATH := $(DRIVERS_PATH)/platform/$(PLATFORM)
+endif
+
 PHONY += default
 default: all
 
@@ -133,11 +137,20 @@ HDR_INSTALL_DIR:=$(HDR_L_DIR)
 $(shell test -d $(HDR_INSTALL_DIR) || mkdir -p $(HDR_INSTALL_DIR))
 endif
 
+check_platform:
+ifndef PLATFORM
+	$(error PLATFORM is not set)
+endif
+	@echo "PLATFORM is set to $(PLATFORM)"
+
+PHONY += check_platform
+
 # default target
-PHONY += libs $(drivers) $(frameworks) $(service) package
-all: install_headers setup_links libs $(drivers) $(frameworks) $(service) package
-tees: setup_links libs $(drivers) $(frameworks) $(service)
+PHONY += libs $(drivers) $(platform_drivers) $(frameworks) $(service) package
+all: install_headers setup_links libs $(drivers) $(platform_drivers) $(frameworks) $(service) package
+tees: setup_links libs $(drivers) $(platform_drivers) $(frameworks) $(service)
 $(drivers): setup_links libs link_libs
+$(platform_drivers): check_platform setup_links libs link_libs
 $(frameworks): setup_links libs link_libs
 $(service): setup_links libs link_libs
 package: check_sym
@@ -197,7 +210,8 @@ check_sym: $(product_apps)
 		echo " [ CHECK a64 SYMS ]: $$i" ;\
 		$(BUILD_TOOLS)/generate_img/check-syms.sh $$i \
 			$(PREBUILD_LIBS)/aarch64/libc_shared.so \
-			$(OUTPUTDIR)/aarch64/obj/aarch64/libtee_shared/libtee_shared.so; \
+			$(OUTPUTDIR)/aarch64/obj/aarch64/libtee_shared/libtee_shared.so \
+			$(OUTPUTDIR)/aarch64/obj/aarch64/libdrv_shared/libdrv_shared.so; \
 	done ; fi
 	$(BUILD_TOOLS)/generate_img/smart-strip.sh $(product_apps)
 
