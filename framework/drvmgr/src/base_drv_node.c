@@ -17,6 +17,7 @@
 #include "target_type.h"
 #include "tee_config.h"
 #include "tee_log.h"
+#include <securec.h>
 
 const struct base_driver_node g_product_base_drv[] = {
 #ifdef CRYPTO_MGR_SERVER_ENABLE

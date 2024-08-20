@@ -166,6 +166,7 @@ static int32_t init_spawn_argv(const char *drv_name, uint32_t drv_name_len,
 
 static void init_spawn_buffer(struct spawn_drv_buffer *buffer)
 {
+    g_argv[ARGV_ELF_PATH_INDEX] = (char *)g_drv_loader;
     g_argv[ARGV_TASK_NAME_INDEX] = buffer->argv.task_name;
     g_argv[ARGV_TASK_PATH_INDEX] = buffer->argv.task_path;
     g_argv[ARGV_UNCOMMIT_INDEX] = buffer->argv.uncommit;

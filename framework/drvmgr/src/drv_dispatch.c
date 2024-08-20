@@ -9,6 +9,7 @@
  * PURPOSE.
  * See the Mulan PSL v2 for more details.
  */
+#define _GNU_SOURCE
 #include "drv_dispatch.h"
 #include <stdint.h>
 #include <inttypes.h>
@@ -37,7 +38,7 @@
 #include <unistd.h>
 
 static int32_t get_drv_params(struct tee_drv_param *params, const struct drv_req_msg_t *msg,
-                              const struct cap_message_info *info)
+                              const struct src_msginfo *info)
 {
     spawn_uuid_t uuid;
     int32_t ret;
@@ -46,27 +47,21 @@ static int32_t get_drv_params(struct tee_drv_param *params, const struct drv_req
         return -1;
     }
 
-    uint32_t cnode_idx = info->src_cnode_idx;
-    if ((cnode_idx == 0) || (info->msg_size < sizeof(struct drv_req_msg_t))) {
-        tloge("invalid cnode or invalid msg size\n");
-        return -1;
-    }
-
-    ret = getuuid(info->src_cred.pid, &uuid);
+    ret = getuuid(info->src_pid, &uuid);
     if (ret != 0) {
-        tloge("get pid:%u uuid failed\n", info->src_cred.pid);
+        tloge("get pid:%u uuid failed\n", info->src_pid);
         return -1;
     }
 
     ret = memcpy_s(&(params->uuid), sizeof(params->uuid), &uuid.uuid, sizeof(uuid.uuid));
     if (ret != 0) {
-        tloge("copy pid:%u uuid:0x%x to params failed\n", info->src_cred.pid, uuid.uuid.timeLow);
+        tloge("copy pid:%u uuid:0x%x to params failed\n", info->src_pid, uuid.uuid.timeLow);
         return -1;
     }
 
     params->args = (uintptr_t)msg->args;
     params->data = (uintptr_t)msg->data;
-    params->caller_pid = pid_to_taskid(TCBCREF2TID(info->src_tcb_cref), info->src_cred.pid);
+    params->caller_pid = pid_to_taskid(info->src_tid, info->src_pid);
 
     return 0;
 }
@@ -745,7 +740,7 @@ static void driver_reply_error_handle(int32_t swi_id, const struct tee_drv_param
     driver_open_reply_error_callback(ret_val, params);
 }
 
-static int32_t driver_handle_message(const struct drv_req_msg_t *msg, const struct cap_message_info *info,
+static int32_t driver_handle_message(const struct drv_req_msg_t *msg, const struct src_msginfo *info,
                                      struct drv_reply_msg_t *rmsg, const cref_t *msg_hdl)
 {
     int64_t ret_val = -1;
@@ -791,7 +786,7 @@ static int32_t driver_handle_message(const struct drv_req_msg_t *msg, const stru
     return ret;
 }
 
-intptr_t driver_dispatch(void *msg, cref_t *p_msg_hdl, struct cap_message_info *info)
+intptr_t driver_dispatch(void *msg, cref_t *p_msg_hdl, struct src_msginfo *info)
 {
     int32_t ret;
     struct drv_reply_msg_t reply_raw_buf;

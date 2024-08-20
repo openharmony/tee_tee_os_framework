@@ -50,6 +50,11 @@ inc-flags += -I$(SYSLIB)/libspawn_common/include
 inc-flags += -I$(TEELIB)/libteeconfig/include
 endif
 
+ifneq ($(CRYPTO_MGR_SERVER_ENABLE), )
+inc-flags += -I$(TEELIB)/libcrypto_hal/include
+inc-flags += -I$(TEELIB)/libcrypto/include
+endif
+
 include $(BUILD_CONFIG)/feature-macro.mk
 
 MODULE_FILE = $(BUILD_DIR)/$(SONAME)
@@ -73,7 +78,7 @@ $(BUILD_DIR)/export.txt: export.txt
 	@${CC} ${flags} -P -E -o $@ -x c $<
 
 ld-flags :=
-ld-flags += -lhwi$(TARG) -lc_shared$(TARG) -lteemem$(TARG) -lteeconfig$(TARG) -lio$(TARG)
+ld-flags += -lc_shared$(TARG) -lteemem$(TARG) -lteeconfig$(TARG) 
 
 ld-flags += -z separate-loadable-segments
 

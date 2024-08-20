@@ -155,6 +155,9 @@ tee_ext_root_uuid_derive_key;
 tee_hal_get_provision_key;
 g_debug_prefix;
 
+cs_server_loop;
+get_valid_bit;
+
 /* the following apis are exported for gtask dynamic link tee_shared library*/
 BN_new;
 BN_free;

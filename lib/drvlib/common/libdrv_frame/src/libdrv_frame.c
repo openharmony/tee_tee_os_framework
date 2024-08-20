@@ -15,11 +15,8 @@
 #include <dlfcn.h>
 #include <unistd.h>
 #include <ipclib.h>
-#include <sys/kuapi.h>
 #include <fileio.h>
 #include <timer.h>
-#include <irqmgr.h>
-#include <tamgr_ext.h>
 #include <tee_tag.h>
 #include <tee_drv_internal.h>
 #include <ipclib_hal.h>
@@ -71,7 +68,7 @@ static int32_t system_init(const char *name)
 
     set_log_use_tid_flag();
 
-    ret = hm_tamgr_register(name);
+    ret = tamgr_register(name);
     if (ret != 0) {
         tloge("%s: tamgr registration for platdrv failed\n", name);
         return -1;
@@ -90,7 +87,6 @@ int32_t register_drv_framework(const struct drv_frame_t *drv_frame, cref_t *ch, 
     }
 
     print_drv_info(drv_frame->name);
-    _init();
 
     ret = ipc_init(drv_frame->name, ch);
     if (ret != 0)

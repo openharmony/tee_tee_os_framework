@@ -14,16 +14,15 @@
 #include <inttypes.h>
 #include <priorities.h>
 #include <ipclib.h>
-#include <irqmgr.h>
 #include <spawn_init.h>
 #include <tee_log.h>
 #include "drv_dispatch.h"
 #include "drv_thread.h"
 #include "drv_operations.h"
+#include "cs.h"
 #ifdef CRYPTO_MGR_SERVER_ENABLE
 #include "drv_random.h"
 #include "crypto_manager.h"
-#include <rnd_seed.h>
 #endif
 
 static taskid_t g_drv_mgr_pid;
@@ -54,32 +53,6 @@ const struct tee_driver_module *get_drv_func(void)
 uint32_t get_drv_index(void)
 {
     return g_drv_index;
-}
-
-static int32_t hwi_context_init(const char *drv_name)
-{
-    cref_t hwi_ch = 0;
-    const int channel_index = 1;
-
-    int32_t ret = ipc_get_my_channel(channel_index, &hwi_ch);
-    if (ret != 0) {
-        tloge("drv %s get ipc channel for hwi fail:0x%x\n", drv_name, ret);
-        return -1;
-    }
-
-    ret = hwi_init(hwi_ch);
-    if (ret != 0) {
-        tloge("drv %s hwi init failed 0x%x\n", drv_name, ret);
-        return -1;
-    }
-
-    ret = hwi_create_irq_thread();
-    if (ret != 0) {
-        tloge("drv %s create hwi irq thread fail:0x%x\n", drv_name, ret);
-        return -1;
-    }
-
-    return 0;
 }
 
 static int32_t send_succ_msg_to_drvmgr(void)
@@ -148,9 +121,6 @@ void tee_drv_entry(const struct tee_driver_module *drv_func, const char *drv_nam
 {
     static dispatch_fn_t dispatch_fns[] = {
         [0] = driver_dispatch,
-#ifdef CRYPTO_MGR_SERVER_ENABLE
-        [HM_MSG_HEADER_CLASS_UPDATE_RND] = rand_update,
-#endif
     };
 
     int32_t ret = param_check(drv_func, drv_name, param);
@@ -159,23 +129,8 @@ void tee_drv_entry(const struct tee_driver_module *drv_func, const char *drv_nam
 
     tlogi("%s begin thread_limit:%u drv_index:%u\n", drv_name, param->thread_limit, param->drv_index);
 
-#ifdef CRYPTO_MGR_SERVER_ENABLE
-    if (strcmp(drv_name, TEE_CRYPTO_DRIVER_NAME) == 0) {
-        ret = ipc_register_ch_path(RAND_DRV_PATH, ch);
-        if (ret != 0) {
-            tloge("failed to register channel with name \"%s\":%d\n", RAND_DRV_PATH, ret);
-            return;
-        }
-    }
-#endif
     g_drv_func = drv_func;
     g_drv_index = param->drv_index;
-
-    ret = hwi_context_init(drv_name);
-    if (ret != 0) {
-        tloge("drv:%s hwi init failed\n", drv_name);
-        return;
-    }
 
     ret = hunt_drv_mgr_pid(&g_drv_mgr_pid);
     if (ret != 0)

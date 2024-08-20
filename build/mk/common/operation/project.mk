@@ -19,16 +19,16 @@ include $(BUILD_CONFIG)/arch_config.mk
 libtee_shared_a32: libteeconfig libtimer libteeagentcommon_client libcrypto_hal libswcrypto_engine $(crypto_lib) libteedynsrv libtee_stub
 libtee_shared: libteeconfig libtimer libteeagentcommon_client libcrypto_hal libswcrypto_engine $(crypto_lib) libteedynsrv libtee_stub
 
-libdrv_shared_a32: #libteeconfig_a32
-libdrv_shared: #libteeconfig
+libdrv_shared_a32: libteeconfig_a32
+libdrv_shared: libteeconfig
 
 teelib := libcrypto_hal libtimer libagent libagent_base libdrv libteeos libpermission_service \
 	libswcrypto_engine libtaentry libteeagentcommon_client libcrypto libteeconfig libteemem \
 	libssa libhuk libteedynsrv libopenssl libipc_hal libtee_stub
 syslib := libelf_verify libspawn_common libelf_verify_key libdynconfmgr libdynconfbuilder
-drvlib := #libdrv_frame
+drvlib := libdrv_frame
 
-libs: libtee_shared $(syslib) #libdrv_shared
+libs: libtee_shared $(syslib) libdrv_shared
 	@echo "libsok"
 
 $(teelib):
@@ -58,7 +58,7 @@ libdrv_shared: $(drvlib)
 
 # compile drivers rules
 
-frameworks := gtask teesmcmgr tarunner #drvmgr
+frameworks := gtask teesmcmgr tarunner drvmgr
 service := huk_service
 
 ifdef CONFIG_SSA_64BIT
@@ -69,11 +69,20 @@ ifdef CONFIG_PERMSRV_64BIT
 service += permission_service
 endif
 
-#drivers := crypto_mgr
+drivers := crypto_mgr
+platform_drivers :=
 
 ifdef CONFIG_TEE_MISC_DRIVER_64BIT
-#drivers += tee_misc_driver
+drivers += tee_misc_driver
 endif
+
+ifdef CONFIG_HADRWARE_CRYPTO_ENABLE
+platform_drivers += libhardware_crypto_drv
+endif
+
+$(platform_drivers):
+	@echo "building platform_drivers=$@ target path $(PLATFORM_DRIVERS_PATH)/$@"
+	$(VER) LDFLAGS= $(MAKE) -C $(PLATFORM_DRIVERS_PATH)/$@ ARCH=aarch64 -f $(PREBUILD_HEADER)/.config -f Makefile all
 
 $(drivers):
 	@echo "building ARCH=arm driver=$@ target"

@@ -15,8 +15,9 @@
 #include <stdint.h>
 #include <tee_defines.h>
 #include <errno.h>
+#include <ipclib.h>
 
 typedef int32_t (*crypto_drv_init) (const void *ops, void *buf, uint32_t buf_len);
 void register_crypto_rand_driver(crypto_drv_init fun, void *ops);
-intptr_t rand_update(void *msg, cref_t *p_msg_hdl, struct hmcap_message_info *info);
+intptr_t rand_update(void *msg, cref_t *p_msg_hdl, struct src_msginfo *info);
 #endif

@@ -14,8 +14,10 @@
 
 static struct drv_frame_info g_drv_frame_configs[] = {
 #if defined(TEE_SUPPORT_DRV_SERVER_64BIT) || defined(TEE_SUPPORT_DRV_SERVER_32BIT)
-    { "drvmgr", AC_SID_DRVMGR, 0, 0, 0, DRVMGR, true },
-    { "drvmgr_multi", AC_SID_DRVMGR, 0, 0, 0, DRVMGR, false },
+    { "drvmgr", 0, 0, 0, 0, DRVMGR, true },
+#ifndef CONFIG_DISABLE_MULTI_DRV
+    { "drvmgr_multi", 0, 0, 0, 0, DRVMGR, false },
+#endif
 #endif
 };
 

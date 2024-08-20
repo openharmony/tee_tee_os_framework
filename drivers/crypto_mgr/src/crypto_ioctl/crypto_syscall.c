@@ -31,7 +31,7 @@
 #include "crypto_syscall_pm.h"
 
 struct crypto_drv_ops_t *g_drv_entry = NULL;
-#define DRV_NAME   "/tafs/libhardware_crypto_drv.so"
+#define DRV_NAME   "libhardware_crypto_drv.so"
 
 static int32_t load_drv_hardware(void)
 {

@@ -130,13 +130,6 @@ static int32_t create_task_channel(const char *task_name, const struct env_param
         }
 
         tlogd("create drv:%s channel:0x%llx\n", task_name, (unsigned long long)(*drv_channel));
-
-        /* used for irq thread */
-        ret = ipc_create_channel(NULL, IPC_CHANNEL_NUM, NULL, reg_items);
-        if (ret != 0) {
-            tloge("create drv irq channel failed\n");
-            return -1;
-        }
     } else {
         /* Create 2 IPC channels */
         ret = ipc_create_channel(task_name, IPC_CHANNEL_NUM, NULL, reg_items);

@@ -14,18 +14,7 @@
 #include <stdint.h>
 #include "drv_io_share.h"
 #include "drv_addr_share.h"
-#include "iomgr_ext.h"
 #include "drv_thread.h"
-
-void *ioremap(uintptr_t phys_addr, unsigned long size, int32_t prot)
-{
-    return hm_io_remap((uintptr_t)phys_addr, NULL, size, prot);
-}
-
-int32_t iounmap(uintptr_t pddr, const void *addr)
-{
-    return hm_io_unmap(pddr, addr);
-}
 
 uint64_t drv_virt_to_phys(uintptr_t addr)
 {

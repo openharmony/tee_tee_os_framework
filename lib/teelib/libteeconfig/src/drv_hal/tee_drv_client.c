@@ -229,8 +229,11 @@ int64_t tee_drv_open(const char *drv_name, const void *param, uint32_t param_len
         name_len,
         0,
     };
-
+#ifndef CONFIG_DISABLE_MULTI_DRV
     int64_t fd = drv_call_new("drvmgr_multi", DRV_GENERAL_CMD_ID, args, lens, ARRAY_SIZE(args));
+#else
+    int64_t fd = drv_call_new("drvmgr", DRV_GENERAL_CMD_ID, args, lens, ARRAY_SIZE(args));
+#endif
     if (fd <= 0) {
         tloge("alloc fd failed\n");
         return fd;
@@ -316,7 +319,12 @@ static int64_t tee_drv_close_handle(int64_t fd)
         (uint64_t)fd,
     };
 
+#ifndef CONFIG_DISABLE_MULTI_DRV
     int64_t ret = drv_call_new("drvmgr_multi", DRV_GENERAL_CMD_ID, args, NULL, ARRAY_SIZE(args));
+#else
+    int64_t ret = drv_call_new("drvmgr", DRV_GENERAL_CMD_ID, args, NULL, ARRAY_SIZE(args));
+#endif
+
     if (ret != 0)
         tloge("close fd:0x%llx fail\n", fd);
 
@@ -357,14 +365,23 @@ void tee_drv_task_exit(uint32_t exit_pid)
         exit_pid,
     };
 
+#ifndef CONFIG_DISABLE_MULTI_DRV
     int64_t ret = drv_call_new("drvmgr_multi", DRV_EXCEPTION_CMD_ID, args, NULL, ARRAY_SIZE(args));
+#else
+    int64_t ret = drv_call_new("drvmgr", DRV_EXCEPTION_CMD_ID, args, NULL, ARRAY_SIZE(args));
+#endif
+
     if (ret != 0)
         tloge("call driver exception failed\n");
 }
 
 void tee_drv_task_dump(void)
 {
+#ifndef CONFIG_DISABLE_MULTI_DRV
     int64_t ret = drv_call_new("drvmgr_multi", DRV_DUMP_CMD_ID, NULL, NULL, 0);
+#else
+    int64_t ret = drv_call_new("drvmgr", DRV_DUMP_CMD_ID, NULL, NULL, 0);
+#endif
     if (ret != 0)
         tloge("drv task dump drv call failed\n");
 }
