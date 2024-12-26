@@ -76,3 +76,11 @@ TEE_Result TEE_RPMB_TAVERSION_Process(uint32_t ta_version)
     (void)ta_version;
     return TEE_ERROR_NOT_SUPPORTED;
 }
+TEE_Result TEE_RPMB_FS_Write_Attr(const char *filename, const uint8_t *buf, size_t size, uint32_t fmode)
+{
+    (void)filename;
+    (void)buf;
+    (void)size;
+    (void)fmode;
+    return TEE_ERROR_NOT_SUPPORTED;
+}

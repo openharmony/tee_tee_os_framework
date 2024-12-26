@@ -85,6 +85,23 @@ struct meminfo_t {
 TEE_Result tee_ext_derive_key_iter(const struct meminfo_t *salt, struct meminfo_t *key,
     uint32_t outer_iter_num, uint32_t inner_iter_num);
 
+/**
+ * @brief Derive key from device rootkey and UUID of the current task for iteration using huk2.
+ *
+ * @param salt [IN] Indicates the data for salt.
+ * @param key [OUT] Indicates the pointer where key is saved.
+ * @param outer_iter_num [IN] Indicates the iteration times in huk service.
+ * @param inner_iter_num [IN] Indicates the iteration times in platform driver.
+ *
+ * @return Returns {@code TEE_SUCCESS} if the operation is successful.
+ *         Returns {@code TEE_ERROR_BAD_PARAMETERS} if input parameter is incorrect.
+ *         Returns {@code TEE_ERROR_GENERIC} if the processing failed.
+ *
+ * @since 12
+ */
+TEE_Result tee_ext_derive_key_iter_by_huk2(const struct meminfo_t *salt, struct meminfo_t *key,
+    uint32_t outer_iter_num, uint32_t inner_iter_num);
+
 #ifdef __cplusplus
 }
 #endif

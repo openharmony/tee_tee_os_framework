@@ -95,6 +95,29 @@ TEE_Result TEE_RPMB_FS_Format(void);
 TEE_Result TEE_RPMB_FS_Write(const char *filename, const uint8_t *buf, size_t size);
 
 /**
+ * @brief Write files to RPMB by huk2 encryption.
+ *
+ * @attention If you want to improve the performance of writing files, you need to define the heap size in TA's
+ * manifest to be at leaset 3 times the file size plus 256KB.
+ * For example: To write a file with a size of 100KB, the defined heap size is at least
+ * 556KB (3 * 100 + 256). If the heap size cannot be satisfied, the file writing will still succeed,
+ * but the performance will be poor.
+ *
+ * @param filename Indicates the file name of the data to be written, the maximum length is 64 bytes.
+ * @param buf Indicates the buffer for writting data.
+ * @param size Indicates the size of the written data, the maximum size is 160KB.
+ * @param fmode Indicates the encryption method for written data, this interface provides specified huk2 encryption.
+ * @return Returns {@code TEE_SUCCESS} if the operation is successful.
+ *         Returns {@code TEE_ERROR_BAD_PARAMETERS} if input parameter is incorrect, or the file name is longer than 64
+ * bytes.
+ *         Returns {@code TEE_ERROR_RPMB_NOSPC} if the RPMB partition has insufficient disk space.
+ *
+ * @since 12
+ * @version 1.0
+ */
+TEE_Result TEE_RPMB_FS_Write_Attr(const char *filename, const uint8_t *buf, size_t size, uint32_t fmode);
+
+/**
  * @brief Read files from RPMB.
  *
  * @attention If you want to improve the performance of reading files, you need to define the heap size in TA's

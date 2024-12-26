@@ -28,3 +28,13 @@ TEE_Result tee_ext_derive_key_iter(const struct meminfo_t *salt, struct meminfo_
     (void)inner_iter_num;
     return TEE_ERROR_NOT_SUPPORTED;
 }
+
+TEE_Result tee_ext_derive_key_iter_by_huk2(const struct meminfo_t *salt, struct meminfo_t *key,
+    uint32_t outer_iter_num, uint32_t inner_iter_num)
+{   
+    (void)salt;
+    (void)key;
+    (void)outer_iter_num;
+    (void)inner_iter_num;
+    return TEE_ERROR_NOT_SUPPORTED;
+}
