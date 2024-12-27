@@ -502,6 +502,7 @@ tee_ext_rpmb_driver_remove;
 TEE_RPMB_FS_Init;
 TEE_RPMB_FS_Format;
 TEE_RPMB_FS_Write;
+TEE_RPMB_FS_Write_Attr;
 TEE_RPMB_FS_Read;
 TEE_RPMB_FS_Rename;
 TEE_RPMB_FS_Rm;
@@ -572,11 +573,19 @@ tee_ext_get_caller_userid;
 tee_get_session_type;
 tee_ext_get_device_unique_id;
 tee_ext_derive_key_iter;
+tee_ext_derive_key_iter_by_huk2;
 TEE_EXT_DeriveTARootKey;
 tee_ext_derive_ta_root_key_by_huk2;
 tee_ext_root_derive_key2_by_huk2;
 tee_ext_root_uuid_derive_key_by_huk2;
 get_heap_usage;
+tee_dstb_gen_sharekey;
+tee_dstb_pre_attestation;
+pthread_attr_settee;
+tee_query_ta_measure_report;
+tee_query_mspc_measure_report;
+TEE_EXT_CheckClientPerm;
+tee_ext_derive_ta_platfrom_keys;
 /* STUB API End */
 
 local: *;
