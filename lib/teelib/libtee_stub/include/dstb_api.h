@@ -47,7 +47,7 @@ extern "C" {
 #endif
 
 enum devid_type {
-    DEVID_NETID = 0;
+    DEVID_NETID = 0,
     DEVID_UDID = 1,
 };
 

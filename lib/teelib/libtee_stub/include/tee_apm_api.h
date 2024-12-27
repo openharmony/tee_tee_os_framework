@@ -57,7 +57,7 @@ enum tee_measure_result_value {
     TEE_MEASURE_ERROR_MSPC_NOT_SUPPORT             = 0x00000008,
     TEE_MEASURE_ERROR_REPORT_NOT_SUPPORT           = 0x00000009,
     TEE_MEASURE_ERROR_APM_NOT_SUPPORT              = 0x0000000a,
-}
+};
 
 /**
  * @brief Record the recent measure errors.
