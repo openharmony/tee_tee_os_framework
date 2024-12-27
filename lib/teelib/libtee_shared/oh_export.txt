@@ -179,6 +179,7 @@ BN_clear_free;
 CRYPTO_malloc;
 OPENSSL_cleanse;
 CRYPTO_free;
+ossl_x25519;
 
 RSA_new;
 RSA_free;
