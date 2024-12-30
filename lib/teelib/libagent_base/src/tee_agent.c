@@ -20,6 +20,10 @@
 
 TEE_Result tee_send_agent_cmd(uint32_t agent_id)
 {
+#ifdef CONFIG_TEE_AGENT_STUB
+    (void)agent_id;
+    return TEE_ERROR_NOT_SUPPORTED;
+#else
     struct ta_to_global_msg send_msg = {0};
     struct global_to_ta_msg ret_msg = {0};
     uint32_t ret;
@@ -51,8 +55,10 @@ TEE_Result tee_send_agent_cmd(uint32_t agent_id)
     }
 
     return TEE_SUCCESS;
+#endif
 }
 
+#ifndef CONFIG_TEE_AGENT_STUB
 static TEE_Result wait_msg_from_gtask(void)
 {
     uint32_t ret;
@@ -94,9 +100,14 @@ static TEE_Result wait_msg_from_gtask(void)
 
     return TEE_SUCCESS;
 }
+#endif
 
 TEE_Result tee_agent_lock(uint32_t agent_id)
 {
+#ifdef CONFIG_TEE_AGENT_STUB
+    (void)agent_id;
+    return TEE_ERROR_NOT_SUPPORTED;
+#else
     struct ta_to_global_msg send_msg = {0};
     uint32_t ret;
 
@@ -112,6 +123,7 @@ TEE_Result tee_agent_lock(uint32_t agent_id)
     }
 
     return wait_msg_from_gtask();
+#endif
 }
 
 /*
@@ -120,6 +132,10 @@ TEE_Result tee_agent_lock(uint32_t agent_id)
  */
 TEE_Result tee_agent_unlock(uint32_t agent_id)
 {
+#ifdef CONFIG_TEE_AGENT_STUB
+    (void)agent_id;
+    return TEE_ERROR_NOT_SUPPORTED;
+#else
     struct ta_to_global_msg send_msg = {0};
     uint32_t ret;
 
@@ -135,10 +151,17 @@ TEE_Result tee_agent_unlock(uint32_t agent_id)
     }
 
     return wait_msg_from_gtask();
+#endif
 }
 
 TEE_Result tee_get_agent_buffer(uint32_t agent_id, void **buffer, uint32_t *length)
 {
+#ifdef CONFIG_TEE_AGENT_STUB
+    (void)agent_id;
+    (void)buffer;
+    (void)length;
+    return TEE_ERROR_NOT_SUPPORTED;
+#else
     struct ta_to_global_msg send_msg  = {0};
     struct global_to_ta_msg entry_msg = {0};
     uint32_t ret;
@@ -176,8 +199,10 @@ TEE_Result tee_get_agent_buffer(uint32_t agent_id, void **buffer, uint32_t *leng
     }
 
     return TEE_SUCCESS;
+#endif
 }
 
+#ifndef CONFIG_TEE_AGENT_STUB
 /* we keep the old interface to compat with old TA */
 void obtain_agent_work_lock(uint32_t agent_id)
 {
@@ -192,3 +217,4 @@ void agent_work_unlock(uint32_t agent_id)
     if (ret != TEE_SUCCESS)
         tloge("failed to unlock agent 0x%x\n", agent_id);
 }
+#endif
