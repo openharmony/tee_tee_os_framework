@@ -566,6 +566,12 @@ tee_free_sharemem;
 copy_from_sharemem;
 copy_to_sharemem;
 
+/* TEE AGENT API */
+tee_agent_lock;
+tee_agent_unlock;
+tee_send_agent_cmd;
+tee_get_agent_buffer;
+
 /* EXTEND API */
 tee_ext_get_caller_info;
 tee_ext_get_caller_userid;

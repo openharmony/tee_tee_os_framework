@@ -145,6 +145,12 @@ TEE_SetTAPersistentTime;
 TEE_Wait;
 TEE_GetREETimeStr;
 
+/* TEE AGENT API */
+tee_agent_lock;
+tee_agent_unlock;
+tee_send_agent_cmd;
+tee_get_agent_buffer;
+
 /* extend API */
 AddCaller_CA_exec;
 AddCaller_CA;
