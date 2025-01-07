@@ -56,3 +56,9 @@ uint32_t tee_get_session_type(void)
 {
     return 0;
 }
+TEE_Result TEE_EXT_CheckClientPerm(uint32_t param_types, const TEE_Param params[TEE_PARAMS_NUM])
+{
+    (void)param_types;
+    (void)params;
+    return TEE_SUCCESS;
+}

@@ -618,7 +618,6 @@ LOCAL_SRC_FILES += $(OPENSSL_FILE_PATH)/crypto/getenv.c
 LOCAL_SRC_FILES += $(OPENSSL_FILE_PATH)/crypto/init.c
 LOCAL_SRC_FILES += $(OPENSSL_FILE_PATH)/crypto/initthread.c
 LOCAL_SRC_FILES += $(OPENSSL_FILE_PATH)/crypto/cpuid.c
-LOCAL_SRC_FILES += $(OPENSSL_FILE_PATH)/ohos_lite/crypto/ec/curve25519.c
 LOCAL_SRC_FILES += $(OPENSSL_FILE_PATH)/providers/baseprov.c
 LOCAL_SRC_FILES += $(OPENSSL_FILE_PATH)/providers/defltprov.c
 LOCAL_SRC_FILES += $(OPENSSL_FILE_PATH)/providers/nullprov.c
