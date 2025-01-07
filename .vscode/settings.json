@@ -1,6 +1,0 @@
-{
-    "files.associations": {
-        "soft_derive_key_api.h": "c",
-        "crypto_inner_interface.h": "c"
-    }
-}
