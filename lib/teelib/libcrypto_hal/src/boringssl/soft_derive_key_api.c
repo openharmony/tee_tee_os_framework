@@ -13,7 +13,7 @@
 #include "soft_derive_key_api.h"
 #include <crypto/evp.h>
 #ifdef CRYPTO_SUPPORT_SOFT_ECC
-#include <crypto/ec/ec_local.h>
+#include <ec/ec_local.h>
 #include <openssl/ecdh.h>
 #endif
 #include <openssl/evp.h>
@@ -50,7 +50,7 @@ static int32_t x25519_derive_key(const struct ecc_pub_key_t *client_key, const s
         tloge("invalid length for x25519");
         return CRYPTO_BAD_PARAMETERS;
     }
-    int32_t res = X25519(out_shared_key, server_key->r, client_key->x);
+    int32_t res = ossl_x25519(out_shared_key, server_key->r, client_key->x);
     if (res != BORINGSSL_OK) {
         tloge("x25519 share key make error");
         return CRYPTO_BAD_PARAMETERS;

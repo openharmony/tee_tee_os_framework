@@ -9,11 +9,17 @@
  * PURPOSE.
  * See the Mulan PSL v2 for more details.
  */
-#include "tee_mem_monitoring_api.h"
-#include "tee_defines.h"
+#include <tee_apm_api.h>
 
-uint32_t get_heap_usage(bool show)
+TEE_Result tee_query_ta_measure_report(const TEE_UUID *uuid, struct ta_measure_report_t *report)
+{   
+    (void)uuid;
+    (void)report;
+    return TEE_ERROR_NOT_SUPPORTED;
+}
+
+TEE_Result tee_query_mspc_measure_report(struct mspc_metric_result_report_t *report)
 {
-    (void)show;
-    return 0;
+    (void)report;
+    return TEE_ERROR_NOT_SUPPORTED;
 }

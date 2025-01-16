@@ -22,3 +22,5 @@ CPPFLAGS += -I$(TEELIB)/libteemem/include
 CPPFLAGS += -I$(TEELIB)/libipc_hal/include
 
 include $(BUILD_LIB)/lib-common.mk
+
+flags += -DCONFIG_TEE_AGENT_STUB

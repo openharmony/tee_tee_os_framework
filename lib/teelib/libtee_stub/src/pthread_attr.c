@@ -9,11 +9,13 @@
  * PURPOSE.
  * See the Mulan PSL v2 for more details.
  */
-#include "tee_mem_monitoring_api.h"
-#include "tee_defines.h"
+#include <pthread_attr.h>
 
-uint32_t get_heap_usage(bool show)
-{
-    (void)show;
+int pthread_attr_settee(pthread_attr_t *attr, int ca, int task_id, int shadow)
+{   
+    (void)attr;
+    (void)ca;
+    (void)task_id;
+    (void)shadow;
     return 0;
 }

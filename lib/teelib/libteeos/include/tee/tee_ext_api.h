@@ -94,6 +94,11 @@ TEE_Result AddCaller_TA_all(void);
 
 uint32_t tee_get_session_type(void);
 
+TEE_Result TEE_EXT_CheckClientPerm(uint32_t param_types, const TEE_Param params[TEE_PARAMS_NUM]);
+
+TEE_Result tee_ext_derive_ta_platfrom_keys(TEE_ObjectHandle object, uint32_t key_size, const TEE_Attribute *params,
+    uint32_t param_count, const uint8_t *exinfo, uint32_t exinfo_size);
+    
 #ifdef __cplusplus
 #if __cplusplus
 }
