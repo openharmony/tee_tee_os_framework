@@ -63,3 +63,25 @@ base/tee/tee_os_framework
 ├── test
 └── sample
 ```
+
+### 三、tee_tee_os_framework 构建指导 ###
+
+tee_tee_os_framework与tee_tee_os_kernel共同构建TEEOS，构建步骤如下：
+
+1. TEEOS内核代码位置：`base/tee/tee_os_kernel`
+
+2. TEEOS框架代码位置：`base/tee/tee_os_framework`
+
+3. 切换目录至OpenHarmony源码根目录，输入以下指令进入Docker构建环境
+
+```Bash
+docker run -it --rm -v $(pwd):$(pwd) -w $(pwd) swr.cn-south-1.myhuaweicloud.com/openharmony-docker/docker_oh_full:3.2 bash
+```
+
+4. 输入以下指令构建杨帆开发板TEEOS
+
+```Bash
+./build.sh --product-name rk3568 --build-target tee --ccache
+```
+
+5. 构建产物为TEEOS镜像：`base/tee/tee_os_kernel/kernel/bl32.bin`
