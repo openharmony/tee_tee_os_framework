@@ -1,12 +1,5 @@
 # TEE Test
 
-- [TEE Test](#TEE-test)
-  - [Introduce](#introduce)
-  - [Important Folders](#important-folders)
-  - [Build](#build)
-  - [Test Execution](#Test Execution)
-  - [Reference](#Reference)
-
 ## Introduce
 
 This is the test suit for the functional and compatible test of TEE.
