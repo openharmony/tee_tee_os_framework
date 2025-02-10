@@ -54,8 +54,6 @@
                 <policyitem type="copyright" name="Institute of Parallel And Distributed Systems (IPADS), Shanghai Jiao Tong University (SJTU)" path=".*" rule="may" group="defaultGroup" filefilter="copyrightPolicyFilter" desc="copyright information"/>
                 <policyitem type="copyright" name="*" path="test/xts/.*.csv" rule="may" group="defaultGroup" filefilter="copyrightPolicyFilter" desc="Filter CSV files"/>
                 <policyitem type="license" name="*" path="test/xts/.*.csv" rule="may" group="defaultGroup" filefilter="copyrightPolicyFilter" desc="Filter CSV files"/>
-                <policyitem type="copyright" name="*" path="lib/teelib/libopenssl/.*" rule="may" group="defaultGroup" filefilter="copyrightPolicyFilter" desc="A soft link to the openssl open source repository"/>
-                <policyitem type="license" name="*" path="lib/teelib/libopenssl/.*" rule="may" group="defaultGroup" filefilter="copyrightPolicyFilter" desc="A soft link to the openssl open source repository"/>
             </policy>
         </policylist>
         <filefilterlist>
