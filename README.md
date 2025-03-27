@@ -1,6 +1,14 @@
-# Contribution for tee_tee_os_framework #
+# Introduction to tee_tee_os_framework repository #
 
-tee_os_framework mainly contains the framework codes of tee, which is responsible for the management of the whole life cycle of TA, the processing of CA and TA interactive information and the management of drivers. In addition, it also provides core services such as encryption, decryption and secure storage. The specific module introduction is as followed.
+## Introduction ##
+
+OpenTrustee provides a Trusted Execution Environment (TEE) that runs in a hardware isolated secure area, running simultaneously with regular operating systems such as OpenHarmony but isolated from each other. OpenTrustee has higher security than conventional operating systems and can provide protection for confidential data on devices.
+
+OpenTrustee is a complete TEE solution that includes multiple components. The system architecture is shown in the figure below:
+
+![](figures/overview-of-opentrustee.png)
+
+The tee_tee_os_framework component mainly includes the operating system framework of OpenTrustee, responsible for managing the entire lifecycle of TA (Trusted Application), processing interaction information between CA (Client Application) and TA, and managing drivers. In addition, it also provides core services such as encryption and decryption, secure storage, etc. Below are specific module introductions.
 
 ### 1. The specific module introduction of tee_os_framework ###
 <table>
@@ -36,7 +44,7 @@ tee_os_framework mainly contains the framework codes of tee, which is responsibl
 
 </table>
 
-### 二、tee_os_framework code directories ###
+### tee_os_framework code directories ###
 ```
 base/tee/tee_os_framework
 ├── framework
@@ -63,3 +71,16 @@ base/tee/tee_os_framework
 ├── test
 └── sample
 ```
+
+## Tee_os_framework Construction Guide ##
+The tee_tee_os_framework and tee_tee_os_kernel work together to build TEEOS, and the commands for building them separately are as follows:
+
+```Bash
+./build.sh --product-name rk3568 --build-target tee --ccache
+```
+
+Build the product as a TEEOS image:` base/tee/tee_os_kernel/kernel/bl32.bin`
+
+## Related code repositories ##
+
+[tee_os_kernel](https://gitcode.com/openharmony-sig/tee_tee_os_kernel)

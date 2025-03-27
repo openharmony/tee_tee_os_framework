@@ -1,8 +1,16 @@
 # tee_tee_os_framework仓介绍 #
 
-tee_os_framework部件主要包含TEE的框架部分，负责TA整个生命周期的管理、CA与TA交互信息的处理以及驱动的管理。除此以外，还提供了加解密、安全存储等核心服务，下面是具体的模块介绍。
+## 简介 ##
 
-### 一、tee_os_framework部件模块划分 ###
+OpenTrustee提供了一个可信执行环境（Trusted Execution Environment，TEE），运行在受硬件隔离的安全区域中，与常规操作系统如OpenHarmony同时运行但互相隔离。OpenTrustee比常规操作系统拥有更高的安全性，可以为设备上的机密数据提供保护。
+
+OpenTrustee是一套完整的TEE解决方案，包含多个部件，系统架构如图所示：
+
+![](figures/overview-of-opentrustee.png)
+
+tee_tee_os_framework部件主要包含OpenTrustee的操作系统框架部分，负责TA（Trusted Application）整个生命周期的管理、CA（Client Application）与TA交互信息的处理以及驱动的管理。除此以外，还提供了加解密、安全存储等核心服务，下面是具体的模块介绍。
+
+## tee_os_framework部件模块划分 ##
 <table>
 <th>子模块名称</th>
 <th>模块职责</th>
@@ -17,7 +25,7 @@ tee_os_framework部件主要包含TEE的框架部分，负责TA整个生命周�
 </tr><tr>
 <td> permission service</td><td>SEC文件验签、权限控制等操作</td>
 </tr><tr>
-<td> ssa</td><td>安全存储操作</td>
+<td> ssa</td><td>安全存储服务，提供对数据的可信存储，并保证数据机密性、完整性、原子性和不可复制性</td>
 </tr><tr>
 <td> huk service</td><td>硬件根秘钥访问控制管理</td>
 </tr><tr>
@@ -36,7 +44,7 @@ tee_os_framework部件主要包含TEE的框架部分，负责TA整个生命周�
 
 </table>
 
-### 二、tee_os_framework部件代码目录结构 ###
+## tee_os_framework部件代码目录结构 ##
 ```
 base/tee/tee_os_framework
 ├── framework
@@ -64,24 +72,15 @@ base/tee/tee_os_framework
 └── sample
 ```
 
-### 三、tee_tee_os_framework 构建指导 ###
-
-tee_tee_os_framework与tee_tee_os_kernel共同构建TEEOS，构建步骤如下：
-
-1. TEEOS内核代码位置：`base/tee/tee_os_kernel`
-
-2. TEEOS框架代码位置：`base/tee/tee_os_framework`
-
-3. 切换目录至OpenHarmony源码根目录，输入以下指令进入Docker构建环境
-
-```Bash
-docker run -it --rm -v $(pwd):$(pwd) -w $(pwd) swr.cn-south-1.myhuaweicloud.com/openharmony-docker/docker_oh_full:3.2 bash
-```
-
-4. 输入以下指令构建杨帆开发板TEEOS
+## tee_os_framework构建指导 ##
+tee_tee_os_framework与tee_tee_os_kernel共同构建TEEOS，单独构建命令如下：
 
 ```Bash
 ./build.sh --product-name rk3568 --build-target tee --ccache
 ```
 
-5. 构建产物为TEEOS镜像：`base/tee/tee_os_kernel/kernel/bl32.bin`
+构建产物为TEEOS镜像：`base/tee/tee_os_kernel/kernel/bl32.bin`
+
+## 相关仓
+
+[tee_os_kernel](https://gitcode.com/openharmony-sig/tee_tee_os_kernel)
