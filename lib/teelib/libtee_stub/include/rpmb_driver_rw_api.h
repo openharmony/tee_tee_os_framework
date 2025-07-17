@@ -291,6 +291,19 @@ TEE_Result tee_ext_rpmb_driver_read(uint8_t *buf, size_t size, uint32_t block, u
  */
 TEE_Result tee_ext_rpmb_driver_remove(size_t size, uint32_t block, uint32_t offset);
 
+/**
+ * @brief RPMB secure storage fully formatted operation
+ *
+ * @return TEE_SUCCESS Indicates that the function was executed successfully
+ *         TEE_ERROR_RPMB_GENERIC  RPMB controller general error
+ *         TEE_ERROR_RPMB_MAC_FAIL  RPMB controller MAC check error
+ *         TEE_ERROR_RPMB_RESP_UNEXPECT_MAC  RPMB response data MAC check error
+ *
+ * @since 20
+ * @version 1.0
+ */
+TEE_Result tee_ext_rpmb_format();
+
 #ifdef __cplusplus
 }
 #endif

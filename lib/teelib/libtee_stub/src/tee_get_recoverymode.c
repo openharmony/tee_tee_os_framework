@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Huawei Technologies Co., Ltd.
+ * Copyright (C) 2025 Huawei Technologies Co., Ltd.
  * Licensed under the Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
@@ -9,11 +9,12 @@
  * PURPOSE.
  * See the Mulan PSL v2 for more details.
  */
-#include "tee_mem_monitoring_api.h"
+
+#include "tee_get_recoverymode.h"
 #include "tee_defines.h"
 
-uint32_t get_heap_usage(bool show)
+int32_t tee_ext_get_recoverymode(boot_modes *recoverymode)
 {
-    (void)show;
-    return 0;
+    (void)recoverymode;
+    return TEE_ERROR_NOT_SUPPORTED;
 }

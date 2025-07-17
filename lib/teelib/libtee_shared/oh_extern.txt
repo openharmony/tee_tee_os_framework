@@ -1,8 +1,6 @@
 EXTERN(
 /* GP Trusted Storage API */
-TEE_GetObjectInfo;
 TEE_GetObjectInfo1;
-TEE_RestrictObjectUsage;
 TEE_RestrictObjectUsage1;
 TEE_GetObjectBufferAttribute;
 TEE_GetObjectValueAttribute;
@@ -13,7 +11,6 @@ TEE_ResetTransientObject;
 TEE_PopulateTransientObject;
 TEE_InitRefAttribute;
 TEE_InitValueAttribute;
-TEE_CopyObjectAttributes;
 TEE_CopyObjectAttributes1;
 TEE_GenerateKey;
 TEE_CreatePersistentObject;
@@ -142,10 +139,8 @@ TEE_GetREETime;
 TEE_GetTAPersistentTime;
 TEE_SetTAPersistentTime;
 TEE_Wait;
-TEE_GetREETimeStr;
 
 /* extend API */
-AddCaller_CA_exec;
 AddCaller_CA;
 AddCaller_TA_all;
 tee_drv_open;
@@ -426,6 +421,7 @@ uart_cprintf;
 uart_printf_func;
 tee_print;
 tee_print_driver;
+tee_report;
 get_global_handle;
 set_global_handle;
 tee_secure_img_release_verify;
@@ -434,6 +430,7 @@ tee_init;
 tee_task_entry;
 set_log_use_tid_flag;
 get_tlv_sharedmem;
+tee_ext_get_advsecmode;
 
 sleep;
 nanosleep;
@@ -498,6 +495,7 @@ tee_ext_rpmb_protect_cfg_blk_read;
 tee_ext_rpmb_driver_write;
 tee_ext_rpmb_driver_read;
 tee_ext_rpmb_driver_remove;
+tee_ext_rpmb_format;
 TEE_RPMB_FS_Init;
 TEE_RPMB_FS_Format;
 TEE_RPMB_FS_Write;
@@ -510,7 +508,7 @@ TEE_RPMB_FS_StatDisk;
 TEE_RPMB_FS_SetAttr;
 TEE_RPMB_FS_Erase;
 TEE_RPMB_KEY_Status;
-TEE_RPMB_TAVERSION_Process;
+tee_rpmb_fs_getseclevel;
 
 /* SE API */
 TEE_SEServiceOpen;
@@ -581,15 +579,18 @@ tee_ext_derive_key_iter;
 tee_ext_derive_key_iter_by_huk2;
 TEE_EXT_DeriveTARootKey;
 tee_ext_derive_ta_root_key_by_huk2;
+tee_ext_derive_key_iter_by_huk2_enhance;
 tee_ext_root_derive_key2_by_huk2;
 tee_ext_root_uuid_derive_key_by_huk2;
-get_heap_usage;
+tee_ext_root_derive_key2_by_huk2_enhance;
+tee_ext_root_uuid_derive_key_by_huk2_enhance;
 tee_dstb_gen_sharekey;
 tee_dstb_pre_attestation;
 pthread_attr_settee;
 tee_query_ta_measure_report;
 tee_query_mspc_measure_report;
-TEE_EXT_CheckClientPerm;
 tee_ext_derive_ta_platfrom_keys;
+spi_notify_set_shadow_priority;
+tee_ext_get_recoverymode;
 /* STUB API End */
 )

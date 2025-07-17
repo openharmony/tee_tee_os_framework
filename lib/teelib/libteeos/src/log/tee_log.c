@@ -269,3 +269,11 @@ void uart_printf_func(const char *fmt, ...)
 
     va_end(ap);
 }
+
+void tee_report(const char *domain, const char *event, HISYSEVENT_TYPE event_type, const char *fmt, ...)
+{
+    (void)domain;
+    (void)event;
+    (void)event_type;
+    (void)fmt;
+}

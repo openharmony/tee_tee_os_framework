@@ -41,21 +41,6 @@ static TEE_Result TestGetREETime(TEE_Param params[4])
     return TEE_SUCCESS;
 }
 
-static TEE_Result TestGetREETimeStr(TEE_Param params[4])
-{
-    tlogi("[%s] begin:", __FUNCTION__);
-
-    char timeStr[DATE_TIME_LENGTH] = { 0 };
-    TEE_GetREETimeStr(timeStr, DATE_TIME_LENGTH);
-    if (strlen(timeStr) == 0) {
-        tloge("TEE_GetREETimeStr failed!\n");
-        return TEE_ERROR_NO_DATA;
-    }
-    TEE_MemMove(params[1].memref.buffer, timeStr, params[1].memref.size);
-    tlogi("after TEE_GetREETimeStr: %s", timeStr);
-    return TEE_SUCCESS;
-}
-
 static TEE_Result TestGetSecureRtcTime(TEE_Param params[4])
 {
     tlogi("[%s] begin:", __FUNCTION__);

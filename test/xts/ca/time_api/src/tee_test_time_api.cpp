@@ -191,35 +191,6 @@ TEE_TEST(TeeBasicTestFram, GetReeTime, Function | MediumTest | Level0)
 }
 
 /**
- * @testcase.name      : GetReeTimeStr
- * @testcase.desc      : test TEE_GetREETimeStr
- * @testcase.expect    : return TEEC_SUCCESS
- */
-TEE_TEST(TeeBasicTestFram, GetReeTimeStr, Function | MediumTest | Level0)
-{
-    ClientSessionMgr sess;
-    uint32_t origin;
-    TEEC_UUID testId = TIME_API_UUID;
-    TEEC_Result ret = sess.Start(&testId);
-    ASSERT_EQ(ret, TEEC_SUCCESS);
-    char testData0[DATE_TIME_LENGTH + 1] = { 0 };
-
-    TEEC_Operation operation = {0};
-    operation.started = 1;
-    operation.paramTypes = TEEC_PARAM_TYPES(TEEC_NONE, TEEC_MEMREF_TEMP_INOUT, TEEC_NONE, TEEC_NONE);
-    operation.params[1].tmpref.size = DATE_TIME_LENGTH;
-    operation.params[1].tmpref.buffer = testData0;
-    ret = TEEC_InvokeCommand(&sess.session, CMD_ID_TEST_GET_REE_TIME_STR, &operation, &origin);
-    ASSERT_EQ(ret, TEEC_SUCCESS);
-#ifndef TEST_STUB
-    ASSERT_STRNE(testData0, PRESET_ZERO);
-#else
-    ASSERT_STREQ(testData0, PRESET_ZERO);
-#endif
-    sess.Destroy();
-}
-
-/**
  * @testcase.name      : GetSecureRtcTime
  * @testcase.desc      : test tee_get_secure_rtc_time api
  * @testcase.expect    : return TEEC_SUCCESS

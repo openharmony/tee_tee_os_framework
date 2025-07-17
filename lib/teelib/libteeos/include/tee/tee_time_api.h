@@ -74,13 +74,4 @@ TEE_Result TEE_SetTAPersistentTime(TEE_Time *time);
  * @return void
  */
 void TEE_GetREETime(TEE_Time *time);
-
-/*
- * Get string of current REE system time
- *
- * @param time_str     [OUT]  current REE system time string
- * @param time_str_len [OUT]  the length of time string
- * @return void
- */
-void TEE_GetREETimeStr(char *time_str, uint32_t time_str_len);
 #endif

@@ -151,3 +151,9 @@ int32_t tee_get_oemkey_info(uint8_t *oem_key, size_t key_size)
 
     return ret;
 }
+
+int32_t tee_ext_get_advsecmode(uint32_t *advsecmode)
+{
+    (void)advsecmode;
+    return TEE_ERROR_NOT_SUPPORTED;
+}

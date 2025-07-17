@@ -30,7 +30,7 @@ TEE test suit is based on Open Harmony hcpptest framework, which can refer to th
 
 
 ## Test Execution
-Note: The absolute path for running the CA during the test must be the same as the absolute path for running the CA specified by AddCaller_CA_exec func in the test TA. In this example, the CA named tee_test_client_api_vendor in the TA is used as an example to describe the test command. You can specify another name in the actual test.
+Note: The absolute path for running the CA during the test must be the same as the absolute path for running the CA specified by AddCaller_CA func in the test TA. In this example, the CA named tee_test_client_api_vendor in the TA is used as an example to describe the test command. You can specify another name in the actual test.
 
 Place the test TA (sec file) in the same level directory as the test CA, and both can be placed in the/vendor/bin/directory.
 
