@@ -54,28 +54,10 @@ extern "C" {
  *         Returns {@code TEE_ERROR_BAD_PARAMETERS} if input parameter is incorrect.
  *         Returns {@code TEE_ERROR_GENERIC} if the processing failed.
  *
- * @since 12
+ * @since 20
  * @version 1.0
  */
 TEE_Result TEE_EXT_DeriveTARootKey(const uint8_t *salt, uint32_t size, uint8_t *key, uint32_t key_size);
-
-/**
- * @brief Derive key from device root key by HUK2.
- * @attention If the device does not support HUK2, the key is derived by HUK.
- *
- * @param salt [IN] Indicates the data for salt.
- * @param size [IN] Indicates the length of salt.
- * @param key [OUT] Indicates the pointer where key is saved.
- * @param key_size [IN] Indicates the size of the key, which must be integer times of 16.
- *
- * @return Returns {@code TEE_SUCCESS} if the operation is successful.
- *         Returns {@code TEE_ERROR_BAD_PARAMETERS} if input parameter is incorrect.
- *         Returns {@code TEE_ERROR_GENERIC} if the processing failed.
- *
- * @since 12
- * @version 1.0
- */
-TEE_Result tee_ext_derive_ta_root_key_by_huk2(const uint8_t *salt, uint32_t size, uint8_t *key, uint32_t key_size);
 
 /**
  * @brief Derive key from device root key by HUK2.
@@ -90,7 +72,7 @@ TEE_Result tee_ext_derive_ta_root_key_by_huk2(const uint8_t *salt, uint32_t size
  *         Returns {@code TEE_ERROR_BAD_PARAMETERS} if input parameter is incorrect.
  *         Returns {@code TEE_ERROR_GENERIC} if the processing failed.
  *
- * @since 12
+ * @since 20
  * @version 1.0
  */
 TEE_Result tee_ext_root_derive_key2_by_huk2(const uint8_t *secret, uint32_t secret_len, uint8_t *key, uint32_t key_len);
@@ -108,10 +90,46 @@ TEE_Result tee_ext_root_derive_key2_by_huk2(const uint8_t *secret, uint32_t secr
  *         Returns {@code TEE_ERROR_BAD_PARAMETERS} if input parameter is incorrect.
  *         Returns {@code TEE_ERROR_GENERIC} if the processing failed.
  *
- * @since 12
+ * @since 20
  * @version 1.0
  */
-TEE_Result tee_ext_root_uuid_derive_key_by_huk2(const uint8_t *salt, uint32_t size, uint8_t *key, uint32_t key_size);
+TEE_Result tee_ext_root_uuid_derive_key_by_huk2(const uint8_t *salt, uint32_t size, uint8_t *key, uint32_t *key_size);
+
+/**
+ * @brief using root key to derive key for keymaster using huk2 enhance
+ *
+ * @param secret [IN] input secret
+ * @param secret_len [IN] input secret size
+ * @param key [OUT] derived key
+ * @param key_len [OUT] derived key size
+ *
+ * @return Returns {@code TEE_SUCCESS} if the operation is successful.
+ *         Returns {@code TEE_ERROR_BAD_PARAMETERS} if input parameter is incorrect.
+ *         Returns {@code TEE_ERROR_GENERIC} if the processing failed.
+ *
+ * @since 20
+ * @version 1.0
+ */
+TEE_Result tee_ext_root_derive_key2_by_huk2_enhance(const uint8_t *secret, uint32_t secret_len, uint8_t *key,
+                                                    uint32_t key_len);
+
+/**
+ * @brief derive key from device rootkey and UUID of the current task using huk2 enhance
+ *
+ * @param salt [IN] data for salt
+ * @param size [IN] salt length
+ * @param key [OUT] pointer where key is saved
+ * @param key_size [OUT] size of generated key, fix-size 32 bytes
+ *
+ * @return Returns {@code TEE_SUCCESS} if the operation is successful.
+ *         Returns {@code TEE_ERROR_BAD_PARAMETERS} if input parameter is incorrect.
+ *         Returns {@code TEE_ERROR_GENERIC} if the processing failed.
+ *
+ * @since 20
+ * @version 1.0
+ */
+TEE_Result tee_ext_root_uuid_derive_key_by_huk2_enhance(const uint8_t *salt, uint32_t size, uint8_t *key,
+                                                        uint32_t *key_size);
 
 #ifdef __cplusplus
 }

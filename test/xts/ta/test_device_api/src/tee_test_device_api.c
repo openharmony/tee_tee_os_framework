@@ -762,14 +762,7 @@ static TEE_Result CmdTestRPMBAPI(uint32_t nParamTypes, TEE_Param pParams[4])
     } else {
         tlogi("test TEE_RPMB_FS_Rm is success\n");
     }
-    // this api should be replace by TEE_EXT_TA_version_check
-    ret = TEE_RPMB_TAVERSION_Process(1);
-    if (ret != TEE_SUCCESS) {
-        tloge("test TEE_RPMB_TAVERSION_Process is failed! ret = 0x%x\n", ret);
-        goto clean;
-    } else {
-        tlogi("test TEE_RPMB_TAVERSION_Process is success\n");
-    }
+
     // write file 
     ret = TEE_RPMB_FS_Write(file_hello, (const uint8_t *)test_string, strlen(test_string));
     if (ret != TEE_SUCCESS) {

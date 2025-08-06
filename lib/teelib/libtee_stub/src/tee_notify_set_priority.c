@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Huawei Technologies Co., Ltd.
+ * Copyright (C) 2025 Huawei Technologies Co., Ltd.
  * Licensed under the Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
@@ -10,13 +10,11 @@
  * See the Mulan PSL v2 for more details.
  */
 
-#ifndef SYS_LIBS_LIBTIMER_GP_TIME_API_H
-#define SYS_LIBS_LIBTIMER_GP_TIME_API_H
-#include <tee_defines.h>
+#include "tee_notify_set_priority.h"
+#include "tee_defines.h"
 
-void TEE_GetSystemTime(TEE_Time *time);
-void TEE_GetREETime(TEE_Time *time);
-TEE_Result TEE_Wait(uint32_t mill_second);
-TEE_Result TEE_SetTAPersistentTime(TEE_Time *time);
-TEE_Result TEE_GetTAPersistentTime(TEE_Time *time);
-#endif
+int spi_notify_set_shadow_priority(uint32_t priority_ree)
+{
+    (void)priority_ree;
+    return TEE_ERROR_NOT_SUPPORTED;
+}

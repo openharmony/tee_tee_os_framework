@@ -29,7 +29,7 @@ TEE 测试套件REE侧是基于Open Harmony的hcpptest编写。测试框架可�
     将测试TA源码放到SDK目录中，参考demo TA的编译，源码和配置文件使用待编译的TA即可。
 
 ## 测试执行
-注意，测试时CA运行的绝对路径要与测试TA中AddCaller_CA_exec指定的CA运行绝对路径保持一致，本例以TA中指定的CA名称为tee_test_client_api_vendor为例来介绍测试命令。
+注意，测试时CA运行的路径要与测试TA中AddCaller_CA指定的CA运行路径保持一致，本例以TA中CA名称为tee_test_client_api_vendor为例来介绍测试命令。
 测试TA（sec文件）放到与测试CA同级目录下，可以均放在/vendor/bin/目录下。
 
 ### TEE sdk兼容性测试

@@ -53,3 +53,8 @@ TEE_Result tee_ext_rpmb_driver_remove(size_t size, uint32_t block, uint32_t offs
     (void)offset;
     return TEE_ERROR_NOT_SUPPORTED;
 }
+
+TEE_Result tee_ext_rpmb_format()
+{
+    return TEE_ERROR_NOT_SUPPORTED;
+}

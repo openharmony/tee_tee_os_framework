@@ -38,3 +38,22 @@ TEE_Result tee_ext_derive_key_iter_by_huk2(const struct meminfo_t *salt, struct 
     (void)inner_iter_num;
     return TEE_ERROR_NOT_SUPPORTED;
 }
+
+TEE_Result tee_ext_derive_ta_root_key_by_huk2(const uint8_t *salt, uint32_t size, uint8_t *key, uint32_t key_size)
+{
+    (void)salt;
+    (void)size;
+    (void)key;
+    (void)key_size;
+    return TEE_ERROR_NOT_SUPPORTED;
+}
+
+TEE_Result tee_ext_derive_key_iter_by_huk2_enhance(const struct meminfo_t *salt, struct meminfo_t *key,
+    uint32_t outer_iter_num, uint32_t inner_iter_num)
+{
+    (void)salt;
+    (void)key;
+    (void)outer_iter_num;
+    (void)inner_iter_num;
+    return TEE_ERROR_NOT_SUPPORTED;
+}

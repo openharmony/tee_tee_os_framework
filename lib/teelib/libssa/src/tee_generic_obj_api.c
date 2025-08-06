@@ -23,54 +23,6 @@
     } while (0)
 #endif
 
-void TEE_GetObjectInfo(TEE_ObjectHandle object, TEE_ObjectInfo *objectInfo)
-{
-    uint32_t pos = 0;
-    uint32_t len = 0;
-    TEE_Result ret;
-    tlogd("TEE_GetObjectInfo start!\n");
-
-    if (objectInfo == NULL || object == NULL) {
-        tloge("bad parameter!\n");
-        return;
-    }
-    if (check_object(object) != TEE_SUCCESS) {
-        tloge("object is invalid\n");
-        return;
-    }
-
-    if (object->ObjectInfo == NULL) {
-        tloge("objectInfo in obj is invalid\n");
-        return;
-    }
-
-    if ((object->ObjectInfo->handleFlags & TEE_HANDLE_FLAG_PERSISTENT) != 0) {
-        ret = TEE_InfoObjectData(object, &pos, &len);
-        if (ret != TEE_SUCCESS) {
-            tloge("info object failed, ret=0x%x\n", ret);
-            return;
-        }
-        objectInfo->dataSize = len;
-        objectInfo->dataPosition = pos;
-    } else {
-        objectInfo->dataSize = 0;
-        objectInfo->dataPosition = 0;
-    }
-    objectInfo->objectType = object->ObjectInfo->objectType;
-#ifndef GP_SUPPORT
-    objectInfo->objectSize = object->ObjectInfo->objectSize;
-    objectInfo->maxObjectSize = object->ObjectInfo->maxObjectSize;
-#else
-    objectInfo->keySize = object->ObjectInfo->keySize;
-    objectInfo->maxKeySize = object->ObjectInfo->maxKeySize;
-#endif
-    objectInfo->objectUsage = object->ObjectInfo->objectUsage;
-    objectInfo->handleFlags = object->ObjectInfo->handleFlags;
-
-    tlogd("TEE_GetObjectInfo end!\n");
-    return;
-}
-
 TEE_Result TEE_GetObjectInfo1(
     TEE_ObjectHandle object,
     TEE_ObjectInfo *objectInfo)
@@ -119,28 +71,6 @@ TEE_Result TEE_GetObjectInfo1(
 
     tlogd("TEE_GetObjectInfo1 end!\n");
     return TEE_SUCCESS;
-}
-
-void TEE_RestrictObjectUsage(TEE_ObjectHandle object, uint32_t objectUsage)
-{
-    tlogd("TEE_RestrictObjectUsage start!\n");
-
-    if (object == NULL) {
-        tloge("bad parameter!\n");
-        return;
-    }
-    if (check_object(object) != TEE_SUCCESS) {
-        tloge("object is invalid\n");
-        return;
-    }
-
-    if (object->ObjectInfo == NULL) {
-        tloge("objectInfo in obj is invalid\n");
-        return;
-    }
-    object->ObjectInfo->objectUsage = (object->ObjectInfo->objectUsage) & (objectUsage);
-
-    return;
 }
 
 TEE_Result TEE_RestrictObjectUsage1(

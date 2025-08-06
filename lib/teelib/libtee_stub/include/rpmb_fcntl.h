@@ -299,18 +299,30 @@ enum TEE_RPMB_KEY_STAT {
 uint32_t TEE_RPMB_KEY_Status(void);
 
 /**
- * @brief Process the current TA version information.
+ * @brief Enumerates the types of RPMB, 1 means ufs or emmc, 2 means rpmc.
  *
- * @param ta_version Indicates the TA version.
+ * @since 20
+ */
+typedef enum {
+    /** ufs / emmc is safe. */
+    TEE_RPMB_SECLEVEL_HIGH = 0x1,
+    /** rpmb is emulated by rpmc. */
+    TEE_RPMB_SECLEVEL_LOW = 0x2,
+} TEE_RPMB_SECLEVEL;
+
+/**
+ * @brief Get RPMB security level, 1 means ufs/emmc, 2 means rpmc.
  *
- * @return Returns {@code TEE_SUCCESS} if the operation is successful.
- *         Returns {@code TEE_ERROR_BAD_PARAMETERS} if input parameter is incorrect.
- *         Returns {@code TEE_ERROR_GENERIC} if the processing failed.
+ * @param sec_level Returns current security level.
  *
- * @since 12
+ * @return TEE_SUCCESS Indicates successful, sec_level value is valid.
+ *         Other return value Indicates error, sec_level value is invalid.
+ *
+ * @since 20
  * @version 1.0
  */
-TEE_Result TEE_RPMB_TAVERSION_Process(uint32_t ta_version);
+TEE_Result tee_rpmb_fs_getseclevel(uint32_t *sec_level);
+
 #ifdef __cplusplus
 }
 #endif

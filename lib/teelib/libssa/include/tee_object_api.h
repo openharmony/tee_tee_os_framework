@@ -58,32 +58,6 @@ enum Handle_Flag_Constants {
 #define TEE_ATTR_IS_PUBLIC(attribute_id)    ((((attribute_id) << 3) >> 31) == 1)
 
 /*
- * Obtain the TEE_ObjectInfo of the object and copy it to the space pointed
- * to by the parameter objectInfo, which is pre-allocated by the user
- *
- * @param object [IN] Source TEE_ObjectHandle
- * @param objectInfo [OUT] Pointer to the structure used to store the TEE_ObjectInfo
- *
- * @return void
- */
-void TEE_GetObjectInfo(TEE_ObjectHandle object, TEE_ObjectInfo *objectInfo);
-
-/*
- * Limit the objectUsage bit of the object. This bit determines the usage of the key in the object.
- * The value range is Usage_Constants. For the flag bit of the parameter objectUsage:
- *    If this bit is set to 1, the use flag of object will not be changed
- *    If this bit is set to 0, the corresponding object usage flag of the object is cleared
- *
- * @attention The newly created object will contain all Usage_Constants,
- * and the usage flag can only be cleared, not set
- * @param object [IN] Need to restrict TEE_ObjectHandle
- * @param objectUsage [IN] ObjectUsage users want to change
- *
- * @return void
- */
-void TEE_RestrictObjectUsage(TEE_ObjectHandle object, uint32_t objectUsage);
-
-/*
  * Get the buffer content of the union in the TEE_Attribute structure of the object pointed
  * to by TEE_ObjectHandle, and the union member must be ref
  *
@@ -198,18 +172,6 @@ void TEE_InitRefAttribute(TEE_Attribute *attr, uint32_t attributeID, void *buffe
  * @return void
  */
 void TEE_InitValueAttribute(TEE_Attribute *attr, uint32_t attributeID, uint32_t a, uint32_t b);
-
-/*
- * This function uses an initialized object to assign TEE_Attribute to an uninitialized object,
- * which is equivalent to copying the TEE_Attribute of srcobject to destobject
- *
- * @attention The TEE_Attribute type and number of the two objects must match
- * @param destObject [IN]  The uninitialized TEE_ObjectHandle to be assigned
- * @param srcObject [IN]  The initialized TEE_ObjectHandle is used to assign a value to another object
- *
- * @return void
- */
-void TEE_CopyObjectAttributes(TEE_ObjectHandle destObject, TEE_ObjectHandle srcObject);
 
 /*
  * This function generates a random key or key-pair and assigns it to the transient object
