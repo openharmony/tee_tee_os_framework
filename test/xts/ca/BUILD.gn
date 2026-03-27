@@ -98,6 +98,7 @@ hcpptest_suite("tee_test_tcf_api") {
     tee_test_root_dir + "/utils/cmd_id",
     tee_test_root_dir + "/ca/tcf_api/common",
 
+    "//base/tee/tee_os_framework/lib/teelib/libteeos/include/tee",
     "//test/xts/tools/lite/hctest/include",
     "//third_party/googletest/googletest/include",
     "//foundation/systemabilitymgr/samgr_lite/interfaces/kits/samgr",
