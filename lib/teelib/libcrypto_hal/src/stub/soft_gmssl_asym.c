@@ -12,6 +12,7 @@
 
 #include "../boringssl/soft_gmssl.h"
 
+#ifndef CRYPTO_SUPPORT_SOFT_SM4
 int32_t sm4_cipher_init(struct ctx_handle_t *ctx, const struct symmerit_key_t *key, const struct memref_t *iv)
 {
     (void)ctx;
@@ -37,3 +38,4 @@ int32_t sm4_cipher_do_final(struct ctx_handle_t *ctx, const struct memref_t *dat
     (void)data_out;
     return CRYPTO_NOT_SUPPORTED;
 }
+#endif
