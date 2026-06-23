@@ -88,7 +88,7 @@ uint64_t hw_rng(void)
 int32_t generate_random(void *buffer, size_t size)
 {
     size_t i;
-    int rnd;
+    uint64_t rnd;
     for (i = 0; i < size; i += sizeof(uint64_t)) {
         rnd = hw_rng();
         memcpy(buffer + i, &rnd, MIN(sizeof(uint64_t), size - i));
