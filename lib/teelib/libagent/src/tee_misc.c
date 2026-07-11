@@ -10,6 +10,7 @@
  * See the Mulan PSL v2 for more details.
  */
 #include "tee_misc.h"
+#include <mem_ops.h>
 #include <securec.h>
 #include <tee_log.h>
 #include <ta_framework.h>
@@ -42,11 +43,27 @@ struct misc_control_t {
 };
 
 static struct misc_control_t *g_trans_control = NULL; /* agent trans buffer */
+static uint64_t g_misc_buffer_pmo;
+
+static void release_misc_buffer(void)
+{
+    if (g_misc_buffer_pmo == 0) {
+        return;
+    }
+
+    if (self_unmap(g_misc_buffer_pmo) != 0) {
+        tloge("unmap misc agent buffer failed\n");
+    }
+
+    g_misc_buffer_pmo = 0;
+    g_trans_control = NULL;
+}
 
 /* before call this function, you should lock the agent fist */
 int32_t tee_get_misc_buffer(void)
 {
     TEE_Result ret;
+    uint64_t virt_addr = 0;
     void *buffer    = NULL;
     uint32_t length = 0;
 
@@ -56,7 +73,17 @@ int32_t tee_get_misc_buffer(void)
         return ERROR_RET;
     }
 
-    g_trans_control        = buffer;
+    if (g_misc_buffer_pmo != 0) {
+        release_misc_buffer();
+    }
+
+    if (self_map_ns_phy_mem((uint64_t)(uintptr_t)buffer, length, &virt_addr) != 0) {
+        tloge("map misc agent buffer to self failed\n");
+        return ERROR_RET;
+    }
+
+    g_misc_buffer_pmo      = (uint64_t)(uintptr_t)buffer;
+    g_trans_control        = (struct misc_control_t *)(uintptr_t)virt_addr;
     g_trans_control->magic = TEE_MISC_AGENT_ID;
 
     return SUCC_RET;
@@ -130,7 +157,7 @@ int32_t get_time_of_data(uint32_t *seconds, uint32_t *millis, char *time_str, ui
 
     ret = g_trans_control->ret;
 END:
-    g_trans_control = NULL;
+    release_misc_buffer();
     /* we dont care return value here */
     (void)tee_agent_unlock(TEE_MISC_AGENT_ID);
     return ret;
