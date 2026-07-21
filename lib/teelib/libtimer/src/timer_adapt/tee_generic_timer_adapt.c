@@ -13,7 +13,7 @@
 #include <pthread.h>
 #include <sys_timer.h>
 #include <tee_log.h>
-#include <timemgr_api.h>
+#include "teecall.h"
 #include <generic_timer.h>
 #include <tee_time_adapt.h>
 #include <tee_mem_mgmt_api.h>
@@ -53,18 +53,11 @@ static uint64_t tee_read_time_stamp(void)
     return timestamp;
 }
 
-static uint32_t tee_sleep(msec)
+static uint32_t tee_sleep(uint32_t msec)
 {
-    TEE_Result ret;
-    cref_t timer_ref;
-
-    timer_ref = create_timer();
-    if (!check_ref_valid(timer_ref))
-        return TMR_ERR;
-
-    ret = timer_start(timer_ref, msec);
-    delete_timer(timer_ref);
-    return ret;
+    (void)msec;
+    tloge("op unsupported\n");
+    return TMR_ERR;
 }
 
 static int64_t timer_value_add(const timeval_t *time_val_1, const timeval_t *time_val_2)
@@ -224,7 +217,7 @@ static void *classic_thread(void *arg)
     return NULL;
 }
 
-static uint32_t classic_thread_create(timer_event *t_event)
+__attribute__((unused)) static uint32_t classic_thread_create(timer_event *t_event)
 {
     pthread_attr_t thread_attr;
     int32_t ret;
@@ -255,43 +248,11 @@ static uint32_t classic_thread_create(timer_event *t_event)
 static timer_event *tee_classic_timer_event_create(sw_timer_event_handler handler,
                                                    int32_t timer_class, void *priv_data)
 {
-    uint32_t ret;
-    timer_event *t_event = NULL;
-    cref_t timer_channel;
-
-    if (handler == NULL) {
-        tloge("bad parameters\n");
-        return NULL;
-    }
-
-    t_event = TEE_Malloc(sizeof(*t_event), 0);
-    if (t_event == NULL) {
-        tloge("no enough memory\n");
-        return NULL;
-    }
-
-    timer_channel = hm_msg_channel_create();
-    if (!check_ref_valid(timer_channel)) {
-        TEE_Free(t_event);
-        return NULL;
-    }
-
-    t_event->timer_class = timer_class;
-    t_event->state = TIMER_STATE_INACTIVE;
-    t_event->timer_channel = timer_channel;
-    t_event->expires.tval64 = 0;
-    t_event->handler = handler;
-    t_event->data = priv_data;
-
-    ret = classic_thread_create(t_event);
-    if (ret != TMR_OK) {
-        (void)hm_msg_channel_remove(t_event->timer_channel);
-        TEE_Free(t_event);
-        tloge("create classic thread fail\n");
-        return NULL;
-    }
-
-    return t_event;
+    (void)handler;
+    (void)timer_class;
+    (void)priv_data;
+    tloge("op unsupported\n");
+    return NULL;
 }
 
 static timer_event *tee_time_event_create(sw_timer_event_handler handler, int32_t timer_class, void *priv_data)
@@ -383,31 +344,9 @@ static uint32_t tee_time_event_stop(timer_event *t_event)
 
 static uint32_t tee_classic_timer_event_destroy(timer_event *t_event)
 {
-    int32_t ret;
-    struct timer_event_msg req_msg = {{{ 0 }}};
-    struct timer_event_msg rsp_msg = {{{ 0 }}};
-    req_msg.hdr.send.msg_id = DESTORY_TIMER;
-
-    if (t_event->state != TIMER_STATE_INACTIVE && t_event->state != TIMER_STATE_EXECUTING) {
-        tloge("invalid timer event state %d\n", t_event->state);
-        return TMR_ERR;
-    }
-
-    if (t_event->pid == (int32_t)get_self_taskid()) {
-        ret = TMR_OK;
-    } else {
-        ret = ipc_msg_call(t_event->timer_channel, &req_msg, sizeof(req_msg),
-                          &rsp_msg, sizeof(rsp_msg), OS_WAIT_FOREVER);
-        if (ret != TMR_OK || rsp_msg.hdr.send.msg_id != TIMER_OPS_SUCCESS)
-            tloge("stop timer event fail\n");
-    }
-
-    if (hm_msg_channel_remove(t_event->timer_channel))
-        tloge("channel remove failed\n");
-
-    (void)memset_s(t_event, sizeof(*t_event), 0, sizeof(*t_event));
-    TEE_Free(t_event);
-    return ret;
+    (void)t_event;
+    tloge("op unsupported\n");
+    return TMR_ERR;
 }
 
 static uint32_t tee_time_event_destroy(timer_event *t_event)

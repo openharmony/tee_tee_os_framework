@@ -28,8 +28,8 @@ endif
 # Source files required to build the target
 ifeq ($(CONFIG_OFF_DRV_TIMER), y)
 libtimer_c_files := $(wildcard src/*.c)
+libtimer_c_files += src/timer_adapt/tee_generic_timer_adapt.c
 endif
 
 include $(BUILD_LIB)/lib-common.mk
 flags += $(TRUSTEDCORE_PLATFORM_FLAGS)
-flags += -DCONFIG_TEE_TIME_STUB
