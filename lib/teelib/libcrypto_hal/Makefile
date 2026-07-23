@@ -62,4 +62,8 @@ libcrypto_hal_c_files := $(filter-out src/stub/soft_gmssl_asym.c, $(libcrypto_ha
 else
 libcrypto_hal_c_files := $(filter-out src/boringssl/soft_gmssl_asym.c, $(libcrypto_hal_c_files))
 endif
+
+ifeq ($(CONFIG_CRYPTO_SUPPORT_SOFT_SM4),true)
+c-flags += -DCRYPTO_SUPPORT_SOFT_SM4
+endif
 include $(BUILD_LIB)/lib-common.mk

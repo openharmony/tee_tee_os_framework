@@ -60,9 +60,6 @@
 +#ifndef OPENSSL_NO_SM4_XTS
 +# define OPENSSL_NO_SM4_XTS
 +#endif
-+#ifndef OPENSSL_NO_SM4
-+# define OPENSSL_NO_SM4
-+#endif
 +#ifndef OPENSSL_NO_PQCHYBRID
 +# define OPENSSL_NO_PQCHYBRID
 +#endif
@@ -212,6 +209,9 @@
 +#endif
 +
 +#define OPENSSL_SUPPRESS_DEPRECATED
++#ifndef OPENSSL_DEV_NO_ATOMICS
++# define OPENSSL_DEV_NO_ATOMICS
++#endif
 +
 +#ifndef MODULESDIR
 +#define MODULESDIR "/usr/local/lib64/ossl-modules"
