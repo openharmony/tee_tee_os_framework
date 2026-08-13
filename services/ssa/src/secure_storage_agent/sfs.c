@@ -535,7 +535,7 @@ static TEE_Result cal_construct_block(struct sfd_t *sfd, uint32_t data_size)
     last_block_pos = cur_block_pos;
     while (data_size > 0) {
         uint32_t read_count = ssa_fs_fread(buffer, block_size, sfd->nfd, &error);
-        if (((read_count % block_size) != 0) || (error < 0)) {
+        if ((read_count == 0) || ((read_count % block_size) != 0) || (error < 0)) {
             tloge("read encrypto buffer failed, read_count=%u, error=%d\n", read_count, error);
             TEE_Free(buffer);
             return get_spec_errno(TEE_ERROR_READ_DATA);

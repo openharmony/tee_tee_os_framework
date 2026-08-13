@@ -55,5 +55,5 @@ int ossl_pool_add_nonce_data(RAND_POOL *pool)
     if (data == NULL)
         return 0;
     (void)memset(data, 0, sizeof(struct data_t));
-    return ossl_rand_pool_add(pool, (unsigned char *)&data, sizeof(struct data_t), 0);
+    return ossl_rand_pool_add(pool, (unsigned char *)data, sizeof(struct data_t), 0);
 }

@@ -275,21 +275,35 @@ error:
 
 #define DOUBLE_SIZE   2
 #define ATTR_IS_BUFFER(attribute_id) ((((attribute_id) << 2) >> 31) == 0)
+static bool check_attrs_count(uint32_t attr_count, uint32_t attr_total_len)
+{
+    if (attr_total_len < sizeof(uint32_t) ||
+        attr_count > (attr_total_len - sizeof(uint32_t)) / (DOUBLE_SIZE * sizeof(uint32_t))) {
+        tloge("invalid attr count. attr count = %u, total size = %u\n", attr_count, attr_total_len);
+        return false;
+    }
+
+    return true;
+}
+
 static bool check_attrs_size(const void *share_mem, uint32_t attr_total_len)
 {
     uint32_t share_mem_size = 0;
     uint32_t temp_size = 0;
     uint32_t attr_id = 0;
-    const uint32_t *attr_count = share_mem;
+    const uint32_t attr_count = *(const uint32_t *)share_mem;
 
     share_mem_size += sizeof(uint32_t);
     if (share_mem_size > attr_total_len) {
         tloge("over size. total size = %u, get size = %u\n", attr_total_len, share_mem_size);
         return false;
     }
+    if (!check_attrs_count(attr_count, attr_total_len))
+        return false;
+
     share_mem += sizeof(uint32_t);
 
-    for (uint32_t i = 0; i < *attr_count; i++) {
+    for (uint32_t i = 0; i < attr_count; i++) {
         if (memcpy_s(&attr_id, sizeof(uint32_t), share_mem, sizeof(uint32_t)) != EOK) {
             tloge("get attr id failed\n");
             return false;
@@ -354,7 +368,17 @@ int32_t restore_attrs(struct asymmetric_params_t *asymmetric_params, const struc
     uint32_t attr_total_len = crypto_arg->size;
     void *arg_buf = (void *)(uintptr_t)crypto_arg->buffer;
 
-    if (attr_total_len == 0 || arg_buf == NULL || *(uint32_t *)arg_buf == 0) {
+    if (attr_total_len == 0 || arg_buf == NULL) {
+        asymmetric_params->param_count = 0;
+        asymmetric_params->attribute = 0;
+        return CRYPTO_SUCCESS;
+    }
+
+    if (attr_total_len < sizeof(uint32_t))
+        return CRYPTO_BAD_PARAMETERS;
+
+    uint32_t attr_count = *(uint32_t *)arg_buf;
+    if (attr_count == 0) {
         asymmetric_params->param_count = 0;
         asymmetric_params->attribute = 0;
         return CRYPTO_SUCCESS;
@@ -363,20 +387,21 @@ int32_t restore_attrs(struct asymmetric_params_t *asymmetric_params, const struc
     if (!check_attrs_size(arg_buf, attr_total_len))
         return CRYPTO_BAD_PARAMETERS;
 
-    uint32_t *attr_count = arg_buf;
-    struct crypto_attribute_t *attr = (struct crypto_attribute_t *)malloc(*attr_count *
-        sizeof(struct crypto_attribute_t));
+    size_t attr_size = (size_t)attr_count * sizeof(struct crypto_attribute_t);
+    if (attr_count != 0 && attr_size / attr_count != sizeof(struct crypto_attribute_t))
+        return CRYPTO_OVERFLOW;
+
+    struct crypto_attribute_t *attr = (struct crypto_attribute_t *)malloc(attr_size);
     if (attr == NULL) {
         tloge("Failed to allocate memory for attribute\n");
         return CRYPTO_OVERFLOW;
     }
 
-    (void)memset_s(attr, *attr_count * sizeof(struct crypto_attribute_t), 0, *attr_count *
-        sizeof(struct crypto_attribute_t));
+    (void)memset_s(attr, attr_size, 0, attr_size);
 
     uint32_t attr_offset = sizeof(uint32_t);
     arg_buf += attr_offset;
-    for (uint32_t i = 0; i < *attr_count; i++) {
+    for (uint32_t i = 0; i < attr_count; i++) {
         attr[i].attribute_id = *(uint32_t *)arg_buf;
         attr_offset += sizeof(uint32_t);
         arg_buf += attr_offset;
@@ -395,7 +420,7 @@ int32_t restore_attrs(struct asymmetric_params_t *asymmetric_params, const struc
         }
         arg_buf += attr_offset;
     }
-    asymmetric_params->param_count = *attr_count;
+    asymmetric_params->param_count = attr_count;
     asymmetric_params->attribute = (uint64_t)(uintptr_t)attr;
     return CRYPTO_SUCCESS;
 }
